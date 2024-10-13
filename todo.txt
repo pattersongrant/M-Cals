@@ -1,0 +1,2 @@
+- make colors more um
+- add sqllite to save goal choices
