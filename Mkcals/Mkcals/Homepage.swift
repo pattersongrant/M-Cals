@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
+import SQLite
 
-
-struct Homepage: View {
-    var body: some View {
+struct Homepage: SwiftUI.View {
+    var body: some SwiftUI.View {
         NavigationStack{
             TabView{
                 Tracker()
@@ -26,8 +26,8 @@ struct Homepage: View {
         
     }
 }
-struct Tracker: View {
-    var body: some View {
+struct Tracker: SwiftUI.View {
+    var body: some SwiftUI.View {
         NavigationStack{
             
             VStack{
@@ -102,8 +102,8 @@ struct Tracker: View {
         
     }
 }
-struct Info: View {
-    var body: some View {
+struct Info: SwiftUI.View {
+    var body: some SwiftUI.View {
         NavigationStack{
             HStack{
                 Text("M")
