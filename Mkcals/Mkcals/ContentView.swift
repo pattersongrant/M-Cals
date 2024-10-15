@@ -26,15 +26,23 @@ struct ContentView: View {
                         .font(.title)
                         
                 }
-                Text("The best calorie tracker for U-M students.")
+                Text("The best calorie tracker for \nU-M students.")
                     .multilineTextAlignment(.center)
-                    .padding(10)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 5)
                     .font(.title2)
                 NavigationLink(destination: Setup().navigationBarBackButtonHidden(true)
                 )
                 {
                     Text("Get Started")
                         .font(.title2)
+                        .foregroundStyle(Color.white)
+                        
+                        .frame(width: 200.0, height: 70.0)
+                            .background(Color.mBlue)
+                            .cornerRadius(5)
+                            .padding()
+                        
                     
                 }
             }
