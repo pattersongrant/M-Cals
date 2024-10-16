@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3145F1BB2CBF4B6E00946A34 /* AddFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145F1BA2CBF4B6E00946A34 /* AddFood.swift */; };
 		3172A1332CBC4CD400BDD5BC /* MkcalsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172A1322CBC4CD400BDD5BC /* MkcalsApp.swift */; };
 		3172A1352CBC4CD400BDD5BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172A1342CBC4CD400BDD5BC /* ContentView.swift */; };
 		3172A1372CBC4CD500BDD5BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3172A1362CBC4CD500BDD5BC /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3145F1BA2CBF4B6E00946A34 /* AddFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFood.swift; sourceTree = "<group>"; };
 		3172A12F2CBC4CD400BDD5BC /* Mkcals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mkcals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3172A1322CBC4CD400BDD5BC /* MkcalsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkcalsApp.swift; sourceTree = "<group>"; };
 		3172A1342CBC4CD400BDD5BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				3172A1322CBC4CD400BDD5BC /* MkcalsApp.swift */,
 				3172A1462CBDA6A800BDD5BC /* Homepage.swift */,
 				3172A1342CBC4CD400BDD5BC /* ContentView.swift */,
+				3145F1BA2CBF4B6E00946A34 /* AddFood.swift */,
 				3172A1402CBC51C600BDD5BC /* Setup.swift */,
 				3172A1362CBC4CD500BDD5BC /* Assets.xcassets */,
 				3172A1382CBC4CD500BDD5BC /* Preview Content */,
@@ -212,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3172A1352CBC4CD400BDD5BC /* ContentView.swift in Sources */,
+				3145F1BB2CBF4B6E00946A34 /* AddFood.swift in Sources */,
 				3172A1412CBC51C600BDD5BC /* Setup.swift in Sources */,
 				3172A1332CBC4CD400BDD5BC /* MkcalsApp.swift in Sources */,
 				3172A1472CBDA6A800BDD5BC /* Homepage.swift in Sources */,

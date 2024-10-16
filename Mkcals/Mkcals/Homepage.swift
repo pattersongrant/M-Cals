@@ -6,7 +6,11 @@
 //
 
 import SwiftUI
-import SQLite
+//import SQLite
+//
+//let path = NSSearchPathForDirectoriesInDomains(
+//    .documentDirectory, .userDomainMask, true
+//).first!
 
 struct Homepage: SwiftUI.View {
     var body: some SwiftUI.View {
@@ -27,8 +31,36 @@ struct Homepage: SwiftUI.View {
     }
 }
 struct Tracker: SwiftUI.View {
+//    private var db: Connection?
+//    init () {
+//        let users = Table("users")
+//        do{
+//            
+//            let db = try Connection("\(path)/db.sqlite3")
+//            let id = 5
+//            let email = "deez"
+//            let name = "what"
+//            
+//            try db.run(users.create { t in     // CREATE TABLE "users" (
+//                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
+//                t.column(email, unique: true)  //     "email" TEXT UNIQUE NOT NULL,
+//                t.column(name)                 //     "name" TEXT
+//            })
+//                                 
+//        }catch {
+//            print("\(error)")
+//        }
+//                                 
+//        
+//    }
+    
+    
+    
+    
+    
     var body: some SwiftUI.View {
         NavigationStack{
+            
             
             VStack{
                 HStack{
@@ -66,7 +98,7 @@ struct Tracker: SwiftUI.View {
                                 .multilineTextAlignment(.leading)
                                 .padding(.leading, 123.0)
                             Spacer()
-                            NavigationLink(destination:ContentView()){
+                            NavigationLink(destination:AddFood()){
                                 Image(systemName:"plus.app.fill")
                                     .resizable()
                                     .frame(width:50, height: 50)
@@ -117,7 +149,7 @@ struct Info: SwiftUI.View {
                     .foregroundStyle(Color.mBlue)
             }.padding(.top, 50.0)
             Spacer()
-            Text("Mkcals is an application created using this michigan-dining-api (https://github.com/anders617/michigan-dining-api) to provide a way to easily track calories & macros from foods eaten in University of Michigan dining halls.\n\nThis is not an official U-M application and is not affiliated with U-M in any way.")
+            Text("Mkcals is an application created using the \nU-M Dining API to provide a way to easily track calories & macros from foods eaten in University of Michigan dining halls.\n\nThis is not an official U-M application and is not affiliated with U-M in any way.")
                 .padding(.bottom, 60.0)
                 .padding(.horizontal, 25.0)
             Spacer()
