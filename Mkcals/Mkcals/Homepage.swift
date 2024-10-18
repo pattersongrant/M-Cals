@@ -13,16 +13,17 @@ import SwiftUI
 //).first!
 
 struct Homepage: SwiftUI.View {
+    var selectedItems: [String]
     var body: some SwiftUI.View {
         NavigationStack{
             TabView{
-                Tracker()
+                Tracker(selectedItems: selectedItems)
                     .tabItem {
-                        Label("Home", systemImage: "house")
+                        Label("Tracker", systemImage: "house")
                     }
                 Info()
                     .tabItem {
-                        Label("Home", systemImage: "info.circle")
+                        Label("Info", systemImage: "info.circle")
                     }
             }
         }.navigationBarBackButtonHidden()
@@ -57,7 +58,7 @@ struct Tracker: SwiftUI.View {
     
     
     
-    
+    var selectedItems: [String]
     var body: some SwiftUI.View {
         NavigationStack{
             
@@ -90,7 +91,6 @@ struct Tracker: SwiftUI.View {
                     .progressViewStyle(LinearProgressViewStyle())
                     .frame(width: 400)
                     
-                ScrollView{
                     VStack{
                         HStack{
                             Text("Breakfast")
@@ -114,15 +114,16 @@ struct Tracker: SwiftUI.View {
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
                         HStack{
                             
-                            Text("Example food")
-                                .multilineTextAlignment(.leading)
-                                .padding(.horizontal, 25.0)
-                                .padding(.vertical, 10.0)
+                            
+                            
+                            List(selectedItems, id: \.self) { item in
+                                            Text(item)
+                                        }
                             Spacer()
                         }
                         
                     }
-                }
+                
                 
                 
                 
@@ -162,5 +163,5 @@ struct Info: SwiftUI.View {
 
 
 #Preview {
-    Homepage()
+    Homepage(selectedItems: ["Lol"])
 }
