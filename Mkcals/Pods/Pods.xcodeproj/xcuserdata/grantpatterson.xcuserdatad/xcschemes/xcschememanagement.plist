@@ -4,21 +4,14 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-Mkcals.xcscheme</key>
+		<key>GRDB.swift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>SQLite.swift-SQLite.swift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>SQLite.swift.xcscheme</key>
+		<key>Pods-Mkcals.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

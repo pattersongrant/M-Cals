@@ -1,18 +1,18 @@
 PODS:
-  - SQLite.swift (0.15.3):
-    - SQLite.swift/standard (= 0.15.3)
-  - SQLite.swift/standard (0.15.3)
+  - GRDB.swift (6.24.1):
+    - GRDB.swift/standard (= 6.24.1)
+  - GRDB.swift/standard (6.24.1)
 
 DEPENDENCIES:
-  - SQLite.swift (~> 0.15.3)
+  - GRDB.swift
 
 SPEC REPOS:
   trunk:
-    - SQLite.swift
+    - GRDB.swift
 
 SPEC CHECKSUMS:
-  SQLite.swift: 8d054987f02728cc912b0eb5a9659650573a65a2
+  GRDB.swift: 136dcb5d8dddca50aae3ba7d77475f79e7232cd8
 
-PODFILE CHECKSUM: 599575b05f68fe74df41646cc6099c936ef12e98
+PODFILE CHECKSUM: 3db59f5fc13439d48350541761b62de4c088dddf
 
 COCOAPODS: 1.15.2

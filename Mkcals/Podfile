@@ -4,7 +4,7 @@ platform :ios, '17.5'
 target 'Mkcals' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'SQLite.swift', '~> 0.15.3'
+  pod 'GRDB.swift'  
   # Pods for Mkcals
 
 end

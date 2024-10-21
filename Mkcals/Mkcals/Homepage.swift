@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-//import SQLite
-//
-//let path = NSSearchPathForDirectoriesInDomains(
-//    .documentDirectory, .userDomainMask, true
-//).first!
+
+import GRDB
+
 
 struct Homepage: SwiftUI.View {
     var selectedItems: [String]
@@ -31,33 +29,7 @@ struct Homepage: SwiftUI.View {
         
     }
 }
-struct Tracker: SwiftUI.View {
-//    private var db: Connection?
-//    init () {
-//        let users = Table("users")
-//        do{
-//            
-//            let db = try Connection("\(path)/db.sqlite3")
-//            let id = 5
-//            let email = "deez"
-//            let name = "what"
-//            
-//            try db.run(users.create { t in     // CREATE TABLE "users" (
-//                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
-//                t.column(email, unique: true)  //     "email" TEXT UNIQUE NOT NULL,
-//                t.column(name)                 //     "name" TEXT
-//            })
-//                                 
-//        }catch {
-//            print("\(error)")
-//        }
-//                                 
-//        
-//    }
-    
-    
-    
-    
+struct Tracker: SwiftUI.View {    
     var selectedItems: [String]
     var body: some SwiftUI.View {
         NavigationStack{
@@ -90,7 +62,7 @@ struct Tracker: SwiftUI.View {
                 ProgressView(value: 0.78)
                     .progressViewStyle(LinearProgressViewStyle())
                     .frame(width: 400)
-                    
+                ScrollView{
                     VStack{
                         HStack{
                             Text("Breakfast")
@@ -112,17 +84,129 @@ struct Tracker: SwiftUI.View {
                             .frame(width:360, height:70)
                             .background(Color.mBlue)
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
+                        
                         HStack{
                             
                             
                             
-                            List(selectedItems, id: \.self) { item in
-                                            Text(item)
-                                        }
+                            VStack {
+                                ForEach(selectedItems, id: \.self) { item in
+                                    HStack{
+                                        Text(item)
+                                            .padding(25)
+                                        
+                                        
+                                        Spacer()
+                                        Text("500")
+                                    }.frame(width: 370.0, height: 25.0)
+                                    
+                                    
+                                    
+                                    
+                                }
+                            }
+                            .padding(.top, 10)
                             Spacer()
                         }
                         
                     }
+                    VStack{
+                        HStack{
+                            Text("Lunch")
+                                .font(.title)
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 123.0)
+                            Spacer()
+                            NavigationLink(destination:AddFood()){
+                                Image(systemName:"plus.app.fill")
+                                    .resizable()
+                                    .frame(width:50, height: 50)
+                                    .foregroundStyle(Color.mmaize)
+                                    .padding(16)
+                            }
+                            
+                            
+                            
+                        }.foregroundStyle(Color.white)
+                            .frame(width:360, height:70)
+                            .background(Color.mBlue)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
+                        
+                        HStack{
+                            
+                            
+                            
+                            VStack {
+                                ForEach(selectedItems, id: \.self) { item in
+                                    HStack{
+                                        Text(item)
+                                            .padding(25)
+                                        
+                                        
+                                        Spacer()
+                                        Text("500")
+                                    }.frame(width: 370.0, height: 25.0)
+                                    
+                                    
+                                    
+                                    
+                                }
+                            }
+                            .padding(.top, 10)
+                            Spacer()
+                        }
+                        
+                    }
+
+                    VStack{
+                        HStack{
+                            Text("Dinner")
+                                .font(.title)
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 123.0)
+                            Spacer()
+                            NavigationLink(destination:AddFood()){
+                                Image(systemName:"plus.app.fill")
+                                    .resizable()
+                                    .frame(width:50, height: 50)
+                                    .foregroundStyle(Color.mmaize)
+                                    .padding(16)
+                            }
+                            
+                            
+                            
+                        }.foregroundStyle(Color.white)
+                            .frame(width:360, height:70)
+                            .background(Color.mBlue)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
+                        
+                        HStack{
+                            
+                            
+                            
+                            VStack {
+                                ForEach(selectedItems, id: \.self) { item in
+                                    HStack{
+                                        Text(item)
+                                            .padding(25)
+                                        
+                                        
+                                        Spacer()
+                                        Text("500")
+                                    }.frame(width: 370.0, height: 25.0)
+                                    
+                                    
+                                    
+                                    
+                                }
+                            }
+                            .padding(.top, 10)
+                            Spacer()
+                        }
+                        
+                    }
+
+                }
                 
                 
                 
@@ -163,5 +247,5 @@ struct Info: SwiftUI.View {
 
 
 #Preview {
-    Homepage(selectedItems: ["Lol"])
+    Homepage(selectedItems: ["Tofu", "Beef & Mushroom Burger w/ Cheese", "Hot Cereal", "Pancakes", "Homemade Apple Topping", "Pancakes"])
 }

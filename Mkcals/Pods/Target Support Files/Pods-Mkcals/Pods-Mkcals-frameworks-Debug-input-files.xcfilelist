@@ -1,2 +1,2 @@
 ${PODS_ROOT}/Target Support Files/Pods-Mkcals/Pods-Mkcals-frameworks.sh
-${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework
+${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework
