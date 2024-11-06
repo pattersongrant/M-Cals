@@ -171,7 +171,7 @@ struct CalCount: View {
                     
                 
                 
-                NavigationLink(destination: Homepage(selectedItems: [])){
+                NavigationLink(destination: Homepage()){
                     Text("Looks good!")
                         .font(.title2)
                         .foregroundStyle(Color.white)

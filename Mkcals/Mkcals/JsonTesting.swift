@@ -71,14 +71,8 @@ struct AddFood: View {
                         .font(.title)
                 }
             )
-            .background(
-                NavigationLink(destination: Homepage(selectedItems: selectedItems), isActive: $isNavigatingToHome) {
-                    EmptyView()
-                }
-                .hidden() // Keep the link hidden but active
-            )
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
+
+        }        .navigationViewStyle(StackNavigationViewStyle())
         .edgesIgnoringSafeArea(.top)
     }
     
