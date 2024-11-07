@@ -46,6 +46,28 @@ class DatabaseManager {
         
     }
     
+    static func addMeal(date: String, mealName: String) throws {
+        try dbQueue.write { db in
+            try db.execute(
+                sql: "INSERT INTO meals (date, mealname) VALUES (?, ?)",
+                arguments: [date, mealName]
+            
+            )
+            
+        }
+    }
+    
+    static func addFoodItem(meal_id: Int, name: String, kcal: Int, pro: Int, fat: Int, cho: Int) throws {
+        try dbQueue.write { db in
+            try db.execute(
+                sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho) VALUES (?, ?, ?, ?, ?, ?)",
+                arguments: [meal_id, name, kcal, pro, fat, cho]
+            
+            )
+            
+        }
+    }
+    
     
 }
 
@@ -54,6 +76,9 @@ class DatabaseManager {
 
 
 struct Selector: View {
+
+    
+    
     init() {
         
     }
