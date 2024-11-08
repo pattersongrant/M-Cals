@@ -71,13 +71,34 @@ class DatabaseManager {
     
 }
 
+class APIHandling {
+    
+    let hallNames = [
+        "Mosher Jordan Dining Hall",
+        "Bursley Dining Hall",
+        "East Quad Dining Hall",
+        "Lawyers Club Dining Hall",
+        "Markley Dining Hall",
+        "Martha Cook Dining Hall",
+        "North Quad Dining Hall",
+        "South Quad Dining Hall",
+        "Twigs at Oxford"
+    ]
+    
+    static func getURL (diningHall: String) -> String {
+        return "https://api.studentlife.umich.edu/menu/xml2print.php?controller=print&view=json&location=\(diningHall.replacingOccurrences(of: " ", with: "%20"))"
+    }
+    
+    
+    
+    
+}
+
 
 
 
 
 struct Selector: View {
-
-    
     
     init() {
         
@@ -87,6 +108,8 @@ struct Selector: View {
     
     var body: some View {
         Text("Database testing.")
+        
+        
     }
 }
 
