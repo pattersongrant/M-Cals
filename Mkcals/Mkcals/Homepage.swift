@@ -55,7 +55,7 @@ struct Homepage: SwiftUI.View {
                                     .multilineTextAlignment(.leading)
                                     .padding(.leading, 123.0)
                                 Spacer()
-                                NavigationLink(destination:Selector()){
+                                NavigationLink(destination:Selector(mealAddingTo: "Breakfast")){
                                     Image(systemName:"plus.app.fill")
                                         .resizable()
                                         .frame(width:50, height: 50)
@@ -75,7 +75,7 @@ struct Homepage: SwiftUI.View {
                                     .multilineTextAlignment(.leading)
                                     .padding(.leading, 123.0)
                                 Spacer()
-                                NavigationLink(destination:Selector()){
+                                NavigationLink(destination:Selector(mealAddingTo: "Lunch")){
                                     Image(systemName:"plus.app.fill")
                                         .resizable()
                                         .frame(width:50, height: 50)
@@ -97,7 +97,32 @@ struct Homepage: SwiftUI.View {
                                     .multilineTextAlignment(.leading)
                                     .padding(.leading, 123.0)
                                 Spacer()
-                                NavigationLink(destination:Selector()){
+                                NavigationLink(destination:Selector(mealAddingTo: "Dinner")){
+                                    Image(systemName:"plus.app.fill")
+                                        .resizable()
+                                        .frame(width:50, height: 50)
+                                        .foregroundStyle(Color.mmaize)
+                                        .padding(16)
+                                }
+                                
+                                
+                                
+                            }.foregroundStyle(Color.white)
+                                .frame(width:360, height:70)
+                                .background(Color.mBlue)
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
+                            
+                            
+                            
+                        }
+                        VStack{
+                            HStack{
+                                Text("Other")
+                                    .font(.title)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.leading, 123.0)
+                                Spacer()
+                                NavigationLink(destination:Selector(mealAddingTo: "Other")){
                                     Image(systemName:"plus.app.fill")
                                         .resizable()
                                         .frame(width:50, height: 50)

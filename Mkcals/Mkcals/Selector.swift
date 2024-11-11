@@ -73,6 +73,21 @@ class DatabaseManager {
 
 class APIHandling {
     
+    
+    
+    static func getURL (diningHall: String) -> String {
+        return "https://api.studentlife.umich.edu/menu/xml2print.php?controller=print&view=json&location=\(diningHall.replacingOccurrences(of: " ", with: "%20"))"
+    }
+    
+}
+
+
+
+
+
+struct Selector: View {
+    @State var selectedDiningHall = "Mosher Jordan Dining Hall"
+    @State var mealAddingTo: String
     let hallNames = [
         "Mosher Jordan Dining Hall",
         "Bursley Dining Hall",
@@ -85,34 +100,21 @@ class APIHandling {
         "Twigs at Oxford"
     ]
     
-    static func getURL (diningHall: String) -> String {
-        return "https://api.studentlife.umich.edu/menu/xml2print.php?controller=print&view=json&location=\(diningHall.replacingOccurrences(of: " ", with: "%20"))"
-    }
-    
-    
-    
-    
-}
-
-
-
-
-
-struct Selector: View {
-    
-    init() {
-        
-    }
-    
     
     
     var body: some View {
-        Text("Database testing.")
+        Picker("Select Dining Hall", selection: $selectedDiningHall) {
+            ForEach(hallNames, id: \.self) { hall in
+                Text(hall).tag(hall)
+            }
+        }
+        
+        Spacer()
         
         
     }
 }
 
 #Preview {
-    Selector()
+    Selector(mealAddingTo: "Breakfast")
 }

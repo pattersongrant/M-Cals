@@ -34,7 +34,7 @@ struct AddFood: View {
                 }
                 .pickerStyle(MenuPickerStyle())
                 .padding(.top, 10)
-                .onChange(of: selectedDiningHall) { newValue in
+                .onChange(of: selectedDiningHall) { oldValue, newValue in
                     fetchData(forceRefresh: true)
                 }
 
