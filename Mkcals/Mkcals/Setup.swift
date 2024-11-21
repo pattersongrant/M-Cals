@@ -41,7 +41,7 @@ struct Setup: View {
                         
                         .frame(width: 370.0, height: 100.0)
                         .background(Color.mBlue)
-                        .cornerRadius(10)
+                        .cornerRadius(13)
                         
                         
                         
@@ -75,7 +75,7 @@ struct Setup: View {
                         
                         .frame(width: 370.0, height: 100.0)
                         .background(Color.mBlue)
-                        .cornerRadius(10)
+                        .cornerRadius(13)
                         
                         
                         
@@ -108,7 +108,7 @@ struct Setup: View {
                         
                         .frame(width: 370.0, height: 100.0)
                         .background(Color.mBlue)
-                        .cornerRadius(10)
+                        .cornerRadius(13)
                         
                         
                         
@@ -178,8 +178,8 @@ struct CalCount: View {
                         
                         .frame(width: 200.0, height: 70.0)
                             .background(Color.mBlue)
-                            .cornerRadius(5)
-                            .padding(75)
+                            .cornerRadius(13)
+                            .padding(5)
                 }
                 
                 NavigationLink(destination: CalHelp()){

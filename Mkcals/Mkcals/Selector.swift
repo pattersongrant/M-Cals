@@ -16,7 +16,7 @@ class DatabaseManager {
     static func setup(for application: UIApplication) throws {
         let databaseURL = try FileManager.default
             .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("datab.sqlite")
+            .appendingPathComponent("datab2.sqlite")
         
         dbQueue = try DatabaseQueue(path: databaseURL.path)
         
@@ -78,9 +78,8 @@ class APIHandling {
     static func getURL (diningHall: String) -> String {
         return "https://api.studentlife.umich.edu/menu/xml2print.php?controller=print&view=json&location=\(diningHall.replacingOccurrences(of: " ", with: "%20"))"
     }
-    
-}
 
+}
 
 
 
@@ -100,17 +99,42 @@ struct Selector: View {
         "Twigs at Oxford"
     ]
     
+
+    
+    
+    struct apiCalled: Codable {
+        var menu: Menu?
+    }
+    struct Menu: Codable {
+        
+    }
     
     
     var body: some View {
-        Picker("Select Dining Hall", selection: $selectedDiningHall) {
-            ForEach(hallNames, id: \.self) { hall in
-                Text(hall).tag(hall)
+        NavigationStack{
+            VStack{
+                Picker("Select Dining Hall", selection: $selectedDiningHall) {
+                    ForEach(hallNames, id: \.self) { hall in
+                        Text(hall).tag(hall)
+                    }
+                }
+                
+                Spacer()
+            }
+        }.navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            NavigationLink(destination: Homepage()){
+                
+                Text("Add to \(mealAddingTo)")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.mBlue)
+                Image(systemName: "arrow.right.circle.fill")
+                    .font(.title)
+                    .foregroundStyle(Color.mBlue)
             }
         }
         
-        Spacer()
-        
+            
         
     }
 }
