@@ -72,12 +72,14 @@ class DatabaseManager {
 }
 
 class APIHandling {
-    
-    
-    
+    //get url and format it
     static func getURL (diningHall: String) -> String {
         return "https://api.studentlife.umich.edu/menu/xml2print.php?controller=print&view=json&location=\(diningHall.replacingOccurrences(of: " ", with: "%20"))"
     }
+    
+
+    
+    
 
 }
 
@@ -99,28 +101,111 @@ struct Selector: View {
         "Twigs at Oxford"
     ]
     
-
+    
+    //api call
+    func fetchData() {
+        let urlString = APIHandling.getURL(diningHall: selectedDiningHall)
+        
+        
+    }
     
     
+    
+    //Structs for JSON decoding
     struct apiCalled: Codable {
         var menu: Menu?
     }
     struct Menu: Codable {
+        var meal: [Meal]?
+    }
+    struct Meal: Codable {
+        var name: String?
+        var course: [Course]?
+    }
+    
+    
+    
+    //array vs single item decoding for menuitem
+    struct Course: Codable {
+        var name: String?
+        var menuitem: ItemWrapper
+        
+        struct ItemWrapper: Codable {
+            var item: [MenuItem]
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.singleValueContainer()
+                if let singleItem = try? container.decode(MenuItem.self) {
+                    // If a single MenuItem is decoded, add it to the array
+                    item = [singleItem]
+                } else if let multipleItems = try? container.decode([MenuItem].self) {
+                    // If an array of MenuItem is decoded, assign it
+                    item = multipleItems
+                } else {
+                    throw DecodingError.typeMismatch(
+                        ItemWrapper.self,
+                        DecodingError.Context(
+                            codingPath: decoder.codingPath,
+                            debugDescription: "Expected single MenuItem or array of MenuItem."
+                        )
+                    )
+                }
+            }
+            
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.singleValueContainer()
+                if item.count == 1 {
+                    try container.encode(item[0]) // Encode as a single item if there's only one
+                } else {
+                    try container.encode(item) // Encode as an array if there are multiple items
+                }
+            }
+        }
+        
+        struct MenuItem: Codable {
+            var name: String?
+            var itemsize: ItemSize? //added
+            
+        }
+    }
+    //end of array vs single item decoding
+    
+    
+    struct ItemSize: Codable {
+        var nutrition: Nutrition?
+    }
+    struct Nutrition: Codable {
+        var pro: String?
+        var fat: String?
+        var cho: String?
+        var kcal: String?
         
     }
+    
+    
+    
+
+    
+
     
     
     var body: some View {
         NavigationStack{
             VStack{
-                Picker("Select Dining Hall", selection: $selectedDiningHall) {
-                    ForEach(hallNames, id: \.self) { hall in
-                        Text(hall).tag(hall)
-                    }
+                HStack{
+                    Picker("Select Dining Hall", selection: $selectedDiningHall) {
+                        ForEach(hallNames, id: \.self) { hall in
+                            Text(hall).tag(hall)
+                        }
+                    }.padding()
+                        
+                        
+                    Spacer()
                 }
                 
                 Spacer()
-            }
+            } .onAppear{fetchData()}
+            
         }.navigationBarTitleDisplayMode(.inline)
         .toolbar {
             NavigationLink(destination: Homepage()){
