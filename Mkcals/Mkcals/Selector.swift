@@ -124,14 +124,42 @@ struct Selector: View {
                 let decoder = JSONDecoder()
                 
                 do{
-                    if let jsonString = String(data: data!, encoding: .utf8) {
+                    
+                    //print raw json
+                    //if let jsonString = String(data: data!, encoding: .utf8) {
                         //print("JSON Response: \(jsonString)")
-                    }
+                    //}
+                    
                     let itemFeed = try decoder.decode(apiCalled.self, from: data!)
                     DispatchQueue.main.async {
                         self.menu = itemFeed.menu //store decoded menu
+                        
+                        
+                        /* Print each course name and its menuitem names
+                            if let meals = itemFeed.menu?.meal {
+                                for meal in meals {
+                                    if let courses = meal.course?.courseitem {
+                                        for course in courses {
+                                            // Print the course name before the menuitems
+                                            if let courseName = course.name {
+                                                print("Course Name: \(courseName)")
+                                            }
+                                            
+                                            // Print each menuitem name under the course
+                                            for menuItem in course.menuitem.item {
+                                                if let itemName = menuItem.name {
+                                                    print("  MenuItem Name: \(itemName)")
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }*/
+                        
+                        
                     }
-                    print(itemFeed)
+                    
+                    //print(itemFeed)
                 } catch {
                     print("error: \(error)")
                 }
@@ -154,31 +182,22 @@ struct Selector: View {
     }
     struct Meal: Codable {
         var name: String?
-        var course: [Course]?
+        var course: CourseWrapper?
         
-    }
-    
-    
-    
-    //array vs single item decoding for menuitem
-    struct Course: Codable {
-        var name: String?
-        var menuitem: ItemWrapper
-        
-        struct ItemWrapper: Codable {
-            var item: [MenuItem]
+        struct CourseWrapper: Codable {
+            var courseitem: [Course]
             
             init(from decoder: Decoder) throws {
                 let container = try decoder.singleValueContainer()
-                if let singleItem = try? container.decode(MenuItem.self) {
+                if let singleCourseItem = try? container.decode(Course.self) {
                     // If a single MenuItem is decoded, add it to the array
-                    item = [singleItem]
-                } else if let multipleItems = try? container.decode([MenuItem].self) {
+                    courseitem = [singleCourseItem]
+                } else if let multipleItems = try? container.decode([Course].self) {
                     // If an array of MenuItem is decoded, assign it
-                    item = multipleItems
+                    courseitem = multipleItems
                 } else {
                     throw DecodingError.typeMismatch(
-                        ItemWrapper.self,
+                        CourseWrapper.self,
                         DecodingError.Context(
                             codingPath: decoder.codingPath,
                             debugDescription: "Expected single MenuItem or array of MenuItem."
@@ -186,24 +205,56 @@ struct Selector: View {
                     )
                 }
             }
-            
-            func encode(to encoder: Encoder) throws {
-                var container = encoder.singleValueContainer()
-                if item.count == 1 {
-                    try container.encode(item[0]) // Encode as a single item if there's only one
-                } else {
-                    try container.encode(item) // Encode as an array if there are multiple items
+            //array vs single item decoding for menuitem
+            struct Course: Codable {
+                var name: String?
+                var menuitem: ItemWrapper
+                
+                struct ItemWrapper: Codable {
+                    var item: [MenuItem]
+                    
+                    init(from decoder: Decoder) throws {
+                        let container = try decoder.singleValueContainer()
+                        if let singleItem = try? container.decode(MenuItem.self) {
+                            // If a single MenuItem is decoded, add it to the array
+                            item = [singleItem]
+                        } else if let multipleItems = try? container.decode([MenuItem].self) {
+                            // If an array of MenuItem is decoded, assign it
+                            item = multipleItems
+                        } else {
+                            throw DecodingError.typeMismatch(
+                                ItemWrapper.self,
+                                DecodingError.Context(
+                                    codingPath: decoder.codingPath,
+                                    debugDescription: "Expected single MenuItem or array of MenuItem."
+                                )
+                            )
+                        }
+                    }
+                    
+                    func encode(to encoder: Encoder) throws {
+                        var container = encoder.singleValueContainer()
+                        if item.count == 1 {
+                            try container.encode(item[0]) // Encode as a single item if there's only one
+                        } else {
+                            try container.encode(item) // Encode as an array if there are multiple items
+                        }
+                    }
+                }
+                
+                struct MenuItem: Codable {
+                    var name: String?
+                    var itemsize: ItemSize? //added
+                    
                 }
             }
-        }
-        
-        struct MenuItem: Codable {
-            var name: String?
-            var itemsize: ItemSize? //added
-            
+            //end of array vs single item decoding
         }
     }
-    //end of array vs single item decoding
+    
+    
+    
+
     
     
     // Struct for Nutrition (only 4 macros)
@@ -278,40 +329,6 @@ struct Selector: View {
                         
                         
                     Spacer()
-                }
-                if let menu = menu {
-                    List(menu.meal ?? [], id: \.name) { meal in
-                        VStack(alignment: .leading) {
-                            Text(meal.name ?? "Unknown Meal")
-                                .font(.title2)
-                                .padding(.vertical, 5)
-                            
-                            ForEach(meal.course ?? [], id: \.name) { course in
-                                VStack(alignment: .leading) {
-                                    Text(course.name ?? "Unknown Course")
-                                        .font(.headline)
-                                    ForEach(course.menuitem.item, id: \.name) { item in
-                                        VStack(alignment: .leading) {
-                                            Text(item.name ?? "Unknown Item")
-                                                .padding(.top, 5)
-                                            if let itemSize = item.itemsize {
-                                                Text("Serving Size: \(itemSize.serving_size ?? "N/A")")
-                                                if let nutrition = itemSize.nutrition {
-                                                    Text("Protein: \(nutrition.pro)")
-                                                    Text("Fat: \(nutrition.fat)")
-                                                    Text("Carbs: \(nutrition.cho)")
-                                                    Text("Calories: \(nutrition.kcal)")
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    Text("Loading menu...")
-                        .foregroundColor(.gray)
                 }
                 Spacer()
             } .onAppear{fetchData()}
