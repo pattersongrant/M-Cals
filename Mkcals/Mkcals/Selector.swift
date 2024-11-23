@@ -106,7 +106,38 @@ struct Selector: View {
     func fetchData() {
         let urlString = APIHandling.getURL(diningHall: selectedDiningHall)
         
+        let url = URL(string: urlString)
         
+        guard url != nil else {
+            return
+        }
+        
+        let session = URLSession.shared
+        
+        let dataTask = session.dataTask(with: url!) { (data,response,error) in
+            
+            //check for errors
+            if error == nil && data != nil {
+                
+                //parse json
+                let decoder = JSONDecoder()
+                
+                do{
+                    if let jsonString = String(data: data!, encoding: .utf8) {
+                        //print("JSON Response: \(jsonString)")
+                    }
+                    let itemFeed = try decoder.decode(apiCalled.self, from: data!)
+                    
+                    print(itemFeed)
+                } catch {
+                    print("error: \(error)")
+                }
+                
+            }
+            
+        }
+        //make the API Call
+        dataTask.resume()
     }
     
     
@@ -171,16 +202,54 @@ struct Selector: View {
     //end of array vs single item decoding
     
     
-    struct ItemSize: Codable {
-        var nutrition: Nutrition?
-    }
+    // Struct for Nutrition (only 4 macros)
     struct Nutrition: Codable {
-        var pro: String?
-        var fat: String?
-        var cho: String?
-        var kcal: String?
+        var pro: String  // Protein
+        var fat: String  // Fat
+        var cho: String  // Carbohydrates
+        var kcal: String // Calories
         
+        // Initialize with default values
+        init(from nutritionDict: [String: String]? = nil) {
+            self.pro = nutritionDict?["pro"] ?? "0"
+            self.fat = nutritionDict?["fat"] ?? "0"
+            self.cho = nutritionDict?["cho"] ?? "0"
+            self.kcal = nutritionDict?["kcal"] ?? "0"
+        }
     }
+
+    // Struct for ItemSize, including Nutrition
+    struct ItemSize: Codable {
+        var serving_size: String?   // Optional, in case it's missing
+        var portion_size: String?  // Optional, in case it's missing
+        var nutrition: Nutrition?  // Optional, in case it's missing or malformed
+        
+        enum CodingKeys: String, CodingKey {
+            case serving_size
+            case portion_size
+            case nutrition
+        }
+        
+        // Custom initializer to handle the case where `nutrition` might be an empty array
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            self.serving_size = try? container.decode(String.self, forKey: .serving_size)
+            self.portion_size = try? container.decode(String.self, forKey: .portion_size)
+            
+            // Attempt to decode `nutrition` as a dictionary
+            if let nutritionDict = try? container.decode([String: String].self, forKey: .nutrition) {
+                self.nutrition = Nutrition(from: nutritionDict)
+            } else if let nutritionArray = try? container.decode([String].self, forKey: .nutrition), nutritionArray.isEmpty {
+                // If `nutrition` is an empty array, initialize it with default values
+                self.nutrition = Nutrition()
+            } else {
+                // Default to empty nutrition if unable to decode
+                self.nutrition = Nutrition()
+            }
+        }
+    }
+
     
     
     
