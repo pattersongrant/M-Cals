@@ -89,6 +89,7 @@ class APIHandling {
 struct Selector: View {
     @State var selectedDiningHall = "Mosher Jordan Dining Hall"
     @State var mealAddingTo: String
+    @State private var menu: Menu? // Store the fetched menu data
     let hallNames = [
         "Mosher Jordan Dining Hall",
         "Bursley Dining Hall",
@@ -127,7 +128,9 @@ struct Selector: View {
                         //print("JSON Response: \(jsonString)")
                     }
                     let itemFeed = try decoder.decode(apiCalled.self, from: data!)
-                    
+                    DispatchQueue.main.async {
+                        self.menu = itemFeed.menu //store decoded menu
+                    }
                     print(itemFeed)
                 } catch {
                     print("error: \(error)")
@@ -152,6 +155,7 @@ struct Selector: View {
     struct Meal: Codable {
         var name: String?
         var course: [Course]?
+        
     }
     
     
@@ -266,12 +270,49 @@ struct Selector: View {
                         ForEach(hallNames, id: \.self) { hall in
                             Text(hall).tag(hall)
                         }
+                        .onChange(of: selectedDiningHall) { oldValue, newValue in
+                            fetchData()
+                        }
                     }.padding()
+                    
                         
                         
                     Spacer()
                 }
-                
+                if let menu = menu {
+                    List(menu.meal ?? [], id: \.name) { meal in
+                        VStack(alignment: .leading) {
+                            Text(meal.name ?? "Unknown Meal")
+                                .font(.title2)
+                                .padding(.vertical, 5)
+                            
+                            ForEach(meal.course ?? [], id: \.name) { course in
+                                VStack(alignment: .leading) {
+                                    Text(course.name ?? "Unknown Course")
+                                        .font(.headline)
+                                    ForEach(course.menuitem.item, id: \.name) { item in
+                                        VStack(alignment: .leading) {
+                                            Text(item.name ?? "Unknown Item")
+                                                .padding(.top, 5)
+                                            if let itemSize = item.itemsize {
+                                                Text("Serving Size: \(itemSize.serving_size ?? "N/A")")
+                                                if let nutrition = itemSize.nutrition {
+                                                    Text("Protein: \(nutrition.pro)")
+                                                    Text("Fat: \(nutrition.fat)")
+                                                    Text("Carbs: \(nutrition.cho)")
+                                                    Text("Calories: \(nutrition.kcal)")
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    Text("Loading menu...")
+                        .foregroundColor(.gray)
+                }
                 Spacer()
             } .onAppear{fetchData()}
             
