@@ -1,2 +1,9 @@
-- make colors more um
-- add sqllite to save goal choices
+- make different meals a segmented picker
+- maybe improve ui of picker
+- add homepage queries
+- add quantity of item
+- fix duplicates bug of picker in db
+
+
+
+
