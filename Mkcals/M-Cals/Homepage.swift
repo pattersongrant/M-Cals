@@ -58,6 +58,7 @@ struct Homepage: SwiftUI.View {
         @State private var totalCarbs: Int = 0
         @State private var CalorieGoal: Int64 = 2000
 
+
         
         struct FoodItem: Identifiable {
             let id: Int64
@@ -519,7 +520,7 @@ struct Homepage: SwiftUI.View {
                             
                             
                         }
-                        
+
                     } 
                 }
                 .onAppear {

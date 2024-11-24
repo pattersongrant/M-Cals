@@ -22,7 +22,7 @@
 		16AAEE62F74528F7E9B5DC07 /* Pods_Mkcals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mkcals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonTesting.swift; sourceTree = "<group>"; };
 		3145F1BC2CC3500500946A34 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
-		3172A12F2CBC4CD400BDD5BC /* Mkcals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mkcals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3172A12F2CBC4CD400BDD5BC /* M-Cals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "M-Cals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3172A1322CBC4CD400BDD5BC /* MkcalsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkcalsApp.swift; sourceTree = "<group>"; };
 		3172A1342CBC4CD400BDD5BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3172A1362CBC4CD500BDD5BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 		3172A1262CBC4CD400BDD5BC = {
 			isa = PBXGroup;
 			children = (
-				3172A1312CBC4CD400BDD5BC /* Mkcals */,
+				3172A1312CBC4CD400BDD5BC /* M-Cals */,
 				3172A1302CBC4CD400BDD5BC /* Products */,
 				E6057329D3C0CF472D470C9A /* Pods */,
 				33313B23521A7772A93F2A98 /* Frameworks */,
@@ -58,12 +58,12 @@
 		3172A1302CBC4CD400BDD5BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3172A12F2CBC4CD400BDD5BC /* Mkcals.app */,
+				3172A12F2CBC4CD400BDD5BC /* M-Cals.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3172A1312CBC4CD400BDD5BC /* Mkcals */ = {
+		3172A1312CBC4CD400BDD5BC /* M-Cals */ = {
 			isa = PBXGroup;
 			children = (
 				3172A1322CBC4CD400BDD5BC /* MkcalsApp.swift */,
@@ -75,7 +75,7 @@
 				3172A1362CBC4CD500BDD5BC /* Assets.xcassets */,
 				3172A1382CBC4CD500BDD5BC /* Preview Content */,
 			);
-			path = Mkcals;
+			path = "M-Cals";
 			sourceTree = "<group>";
 		};
 		3172A1382CBC4CD500BDD5BC /* Preview Content */ = {
@@ -106,9 +106,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3172A12E2CBC4CD400BDD5BC /* Mkcals */ = {
+		3172A12E2CBC4CD400BDD5BC /* M-Cals */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3172A13D2CBC4CD500BDD5BC /* Build configuration list for PBXNativeTarget "Mkcals" */;
+			buildConfigurationList = 3172A13D2CBC4CD500BDD5BC /* Build configuration list for PBXNativeTarget "M-Cals" */;
 			buildPhases = (
 				A038F2FD430920D4AA7DA6AC /* [CP] Check Pods Manifest.lock */,
 				3172A12B2CBC4CD400BDD5BC /* Sources */,
@@ -120,9 +120,9 @@
 			);
 			dependencies = (
 			);
-			name = Mkcals;
+			name = "M-Cals";
 			productName = Mkcals;
-			productReference = 3172A12F2CBC4CD400BDD5BC /* Mkcals.app */;
+			productReference = 3172A12F2CBC4CD400BDD5BC /* M-Cals.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +153,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3172A12E2CBC4CD400BDD5BC /* Mkcals */,
+				3172A12E2CBC4CD400BDD5BC /* M-Cals */,
 			);
 		};
 /* End PBXProject section */
@@ -356,7 +356,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Mkcals/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"M-Cals/Preview Content\"";
 				DEVELOPMENT_TEAM = Q8344KAJF2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -370,7 +370,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.grantp.Mkcals;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.grantp.M-Cals";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -386,7 +386,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Mkcals/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"M-Cals/Preview Content\"";
 				DEVELOPMENT_TEAM = Q8344KAJF2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -400,7 +400,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.grantp.Mkcals;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.grantp.M-Cals";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -420,7 +420,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3172A13D2CBC4CD500BDD5BC /* Build configuration list for PBXNativeTarget "Mkcals" */ = {
+		3172A13D2CBC4CD500BDD5BC /* Build configuration list for PBXNativeTarget "M-Cals" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3172A13E2CBC4CD500BDD5BC /* Debug */,
