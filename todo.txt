@@ -3,6 +3,5 @@
 - add quantity of item
 - make last selected hallName saved
 - calendar tracker
-- make calorie bar accurate with calorie goal
-- write calories left to goal on screen
-
+- add custom cal adj
+- new dark mode
