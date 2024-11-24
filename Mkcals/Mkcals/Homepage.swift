@@ -27,19 +27,40 @@ struct Homepage: SwiftUI.View {
     }
     struct Tracker: SwiftUI.View {
 
+        // Define state variables to store food items for each meal
+        @State private var breakfastItems: [FoodItem] = []
+        @State private var lunchItems: [FoodItem] = []
+        @State private var dinnerItems: [FoodItem] = []
+        @State private var otherItems: [FoodItem] = []
+        
+        struct FoodItem: Identifiable {
+            let id: Int64
+            let name: String
+            let kcal: String
+            let pro: String
+            let fat: String
+            let cho: String
+        }
+        
+        // Function to get current date in yyyy-MM-dd format
         public func getCurrentDate() -> String {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd" // Set the format to include only year, month, and day
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             let currentDate = Date()
             return dateFormatter.string(from: currentDate)
         }
-        public func getFoodItemsForMeal(mealname: String) {
+        
+        func GetTotalCalories(bitems: String, litems:String, ditems:String, oitems:String) {
+            
+        }
+        
+        // Fetch food items for a specific meal
+        public func getFoodItemsForMeal(mealname: String, completion: @escaping ([FoodItem]) -> Void) {
             do {
                 let currentDate = getCurrentDate()
-                let mealType = mealname  // You can dynamically set this based on the meal
+                let mealType = mealname
                 
                 try dbQueue.read { db in
-                    // Query with JOIN
                     let query = """
                     SELECT fooditems.*
                     FROM meals
@@ -47,9 +68,20 @@ struct Homepage: SwiftUI.View {
                     WHERE meals.date = ? AND meals.mealname = ?
                     """
                     
-                    // Fetch the food items
-                    let foodItems = try Row.fetchAll(db, sql: query, arguments: [currentDate, mealType])
-                    print("Food Items: \(foodItems)")
+                    let fetchedItems = try Row.fetchAll(db, sql: query, arguments: [currentDate, mealType])
+                    
+                    // Map the fetched rows to FoodItem structs
+                    let foodItems = fetchedItems.map { row in
+                        FoodItem(
+                            id: row["id"] as! Int64,
+                            name: row["name"] as! String,
+                            kcal: row["kcal"] as! String,
+                            pro: row["pro"] as! String,
+                            fat: row["fat"] as! String,
+                            cho: row["cho"] as! String
+                        )
+                    }
+                    completion(foodItems)
                 }
             } catch {
                 print("Error fetching food items: \(error.localizedDescription)")
@@ -135,6 +167,25 @@ struct Homepage: SwiftUI.View {
                                 .background(Color.mBlue)
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
                             
+                            ForEach(breakfastItems, id: \.id) { item in
+                                HStack{
+                                    
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+                                    Spacer()
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
                         }
                         VStack{
                             HStack{
@@ -155,7 +206,24 @@ struct Homepage: SwiftUI.View {
                                 .background(Color.mBlue)
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
                             
-                            
+                            ForEach(lunchItems, id: \.id) { item in
+                                HStack{
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+                                    Spacer()
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
                         }
                         
                         VStack{
@@ -179,7 +247,24 @@ struct Homepage: SwiftUI.View {
                                 .frame(width:360, height:60)
                                 .background(Color.mBlue)
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
-                            
+                            ForEach(dinnerItems, id: \.id) { item in
+                                HStack{
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+                                    Spacer()
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
                             
                             
                         }
@@ -204,18 +289,107 @@ struct Homepage: SwiftUI.View {
                                 .frame(width:360, height:60)
                                 .background(Color.mBlue)
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
-                            
+                            ForEach(otherItems, id: \.id) { item in
+                                HStack{
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+                                    Spacer()
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                        
+ 
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
                             
                             
                         }
                         
                     } 
                 }
+                .onAppear {
+                    // Fetch food items for each meal when the view appears
+                    getFoodItemsForMeal(mealname: "Breakfast") { items in
+                        breakfastItems = items
+                    }
+                    getFoodItemsForMeal(mealname: "Lunch") { items in
+                        lunchItems = items
+                    }
+                    getFoodItemsForMeal(mealname: "Dinner") { items in
+                        dinnerItems = items
+                    }
+                    getFoodItemsForMeal(mealname: "Other") { items in
+                        otherItems = items
+                    }
+                }
                 Spacer()
             }
         }
     }
 }
+struct NutritionViewer: SwiftUI.View {
+    @State var name: String
+    @State var kcal: String
+    @State var pro: String
+    @State var fat: String
+    @State var cho: String
+    var body: some SwiftUI.View {
+        NavigationStack{
+            VStack{
+                Text(name).bold()
+                    .font(.largeTitle)
+                    .foregroundStyle(Color.black)
+                    .padding(12)
+                    
+                Divider()
+                    
+                VStack{
+                    HStack{
+                        Text("Calories: " + kcal)
+                        Spacer()
+                    }
+                    HStack{
+                        Text("Protein: " + pro)
+                        Spacer()
+                    }
+                    HStack{
+                        Text("Fat: " + fat)
+                        Spacer()
+                    }
+                    HStack{
+                        Text("Carbs: " + cho)
+                        Spacer()
+                    }
+                } .font(.title2)
+                    .padding(.leading, 15)
+                    .foregroundStyle(Color.mBlue)
+                Spacer()
+                HStack{
+                    Text("M")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.mmaize)
+                    Text("Cals")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.mBlue)
+                }
+                Spacer()
+            }
+        }.navigationBarTitleDisplayMode(.inline)
+    }
+    
+}
+
+
 struct Info: SwiftUI.View {
     var body: some SwiftUI.View {
         NavigationStack{

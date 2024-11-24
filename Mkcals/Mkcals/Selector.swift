@@ -16,7 +16,7 @@ class DatabaseManager {
     static func setup(for application: UIApplication) throws {
         let databaseURL = try FileManager.default
             .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("datab2.sqlite")
+            .appendingPathComponent("datab3.sqlite")
         
         dbQueue = try DatabaseQueue(path: databaseURL.path)
         
@@ -208,10 +208,10 @@ struct Selector: View {
                         for course in courses {
                             if let item = course.menuitem.item.first(where: { $0.name == selectedItem }) {
                                 if let nutrition = item.itemsize?.nutrition {
-                                    let kcal = String(nutrition.kcal)
-                                    let pro = String(nutrition.pro)
-                                    let fat = String(nutrition.fat)
-                                    let cho = String(nutrition.cho)
+                                    let kcal = nutrition.kcal ?? "0kcal"
+                                    let pro = nutrition.pro ?? "0gm"
+                                    let fat = nutrition.fat ?? "0gm"
+                                    let cho = nutrition.cho ?? "0gm"
                                     
                                     try DatabaseManager.addFoodItem(
                                         meal_id: validMealID,
@@ -323,17 +323,17 @@ struct Selector: View {
     
     // Struct for Nutrition (only 4 macros)
     struct Nutrition: Codable {
-        var pro: String  // Protein
-        var fat: String  // Fat
-        var cho: String  // Carbohydrates
-        var kcal: String // Calories
+        var pro: String?  // Protein
+        var fat: String?  // Fat
+        var cho: String?  // Carbohydrates
+        var kcal: String? // Calories
         
         // Initialize with default values
         init(from nutritionDict: [String: String]? = nil) {
-            self.pro = nutritionDict?["pro"] ?? "0"
-            self.fat = nutritionDict?["fat"] ?? "0"
-            self.cho = nutritionDict?["cho"] ?? "0"
-            self.kcal = nutritionDict?["kcal"] ?? "0"
+            self.pro = nutritionDict?["pro"] ?? "0gm"
+            self.fat = nutritionDict?["fat"] ?? "0gm"
+            self.cho = nutritionDict?["cho"] ?? "0gm"
+            self.kcal = nutritionDict?["kcal"] ?? "0kcal"
         }
     }
 
