@@ -37,10 +37,10 @@ class DatabaseManager {
                 t.column("meal_id", .integer).notNull() //foriegn key links to specific meal.id
                     .references("meals", onDelete: .cascade)
                 t.column("name", .text).notNull() // yyyy-mm-dd
-                t.column("kcal", .integer).notNull() //Calories
-                t.column("pro", .integer).notNull() //protein
-                t.column("fat", .integer).notNull() //total fat
-                t.column("cho", .integer).notNull() //total carbs
+                t.column("kcal", .text).notNull() //Calories
+                t.column("pro", .text).notNull() //protein
+                t.column("fat", .text).notNull() //total fat
+                t.column("cho", .text).notNull() //total carbs
             }
         }
         
@@ -57,7 +57,7 @@ class DatabaseManager {
         }
     }
     
-    static func addFoodItem(meal_id: Int, name: String, kcal: Int, pro: Int, fat: Int, cho: Int) throws {
+    static func addFoodItem(meal_id: Int, name: String, kcal: String, pro: String, fat: String, cho: String) throws {
         try dbQueue.write { db in
             try db.execute(
                 sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho) VALUES (?, ?, ?, ?, ?, ?)",
@@ -91,6 +91,7 @@ struct Selector: View {
     @State var mealAddingTo: String
     @State private var menu: Menu? // Store the fetched menu data
     @State private var selectedItems: Set<String> = [] // Set to store selected menu items
+    @State var selectedMeal = "Breakfast"
     
     let hallNames = [
         "Mosher Jordan Dining Hall",
@@ -172,6 +173,64 @@ struct Selector: View {
         //make the API Call
         dataTask.resume()
     }
+    
+    func getCurrentDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Set the format to include only year, month, and day
+        let currentDate = Date()
+        return dateFormatter.string(from: currentDate)
+    }
+    
+    func saveSelectedItemsToDatabase() {
+        guard let meals = menu?.meal else { return }
+        print(getCurrentDate())
+        print(selectedItems)
+        
+        
+        // Find or create the meal in the database and get its ID
+        do {
+            try DatabaseManager.addMeal(date: getCurrentDate(), mealName: mealAddingTo) // Example date, use current date dynamically if needed.
+            
+            // Get the last inserted meal ID (or you might need to fetch it based on date and meal name)
+            let mealID = try dbQueue.read { db in
+                try Int.fetchOne(db, sql: "SELECT id FROM meals WHERE date = ? AND mealname = ?", arguments: [getCurrentDate(), mealAddingTo])
+            }
+            
+            guard let validMealID = mealID else { return }
+            
+            // Add each selected item to the database
+            for selectedItem in selectedItems {
+                for meal in meals {
+                    if let courses = meal.course?.courseitem {
+                        for course in courses {
+                            if let item = course.menuitem.item.first(where: { $0.name == selectedItem }) {
+                                if let nutrition = item.itemsize?.nutrition {
+                                    let kcal = String(nutrition.kcal)
+                                    let pro = String(nutrition.pro)
+                                    let fat = String(nutrition.fat)
+                                    let cho = String(nutrition.cho)
+                                    
+                                    try DatabaseManager.addFoodItem(
+                                        meal_id: validMealID,
+                                        name: selectedItem,
+                                        kcal: kcal,
+                                        pro: pro,
+                                        fat: fat,
+                                        cho: cho
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            print("Items successfully added to the database.")
+        } catch {
+            print("Failed to add items: \(error)")
+        }
+    }
+
     
     
     
@@ -319,15 +378,17 @@ struct Selector: View {
         NavigationStack{
             VStack{
                 HStack{
+                    
                     Picker("Select Dining Hall", selection: $selectedDiningHall) {
                         ForEach(hallNames, id: \.self) { hall in
                             Text(hall).tag(hall)
+                                
                         }
                         .onChange(of: selectedDiningHall) { oldValue, newValue in
                             fetchData()
                         }
-                    }
-                    //.padding(.top, 12)
+                    } .accentColor(Color.mBlue)
+                                            //.padding(.top, 12)
                     .padding(.leading,2)
                     
                     
@@ -339,18 +400,21 @@ struct Selector: View {
                 ScrollView{
                     if let meals = menu?.meal {
                         ForEach(meals, id: \.name) { meal in
+                            
                             if meal.course != nil {
-                                Text(meal.name?.lowercased().capitalized ?? "Unnamed Meal")
+                                
+                                    Text(meal.name?.lowercased().capitalized ?? "Unnamed Meal")
                                     
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .foregroundStyle(Color.mBlue)
-                                    .frame(height:60)
-                                    .padding(.horizontal) // Add padding around the text
+                                        .font(.largeTitle)
+                                        .bold()
+                                        .foregroundStyle(Color.mBlue)
+                                        .frame(height:60)
+                                        .padding(.horizontal) // Add padding around the text
                                         .background(Color(.systemGray5)) // Light gray background
                                         .cornerRadius(13) // Apply rounded corners
                                         .padding(.bottom, 8)
-                                    
+                                        
+                                
                                     
                                     
                                     
@@ -422,14 +486,18 @@ struct Selector: View {
         }.navigationBarTitleDisplayMode(.inline)
         .toolbar {
             NavigationLink(destination: Homepage()){
+                HStack{
+                    Text("Add to \(mealAddingTo)")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.mBlue)
+                    Image(systemName: "arrow.right.circle.fill")
+                        .font(.title)
+                        .foregroundStyle(Color.mBlue)
+                }
                 
-                Text("Add to \(mealAddingTo)")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.mBlue)
-                Image(systemName: "arrow.right.circle.fill")
-                    .font(.title)
-                    .foregroundStyle(Color.mBlue)
-            }
+            } .simultaneousGesture(TapGesture().onEnded {
+                saveSelectedItemsToDatabase()
+            })
         }
         
             
