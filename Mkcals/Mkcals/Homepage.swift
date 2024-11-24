@@ -88,6 +88,37 @@ struct Homepage: SwiftUI.View {
             }
         }
         
+        func DeleteItem(item: FoodItem){
+            do {
+                // Use the ID of the food item to delete it from the database
+                try dbQueue.write { db in
+                    try db.execute(
+                        sql: "DELETE FROM fooditems WHERE id = ?",
+                        arguments: [item.id]
+                    )
+                }
+
+                // After deletion, update the local array by removing the item
+                if let index = breakfastItems.firstIndex(where: { $0.id == item.id }) {
+                    breakfastItems.remove(at: index)
+                }
+
+                if let index = lunchItems.firstIndex(where: { $0.id == item.id }) {
+                    lunchItems.remove(at: index)
+                }
+
+                if let index = dinnerItems.firstIndex(where: { $0.id == item.id }) {
+                    dinnerItems.remove(at: index)
+                }
+
+                if let index = otherItems.firstIndex(where: { $0.id == item.id }) {
+                    otherItems.remove(at: index)
+                }
+            } catch {
+                print("Error deleting food item: \(error.localizedDescription)")
+            }
+            
+        }
         var body: some SwiftUI.View {
             NavigationStack{
                 VStack{
@@ -171,7 +202,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
-                                    Spacer()
+
                                     NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
                                         Image(systemName: "info.circle")
                                             .resizable()
@@ -179,6 +210,15 @@ struct Homepage: SwiftUI.View {
                                             .frame(width: 20, height: 20)
                                             
                                         
+                                    }
+                                    Spacer()
+                                    Button(action: {
+                                        DeleteItem(item: item) // Call DeleteItem when the button is pressed
+                                    }) {
+                                        Image(systemName: "trash.square")
+                                            .resizable()
+                                            .foregroundStyle(Color.mBlue)
+                                            .frame(width: 25, height: 25)
                                     }
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -209,7 +249,7 @@ struct Homepage: SwiftUI.View {
                             ForEach(lunchItems, id: \.id) { item in
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
-                                    Spacer()
+
                                     NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
                                         Image(systemName: "info.circle")
                                             .resizable()
@@ -217,6 +257,15 @@ struct Homepage: SwiftUI.View {
                                             .frame(width: 20, height: 20)
                                             
                                         
+                                    }
+                                    Spacer()
+                                    Button(action: {
+                                        DeleteItem(item: item) // Call DeleteItem when the button is pressed
+                                    }) {
+                                        Image(systemName: "trash.square")
+                                            .resizable()
+                                            .foregroundStyle(Color.mBlue)
+                                            .frame(width: 25, height: 25)
                                     }
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -250,7 +299,7 @@ struct Homepage: SwiftUI.View {
                             ForEach(dinnerItems, id: \.id) { item in
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
-                                    Spacer()
+
                                     NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
                                         Image(systemName: "info.circle")
                                             .resizable()
@@ -258,6 +307,15 @@ struct Homepage: SwiftUI.View {
                                             .frame(width: 20, height: 20)
                                             
                                         
+                                    }
+                                    Spacer()
+                                    Button(action: {
+                                        DeleteItem(item: item) // Call DeleteItem when the button is pressed
+                                    }) {
+                                        Image(systemName: "trash.square")
+                                            .resizable()
+                                            .foregroundStyle(Color.mBlue)
+                                            .frame(width: 25, height: 25)
                                     }
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -292,20 +350,30 @@ struct Homepage: SwiftUI.View {
                             ForEach(otherItems, id: \.id) { item in
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
-                                    Spacer()
+                                    
                                     NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
                                         Image(systemName: "info.circle")
                                             .resizable()
-                                            .font(.title)
-                                            .frame(width: 20, height: 20)
+                                            .frame(width: 15, height: 15)
                                             
                                         
                                     }
+                                    Spacer()
+                                    Button(action: {
+                                        DeleteItem(item: item) // Call DeleteItem when the button is pressed
+                                    }) {
+                                        Image(systemName: "trash.square")
+                                            .resizable()
+                                            .foregroundStyle(Color.mBlue)
+                                            .frame(width: 25, height: 25)
+                                    }
+                                        
                                         
  
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
                                     .padding(.vertical,8)
+                                    
                                 Divider()
                                     
                             }
