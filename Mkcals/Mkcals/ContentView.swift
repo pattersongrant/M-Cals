@@ -7,6 +7,10 @@
 
 import SwiftUI
 struct ContentView: View {
+    init() {
+        
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -42,6 +46,25 @@ struct ContentView: View {
                         .padding()
                     
                     
+                }
+            }.onAppear {
+                do {
+                    try dbQueue.write { db in
+                        // Check if the `user` table is empty
+                        let rowCount = try Int.fetchOne(db, sql: "SELECT COUNT(*) FROM user") ?? 0
+                        
+                        if rowCount == 0 {
+                            // Table is empty; insert default values
+                            try db.execute(
+                                sql: "INSERT INTO user (weightplan, caloriegoal, firstSetupComplete) VALUES ('maintain', 2000, false)"
+                            )
+                            print("Default user values initialized.")
+                        } else {
+                            print("User table already has entries; skipping initialization.")
+                        }
+                    }
+                } catch {
+                    print("Error initializing default user values: \(error)")
                 }
             }
             .padding()

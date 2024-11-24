@@ -8,6 +8,19 @@
 import SwiftUI
 
 struct Setup: View {
+    
+    
+    func saveWeightPlan(plan: String) throws {
+        try dbQueue.write { db in
+            try db.execute(
+                sql: "UPDATE user SET weightplan = ? WHERE id = 1",
+                arguments: [plan]
+            
+            )
+            
+        }
+    }
+    
     var body: some View {
         NavigationStack{
             VStack {
@@ -46,7 +59,13 @@ struct Setup: View {
                         
                         
                         
-                    }
+                    }.simultaneousGesture(TapGesture().onEnded {
+                        do {
+                            try saveWeightPlan(plan: "gain")
+                        } catch {
+                            print("error saving: \(error)")
+                        }
+                    })
                     NavigationLink(destination: CalCount()){
                         HStack{
                             HStack{
@@ -80,7 +99,13 @@ struct Setup: View {
                         
                         
                         
-                    }
+                    } .simultaneousGesture(TapGesture().onEnded {
+                        do {
+                            try saveWeightPlan(plan: "maintain")
+                        } catch {
+                            print("error saving")
+                        }
+                    })
                     NavigationLink(destination: CalCount()){
                         HStack{
                             HStack{
@@ -113,7 +138,13 @@ struct Setup: View {
                         
                         
                         
-                    }
+                    } .simultaneousGesture(TapGesture().onEnded {
+                        do {
+                            try saveWeightPlan(plan: "lose")
+                        } catch {
+                            print("error saving")
+                        }
+                    })
                     
                     
                     
@@ -135,6 +166,8 @@ struct Setup: View {
         }
     }
 }
+
+
 
 struct Unsure: View {
     var body: some View {
@@ -158,6 +191,18 @@ struct Unsure: View {
 
 struct CalCount: View {
     @State private var number: Int = 2000
+    
+    func saveCalorieGoal(goal: Int) throws {
+        try dbQueue.write { db in
+            try db.execute(
+                sql: "UPDATE user SET caloriegoal = ?, firstSetupComplete = ? WHERE id = 1",
+                arguments: [goal, true]
+            
+            )
+            
+        }
+    }
+    
     let kcalRange = Array(stride(from: 0, through: 10000, by: 50))
     
     var body: some View {
@@ -180,7 +225,13 @@ struct CalCount: View {
                             .background(Color.mBlue)
                             .cornerRadius(13)
                             .padding(5)
-                }
+                } .simultaneousGesture(TapGesture().onEnded {
+                    do {
+                        try saveCalorieGoal(goal: number)
+                    } catch {
+                        print("error saving: \(error)")
+                    }
+                })
                 
                 NavigationLink(destination: CalHelp()){
                     HStack{

@@ -9,78 +9,12 @@ import SwiftUI
 
 import GRDB
 
-var dbQueue: DatabaseQueue!
-
-class DatabaseManager {
-
-    static func setup(for application: UIApplication) throws {
-        let databaseURL = try FileManager.default
-            .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("datab3.sqlite")
-        
-        dbQueue = try DatabaseQueue(path: databaseURL.path)
-        
-        
-        // make table
-        
-        try dbQueue.write { db in
-            try db.create(table: "meals", ifNotExists: true) { t in
-                t.autoIncrementedPrimaryKey("id")
-                t.column("date", .text).notNull() // yyyy-mm-dd
-                t.column("mealname", .text).notNull() // breakfast, lunch, dinner, or other
-            }
-        }
-        
-        try dbQueue.write { db in
-            try db.create(table: "fooditems", ifNotExists: true) { t in
-                t.autoIncrementedPrimaryKey("id")
-                t.column("meal_id", .integer).notNull() //foriegn key links to specific meal.id
-                    .references("meals", onDelete: .cascade)
-                t.column("name", .text).notNull() // yyyy-mm-dd
-                t.column("kcal", .text).notNull() //Calories
-                t.column("pro", .text).notNull() //protein
-                t.column("fat", .text).notNull() //total fat
-                t.column("cho", .text).notNull() //total carbs
-
-            }
-        }
-        
-    }
-    
-    static func addMeal(date: String, mealName: String) throws {
-        try dbQueue.write { db in
-            try db.execute(
-                sql: "INSERT INTO meals (date, mealname) VALUES (?, ?)",
-                arguments: [date, mealName]
-            
-            )
-            
-        }
-    }
-    
-    static func addFoodItem(meal_id: Int, name: String, kcal: String, pro: String, fat: String, cho: String) throws {
-        try dbQueue.write { db in
-            try db.execute(
-                sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho) VALUES (?, ?, ?, ?, ?, ?)",
-                arguments: [meal_id, name, kcal, pro, fat, cho]
-            
-            )
-            
-        }
-    }
-    
-    
-}
 
 class APIHandling {
     //get url and format it
     static func getURL (diningHall: String) -> String {
         return "https://api.studentlife.umich.edu/menu/xml2print.php?controller=print&view=json&location=\(diningHall.replacingOccurrences(of: " ", with: "%20"))"
     }
-    
-
-    
-    
 
 }
 
