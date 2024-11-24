@@ -327,8 +327,8 @@ struct Selector: View {
                             fetchData()
                         }
                     }
-                    .padding(.top, 12)
-                    .padding(.leading,12)
+                    //.padding(.top, 12)
+                    .padding(.leading,2)
                     
                     
                     
@@ -345,8 +345,15 @@ struct Selector: View {
                                     .font(.largeTitle)
                                     .bold()
                                     .foregroundStyle(Color.mBlue)
-                                    .underline(true)
-                                    .padding(.bottom, 6)
+                                    .frame(height:60)
+                                    .padding(.horizontal) // Add padding around the text
+                                        .background(Color(.systemGray5)) // Light gray background
+                                        .cornerRadius(13) // Apply rounded corners
+                                        .padding(.bottom, 8)
+                                    
+                                    
+                                    
+                                    
                             }
                             if let courses = meal.course?.courseitem {
                                 ForEach(courses, id: \.name) { course in
@@ -396,11 +403,16 @@ struct Selector: View {
                                                 Divider()
                                             }
                                         }
-                                    }.padding(.bottom, 8)
+                                    }.padding(.bottom, 15)
                                 }
                                 
                             }
                         }
+                    } else {
+                        ProgressView()
+                            .padding(.top, 15)
+                        Text("Loading Menu...")
+                            .foregroundStyle(Color.gray)
                     }
                 }
 
