@@ -41,6 +41,7 @@ class DatabaseManager {
                 t.column("pro", .text).notNull() //protein
                 t.column("fat", .text).notNull() //total fat
                 t.column("cho", .text).notNull() //total carbs
+
             }
         }
         
@@ -186,7 +187,6 @@ struct Selector: View {
         print(getCurrentDate())
         print(selectedItems)
         
-        
         // Find or create the meal in the database and get its ID
         do {
             try DatabaseManager.addMeal(date: getCurrentDate(), mealName: mealAddingTo) // Example date, use current date dynamically if needed.
@@ -196,10 +196,13 @@ struct Selector: View {
                 try Int.fetchOne(db, sql: "SELECT id FROM meals WHERE date = ? AND mealname = ?", arguments: [getCurrentDate(), mealAddingTo])
             }
             
+            
             guard let validMealID = mealID else { return }
             
             // Add each selected item to the database
             for selectedItem in selectedItems {
+                print(selectedItems)
+                
                 for meal in meals {
                     if let courses = meal.course?.courseitem {
                         for course in courses {
