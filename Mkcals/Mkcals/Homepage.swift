@@ -6,7 +6,11 @@
 //
 
 import SwiftUI
+import GRDB
 struct Homepage: SwiftUI.View {
+
+
+    
     var body: some SwiftUI.View {
         NavigationStack{
             TabView{
@@ -22,6 +26,36 @@ struct Homepage: SwiftUI.View {
         }.navigationBarBackButtonHidden()
     }
     struct Tracker: SwiftUI.View {
+
+        public func getCurrentDate() -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd" // Set the format to include only year, month, and day
+            let currentDate = Date()
+            return dateFormatter.string(from: currentDate)
+        }
+        public func getFoodItemsForMeal(mealname: String) {
+            do {
+                let currentDate = getCurrentDate()
+                let mealType = mealname  // You can dynamically set this based on the meal
+                
+                try dbQueue.read { db in
+                    // Query with JOIN
+                    let query = """
+                    SELECT fooditems.*
+                    FROM meals
+                    JOIN fooditems ON fooditems.meal_id = meals.id
+                    WHERE meals.date = ? AND meals.mealname = ?
+                    """
+                    
+                    // Fetch the food items
+                    let foodItems = try Row.fetchAll(db, sql: query, arguments: [currentDate, mealType])
+                    print("Food Items: \(foodItems)")
+                }
+            } catch {
+                print("Error fetching food items: \(error.localizedDescription)")
+            }
+        }
+        
         var body: some SwiftUI.View {
             NavigationStack{
                 VStack{
@@ -175,7 +209,7 @@ struct Homepage: SwiftUI.View {
                             
                         }
                         
-                    }
+                    } 
                 }
                 Spacer()
             }
