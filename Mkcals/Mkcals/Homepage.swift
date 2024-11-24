@@ -56,6 +56,7 @@ struct Homepage: SwiftUI.View {
         @State private var totalProtein: Int = 0
         @State private var totalFat: Int = 0
         @State private var totalCarbs: Int = 0
+        @State private var CalorieGoal: Int64 = 2000
 
         
         struct FoodItem: Identifiable {
@@ -139,7 +140,26 @@ struct Homepage: SwiftUI.View {
         }
 
         
-
+        func getCurrentCalorieGoal() {
+            do {
+                try dbQueue.read { db in
+                    // Select the firstSetupComplete value from the user table
+                    let result = try Row.fetchOne(db, sql: "SELECT caloriegoal FROM user WHERE id = 1")
+                    
+                    // If the result exists and the value is 1 (true), update the state
+                    if let result = result{
+                        if let goal = result["caloriegoal"]{
+                            print(goal)  // This will print calorie goal
+                            CalorieGoal = goal as! Int64
+                            
+                        }
+                        
+                    }
+                }
+            } catch {
+                print("Error fetching caloriegoal: \(error)")
+            }
+        }
         
 
         
@@ -175,6 +195,12 @@ struct Homepage: SwiftUI.View {
             } catch {
                 print("Error fetching food items: \(error.localizedDescription)")
             }
+        }
+        
+        func formatNumberWithCommas(_ number: Int) -> String? {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal  // This adds commas
+            return numberFormatter.string(from: NSNumber(value: number))
         }
         
         func DeleteItem(item: FoodItem){
@@ -244,21 +270,21 @@ struct Homepage: SwiftUI.View {
                                 
                         }.font(.title3)
                             
-                            .padding(.horizontal,10)
+                            .padding(.horizontal,6)
                         VStack{
                             Text("Protein")
                                 .bold()
                             Text("\(totalProtein)")
                         }.font(.title3)
                             
-                            .padding(.horizontal,10)
+                            .padding(.horizontal,6)
                         VStack{
                             Text("Fat")
                                 .bold()
                             Text("\(totalFat)")
                         }.font(.title3)
                             
-                            .padding(.horizontal,10)
+                            .padding(.horizontal,6)
                         VStack{
                             Text("Carbs")
                                 .bold()
@@ -266,12 +292,31 @@ struct Homepage: SwiftUI.View {
                                 
                         }.font(.title3)
                             
-                            .padding(.horizontal,10)
+                            .padding(.horizontal,6)
+                        VStack{
+                            VStack{
+                                Text(String(formatNumberWithCommas(Int(CalorieGoal-Int64(totalCalories))) ?? ""))
+                                    
+                                Text("Left")
+                                    
+                            }
+                                .padding(4)
+                                .border(.black)
+                            
+                            
+                                
+                        } .padding(.horizontal, 6)
+                        
                     }
-                    ProgressView(value: (Double(totalCalories)/2000.0))
+                    
+                    
+                    ProgressView(value: (Double(totalCalories)/Double(CalorieGoal)))
                         .progressViewStyle(LinearProgressViewStyle())
                         .frame(width: 400)
                         .padding(6)
+                    
+                        
+                        
                     ScrollView{
                         VStack{
                             HStack{
@@ -309,10 +354,10 @@ struct Homepage: SwiftUI.View {
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
-                                        Image(systemName: "trash.square")
+                                        Image(systemName: "trash")
                                             .resizable()
                                             .foregroundStyle(Color.mBlue)
-                                            .frame(width: 25, height: 25)
+                                            .frame(width: 20, height: 25)
                                     }
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -356,10 +401,10 @@ struct Homepage: SwiftUI.View {
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
-                                        Image(systemName: "trash.square")
+                                        Image(systemName: "trash")
                                             .resizable()
                                             .foregroundStyle(Color.mBlue)
-                                            .frame(width: 25, height: 25)
+                                            .frame(width: 20, height: 25)
                                     }
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -406,10 +451,10 @@ struct Homepage: SwiftUI.View {
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
-                                        Image(systemName: "trash.square")
+                                        Image(systemName: "trash")
                                             .resizable()
                                             .foregroundStyle(Color.mBlue)
-                                            .frame(width: 25, height: 25)
+                                            .frame(width: 20, height: 25)
                                     }
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -456,10 +501,10 @@ struct Homepage: SwiftUI.View {
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
-                                        Image(systemName: "trash.square")
+                                        Image(systemName: "trash")
                                             .resizable()
                                             .foregroundStyle(Color.mBlue)
-                                            .frame(width: 25, height: 25)
+                                            .frame(width: 20, height: 25)
                                     }
                                         
                                         
@@ -495,6 +540,7 @@ struct Homepage: SwiftUI.View {
                     totalProtein = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "pro")
                     totalFat = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "fat")
                     totalCarbs = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "cho")
+                    getCurrentCalorieGoal()
                 }
                 Spacer()
             }
