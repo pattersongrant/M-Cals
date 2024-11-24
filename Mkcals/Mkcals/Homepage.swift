@@ -7,6 +7,7 @@
 
 import SwiftUI
 import GRDB
+
 struct Homepage: SwiftUI.View {
 
 
@@ -21,6 +22,10 @@ struct Homepage: SwiftUI.View {
                 Info()
                     .tabItem {
                         Label("Info", systemImage: "info.circle")
+                    }
+                Setup()
+                    .tabItem {
+                        Label("Settings", systemImage: "gearshape")
                     }
             }
         }.navigationBarBackButtonHidden()
