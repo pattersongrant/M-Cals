@@ -23,7 +23,22 @@ struct Homepage: SwiftUI.View {
                     .tabItem {
                         Label("Info", systemImage: "info.circle")
                     }
-                Setup()
+                VStack{
+                    Spacer()
+                    HStack{
+                        Text("M")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.mmaize)
+                        Text("Cals")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.mBlue)
+                    }
+                    Spacer()
+                    Setup()
+                    Spacer()
+                }
                     .tabItem {
                         Label("Settings", systemImage: "gearshape")
                     }

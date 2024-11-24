@@ -1,9 +1,8 @@
 - make different meals a segmented picker
 - maybe improve ui of picker
-- add homepage queries
 - add quantity of item
-- fix duplicates bug of picker in db
-
-
-
+- make last selected hallName saved
+- calendar tracker
+- make calorie bar accurate with calorie goal
+- write calories left to goal on screen
 

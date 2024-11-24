@@ -133,14 +133,26 @@ struct Selector: View {
             
             guard let validMealID = mealID else { return }
             
-            // Add each selected item to the database
+            var addedItems = Set<String>()  // A Set to track added items (by their name)
+
             for selectedItem in selectedItems {
-                print(selectedItems)
+                print(selectedItem)
                 
                 for meal in meals {
                     if let courses = meal.course?.courseitem {
                         for course in courses {
+                            // Find the first matching item
                             if let item = course.menuitem.item.first(where: { $0.name == selectedItem }) {
+                                
+                                // Check if this item has already been added
+                                if addedItems.contains(selectedItem) {
+                                    continue  // Skip if already added
+                                }
+                                
+                                // Mark this item as added
+                                addedItems.insert(selectedItem)
+                                
+                                // If nutrition exists, add the food item to the database
                                 if let nutrition = item.itemsize?.nutrition {
                                     let kcal = nutrition.kcal ?? "0kcal"
                                     let pro = nutrition.pro ?? "0gm"
@@ -161,6 +173,7 @@ struct Selector: View {
                     }
                 }
             }
+
             
             print("Items successfully added to the database.")
         } catch {
