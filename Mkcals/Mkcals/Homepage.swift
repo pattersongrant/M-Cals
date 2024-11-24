@@ -32,6 +32,11 @@ struct Homepage: SwiftUI.View {
         @State private var lunchItems: [FoodItem] = []
         @State private var dinnerItems: [FoodItem] = []
         @State private var otherItems: [FoodItem] = []
+        @State private var totalCalories: Int = 0
+        @State private var totalProtein: Int = 0
+        @State private var totalFat: Int = 0
+        @State private var totalCarbs: Int = 0
+
         
         struct FoodItem: Identifiable {
             let id: Int64
@@ -50,9 +55,73 @@ struct Homepage: SwiftUI.View {
             return dateFormatter.string(from: currentDate)
         }
         
-        func GetTotalCalories(bitems: String, litems:String, ditems:String, oitems:String) {
+        /*func GetTotalCalories(bitems: [FoodItem] = [], litems: [FoodItem] = [], ditems: [FoodItem] = [], oitems: [FoodItem] = []) -> Int {
+            // Initialize the total calories counter
+            var total = 0
             
+            // Helper function to sum calories from an array of food items
+            func sumCalories(from items: [FoodItem]) {
+                for item in items {
+                    // Convert the kcal string to an integer and add it to the total
+                    if let kcalValue = Int(item.kcal.dropLast(4)) {
+                        total += kcalValue
+                    }
+                }
+            }
+            
+            // Sum calories for each meal
+            sumCalories(from: bitems)  // Breakfast items
+            sumCalories(from: litems)  // Lunch items
+            sumCalories(from: ditems)  // Dinner items
+            sumCalories(from: oitems)  // Other items
+            print(total)
+            
+            return total
+        }*/
+        func GetTotalNutrient(bitems: [FoodItem] = [], litems: [FoodItem] = [], ditems: [FoodItem] = [], oitems: [FoodItem] = [], nutrientKey: String) -> Int {
+            // Initialize the total counter
+            var total = 0
+            
+            // Helper function to sum nutrient values from an array of food items
+            func sumNutrient(from items: [FoodItem], key: String) {
+                for item in items {
+                    // Dynamically access the nutrient value based on the key
+                    let nutrientValue: String
+                    switch key {
+                    case "kcal":
+                        nutrientValue = String(item.kcal.dropLast(4))
+                    case "pro":
+                        nutrientValue = String(item.pro.dropLast(2))
+                    case "fat":
+                        nutrientValue = String(item.fat.dropLast(2))
+                    case "cho":
+                        nutrientValue = String(item.cho.dropLast(2))
+                    default:
+                        nutrientValue = "0"
+                    }
+                    
+                    // Convert the nutrient value string to an integer and add it to the total
+                    if let nutrientIntValue = Int(nutrientValue.trimmingCharacters(in: .whitespaces)) {
+                        total += nutrientIntValue
+                    } else {
+                        print("Invalid \(key) value: \(nutrientValue)")
+                    }
+                }
+            }
+            
+            // Sum nutrients for each meal
+            sumNutrient(from: bitems, key: nutrientKey)  // Breakfast items
+            sumNutrient(from: litems, key: nutrientKey)  // Lunch items
+            sumNutrient(from: ditems, key: nutrientKey)  // Dinner items
+            sumNutrient(from: oitems, key: nutrientKey)  // Other items
+            
+            return total
         }
+
+        
+
+        
+
         
         // Fetch food items for a specific meal
         public func getFoodItemsForMeal(mealname: String, completion: @escaping ([FoodItem]) -> Void) {
@@ -117,6 +186,11 @@ struct Homepage: SwiftUI.View {
             } catch {
                 print("Error deleting food item: \(error.localizedDescription)")
             }
+            totalCalories = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "kcal")
+            totalProtein = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "pro")
+            totalFat = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "fat")
+            totalCarbs = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "cho")
+            
             
         }
         var body: some SwiftUI.View {
@@ -146,7 +220,7 @@ struct Homepage: SwiftUI.View {
                         VStack{
                             Text("Calories")
                                 .bold()
-                            Text("2000")
+                            Text("\(totalCalories)")
                                 
                         }.font(.title3)
                             
@@ -154,27 +228,27 @@ struct Homepage: SwiftUI.View {
                         VStack{
                             Text("Protein")
                                 .bold()
-                            Text("120")
+                            Text("\(totalProtein)")
                         }.font(.title3)
                             
                             .padding(.horizontal,10)
                         VStack{
                             Text("Fat")
                                 .bold()
-                            Text("100")
+                            Text("\(totalFat)")
                         }.font(.title3)
                             
                             .padding(.horizontal,10)
                         VStack{
                             Text("Carbs")
                                 .bold()
-                            Text("300")
+                            Text("\(totalCarbs)")
                                 
                         }.font(.title3)
                             
                             .padding(.horizontal,10)
                     }
-                    ProgressView(value: (30/2000.0))
+                    ProgressView(value: (Double(totalCalories)/2000.0))
                         .progressViewStyle(LinearProgressViewStyle())
                         .frame(width: 400)
                         .padding(6)
@@ -397,6 +471,10 @@ struct Homepage: SwiftUI.View {
                     getFoodItemsForMeal(mealname: "Other") { items in
                         otherItems = items
                     }
+                    totalCalories = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "kcal")
+                    totalProtein = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "pro")
+                    totalFat = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "fat")
+                    totalCarbs = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "cho")
                 }
                 Spacer()
             }
