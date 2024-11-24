@@ -90,6 +90,8 @@ struct Selector: View {
     @State var selectedDiningHall = "Mosher Jordan Dining Hall"
     @State var mealAddingTo: String
     @State private var menu: Menu? // Store the fetched menu data
+    @State private var selectedItems: Set<String> = [] // Set to store selected menu items
+    
     let hallNames = [
         "Mosher Jordan Dining Hall",
         "Bursley Dining Hall",
@@ -185,7 +187,7 @@ struct Selector: View {
         var course: CourseWrapper?
         
         struct CourseWrapper: Codable {
-            var courseitem: [Course]
+            var courseitem: [Course] //makes an array called courseitem to store all courses for the meal (whether it be single or mutliple)
             
             init(from decoder: Decoder) throws {
                 let container = try decoder.singleValueContainer()
@@ -324,12 +326,84 @@ struct Selector: View {
                         .onChange(of: selectedDiningHall) { oldValue, newValue in
                             fetchData()
                         }
-                    }.padding()
+                    }
+                    .padding(.top, 12)
+                    .padding(.leading,12)
+                    
+                    
                     
                         
                         
                     Spacer()
                 }
+                ScrollView{
+                    if let meals = menu?.meal {
+                        ForEach(meals, id: \.name) { meal in
+                            if meal.course != nil {
+                                Text(meal.name?.lowercased().capitalized ?? "Unnamed Meal")
+                                    
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .foregroundStyle(Color.mBlue)
+                                    .underline(true)
+                                    .padding(.bottom, 6)
+                            }
+                            if let courses = meal.course?.courseitem {
+                                ForEach(courses, id: \.name) { course in
+                                    VStack{
+                                        HStack{
+                                            Text(course.name ?? "Unnamed Course")
+                                                .foregroundStyle(Color.mmaize)
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.leading, 15)
+                                            //.underline(true)
+                                            
+                                                .padding(.bottom, 4)
+                                            
+                                            Spacer()
+                                        }
+                                        // Directly use `course.menuitem.item` without optional unwrapping
+                                        
+                                        ForEach(course.menuitem.item, id: \.name) { menuItem in
+                                            VStack{
+                                                HStack{
+                                                    Text(menuItem.name ?? "Unnamed MenuItem")
+                                                        .padding(.leading, 15)
+                                                        .fontWeight(.semibold)
+                                                    Spacer()
+                                                    Toggle(isOn: Binding(
+                                                        get: { selectedItems.contains(menuItem.name ?? "") },
+                                                        set: { isSelected in
+                                                            if isSelected {
+                                                                selectedItems.insert(menuItem.name ?? "")
+                                                            } else {
+                                                                selectedItems.remove(menuItem.name ?? "")
+                                                            }
+                                                        }
+                                                    )) {
+                                                        Image(systemName: selectedItems.contains(menuItem.name ?? "") ? "checkmark.square.fill" : "square") // Empty square when unselected, filled when selected
+                                                            .foregroundStyle(Color.mBlue)
+                                                            //.frame(height:25)
+                                                            //.font(.largeTitle)
+                                                    }
+                                                    .labelsHidden()
+                                                    .toggleStyle(.button)
+                                                    .padding(.trailing, 15)
+                                                
+                                                    
+                                                }
+                                                Divider()
+                                            }
+                                        }
+                                    }.padding(.bottom, 8)
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+
                 Spacer()
             } .onAppear{fetchData()}
             
