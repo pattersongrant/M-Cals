@@ -22,11 +22,13 @@ class APIHandling {
 
 
 struct Selector: View {
-    @State var selectedDiningHall = "Mosher Jordan Dining Hall"
+    @State var selectedDiningHall: String = UserDefaults.standard.string(forKey: "selectedDiningHall") ?? "Mosher Jordan Dining Hall"
     @State var mealAddingTo: String
     @State private var menu: Menu? // Store the fetched menu data
     @State private var selectedItems: Set<String> = [] // Set to store selected menu items
     @State var selectedMeal = "Breakfast"
+    @State var jsonBug = false
+    @State var hallChanging = false
     
     let hallNames = [
         "Mosher Jordan Dining Hall",
@@ -39,6 +41,12 @@ struct Selector: View {
         "South Quad Dining Hall",
         "Twigs at Oxford"
     ]
+    
+    // Update UserDefaults whenever the dining hall changes
+    private func updateSelectedDiningHallCache() {
+        UserDefaults.standard.set(selectedDiningHall, forKey: "selectedDiningHall")
+    }
+    
     
     
     //api call
@@ -96,10 +104,11 @@ struct Selector: View {
                         
                         
                     }
-                    
+                    hallChanging = false
                     //print(itemFeed)
                 } catch {
                     print("error: \(error)")
+                    jsonBug = true
                 }
                 
             }
@@ -335,6 +344,8 @@ struct Selector: View {
                                 
                         }
                         .onChange(of: selectedDiningHall) { oldValue, newValue in
+                            hallChanging = true
+                            updateSelectedDiningHallCache()
                             fetchData()
                         }
                     } .accentColor(Color.mBlue)
@@ -348,11 +359,12 @@ struct Selector: View {
                     Spacer()
                 }
                 ScrollView{
-                    if let meals = menu?.meal {
-                        ForEach(meals, id: \.name) { meal in
-                            
-                            if meal.course != nil {
+                    if let meals = menu?.meal{
+                        if hallChanging == false{
+                            ForEach(meals, id: \.name) { meal in
                                 
+                                if meal.course != nil {
+                                    
                                     Text(meal.name?.lowercased().capitalized ?? "Unnamed Meal")
                                     
                                         .font(.largeTitle)
@@ -363,69 +375,87 @@ struct Selector: View {
                                         .background(Color(.systemGray5)) // Light gray background
                                         .cornerRadius(13) // Apply rounded corners
                                         .padding(.bottom, 8)
-                                        
-                                
                                     
                                     
                                     
-                            }
-                            if let courses = meal.course?.courseitem {
-                                ForEach(courses, id: \.name) { course in
-                                    VStack{
-                                        HStack{
-                                            Text(course.name ?? "Unnamed Course")
-                                                .foregroundStyle(Color.mmaize)
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.leading, 15)
-                                            //.underline(true)
+                                    
+                                    
+                                }
+                                if let courses = meal.course?.courseitem {
+                                    ForEach(courses, id: \.name) { course in
+                                        VStack{
+                                            HStack{
+                                                Text(course.name ?? "Unnamed Course")
+                                                    .foregroundStyle(Color.mmaize)
+                                                    .font(.title2)
+                                                    .bold()
+                                                    .padding(.leading, 15)
+                                                //.underline(true)
+                                                
+                                                    .padding(.bottom, 4)
+                                                
+                                                Spacer()
+                                            }
+                                            // Directly use `course.menuitem.item` without optional unwrapping
                                             
-                                                .padding(.bottom, 4)
-                                            
-                                            Spacer()
-                                        }
-                                        // Directly use `course.menuitem.item` without optional unwrapping
-                                        
-                                        ForEach(course.menuitem.item, id: \.name) { menuItem in
-                                            VStack{
-                                                HStack{
-                                                    Text(menuItem.name ?? "Unnamed MenuItem")
-                                                        .padding(.leading, 15)
-                                                        .fontWeight(.semibold)
-                                                    Spacer()
-                                                    Toggle(isOn: Binding(
-                                                        get: { selectedItems.contains(menuItem.name ?? "") },
-                                                        set: { isSelected in
-                                                            if isSelected {
-                                                                selectedItems.insert(menuItem.name ?? "")
-                                                            } else {
-                                                                selectedItems.remove(menuItem.name ?? "")
+                                            ForEach(course.menuitem.item, id: \.name) { menuItem in
+                                                VStack{
+                                                    HStack{
+                                                        Text(menuItem.name ?? "Unnamed MenuItem")
+                                                            .padding(.leading, 15)
+                                                            .fontWeight(.semibold)
+                                                        Spacer()
+                                                        Toggle(isOn: Binding(
+                                                            get: { selectedItems.contains(menuItem.name ?? "") },
+                                                            set: { isSelected in
+                                                                if isSelected {
+                                                                    selectedItems.insert(menuItem.name ?? "")
+                                                                } else {
+                                                                    selectedItems.remove(menuItem.name ?? "")
+                                                                }
                                                             }
-                                                        }
-                                                    )) {
-                                                        Image(systemName: selectedItems.contains(menuItem.name ?? "") ? "checkmark.square.fill" : "square") // Empty square when unselected, filled when selected
-                                                            .foregroundStyle(Color.mBlue)
+                                                        )) {
+                                                            Image(systemName: selectedItems.contains(menuItem.name ?? "") ? "checkmark.square.fill" : "square") // Empty square when unselected, filled when selected
+                                                                .foregroundStyle(Color.mBlue)
                                                             
                                                             //.frame(height:25)
-                                                            .font(.largeTitle)
+                                                                .font(.largeTitle)
+                                                        }
+                                                        .labelsHidden()
+                                                        .toggleStyle(.button)
+                                                        .padding(.trailing, 15)
+                                                        .buttonStyle(.plain)
+                                                        
+                                                        
+                                                        
                                                     }
-                                                    .labelsHidden()
-                                                    .toggleStyle(.button)
-                                                    .padding(.trailing, 15)
-                                                    .buttonStyle(.plain)
-                                                    
-                                                
-                                                    
+                                                    Divider()
                                                 }
-                                                Divider()
                                             }
-                                        }
-                                    }.padding(.bottom, 15)
+                                        }.padding(.bottom, 15)
+                                    }
+                                    
                                 }
-                                
                             }
+                        } else if jsonBug == true{
+                            Text("Error fetching menus. Please connect to the UMich Wifi.")
+                                .foregroundStyle(Color.gray)
+                                .padding()
                         }
-                    } else {
+                                
+                        else {
+                            ProgressView()
+                                .padding(.top, 15)
+                            Text("Loading Menu...")
+                                .foregroundStyle(Color.gray)
+                        }
+                    } else if jsonBug == true{
+                        Text("Error fetching menus. Please connect to the UMich Wifi.")
+                            .foregroundStyle(Color.gray)
+                            .padding()
+                    }
+                            
+                    else {
                         ProgressView()
                             .padding(.top, 15)
                         Text("Loading Menu...")
