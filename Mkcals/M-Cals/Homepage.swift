@@ -1078,7 +1078,7 @@ struct Info: SwiftUI.View {
                     .foregroundStyle(Color.mBlue)
             }.padding(.top, 50.0)
             Spacer()
-            Text("MCals is an application created using the \nU-M Dining API to provide a way to easily track calories & macros from foods eaten in U-M dining halls.\n\nThis is not an official U-M application and is not affiliated with U-M in any way.")
+            Text("MCals is an application created using the \nU-M Dining API to provide a way to easily track calories & macros from foods eaten in U-M dining halls.\n\nYou must be connected to the U-M WiFi for the app to function properly.\n\nThis is not an official U-M application and is not affiliated with U-M in any way.")
                 .padding(.bottom, 60.0)
                 .padding(.horizontal, 25.0)
             Spacer()

@@ -438,7 +438,7 @@ struct Selector: View {
                                 }
                             }
                         } else if jsonBug == true{
-                            Text("Error fetching menus. Please connect to the UMich Wifi.")
+                            Text("Error fetching menus. Please connect to the U-M Wifi.")
                                 .foregroundStyle(Color.gray)
                                 .padding()
                         }
@@ -450,7 +450,7 @@ struct Selector: View {
                                 .foregroundStyle(Color.gray)
                         }
                     } else if jsonBug == true{
-                        Text("Error fetching menus. Please connect to the UMich Wifi.")
+                        Text("Error fetching menus. Please connect to the U-M Wifi.")
                             .foregroundStyle(Color.gray)
                             .padding()
                     }
