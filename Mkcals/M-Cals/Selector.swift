@@ -405,12 +405,15 @@ struct Selector: View {
                                                     )) {
                                                         Image(systemName: selectedItems.contains(menuItem.name ?? "") ? "checkmark.square.fill" : "square") // Empty square when unselected, filled when selected
                                                             .foregroundStyle(Color.mBlue)
+                                                            
                                                             //.frame(height:25)
-                                                            //.font(.largeTitle)
+                                                            .font(.largeTitle)
                                                     }
                                                     .labelsHidden()
                                                     .toggleStyle(.button)
                                                     .padding(.trailing, 15)
+                                                    .buttonStyle(.plain)
+                                                    
                                                 
                                                     
                                                 }

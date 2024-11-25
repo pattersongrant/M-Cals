@@ -2,6 +2,6 @@
 - maybe improve ui of picker
 - add quantity of item
 - make last selected hallName saved
-- calendar tracker
 - add custom cal adj
+- cache today's meals
 - new dark mode

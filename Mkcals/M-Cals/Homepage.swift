@@ -19,6 +19,10 @@ struct Homepage: SwiftUI.View {
                     .tabItem {
                         Label("Tracker", systemImage: "house")
                     }
+                History()
+                    .tabItem {
+                        Label("History", systemImage: "calendar")
+                    }
                 Info()
                     .tabItem {
                         Label("Info", systemImage: "info.circle")
@@ -42,9 +46,465 @@ struct Homepage: SwiftUI.View {
                     .tabItem {
                         Label("Settings", systemImage: "gearshape")
                     }
+
             }
         }.navigationBarBackButtonHidden()
     }
+
+    struct History: SwiftUI.View {
+
+        // Define state variables to store food items for each meal
+        @State private var breakfastItems: [FoodItem] = []
+        @State private var lunchItems: [FoodItem] = []
+        @State private var dinnerItems: [FoodItem] = []
+        @State private var otherItems: [FoodItem] = []
+        @State private var totalCalories: Int = 0
+        @State private var totalProtein: Int = 0
+        @State private var totalFat: Int = 0
+        @State private var totalCarbs: Int = 0
+        @State private var CalorieGoal: Int64 = 2000
+        @State private var selectedDate: Date = Date()
+        
+        // Function to get the current date in "yyyy-MM-dd" format
+        private func formattedCurrentDate() -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: selectedDate)
+        }
+
+
+        
+        struct FoodItem: Identifiable {
+            let id: Int64
+            let name: String
+            let kcal: String
+            let pro: String
+            let fat: String
+            let cho: String
+        }
+        
+        // Function to get current date in yyyy-MM-dd format
+        public func getCurrentDate() -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let currentDate = Date()
+            return dateFormatter.string(from: currentDate)
+        }
+        
+        func GetTotalNutrient(bitems: [FoodItem] = [], litems: [FoodItem] = [], ditems: [FoodItem] = [], oitems: [FoodItem] = [], nutrientKey: String) -> Int {
+            // Initialize the total counter
+            var total = 0
+            
+            // Helper function to sum nutrient values from an array of food items
+            func sumNutrient(from items: [FoodItem], key: String) {
+                for item in items {
+                    // Dynamically access the nutrient value based on the key
+                    let nutrientValue: String
+                    switch key {
+                    case "kcal":
+                        nutrientValue = String(item.kcal.dropLast(4))
+                    case "pro":
+                        nutrientValue = String(item.pro.dropLast(2))
+                    case "fat":
+                        nutrientValue = String(item.fat.dropLast(2))
+                    case "cho":
+                        nutrientValue = String(item.cho.dropLast(2))
+                    default:
+                        nutrientValue = "0"
+                    }
+                    
+                    // Convert the nutrient value string to an integer and add it to the total
+                    if let nutrientIntValue = Int(nutrientValue.trimmingCharacters(in: .whitespaces)) {
+                        total += nutrientIntValue
+                    } else {
+                        print("Invalid \(key) value: \(nutrientValue)")
+                    }
+                }
+            }
+            
+            // Sum nutrients for each meal
+            sumNutrient(from: bitems, key: nutrientKey)  // Breakfast items
+            sumNutrient(from: litems, key: nutrientKey)  // Lunch items
+            sumNutrient(from: ditems, key: nutrientKey)  // Dinner items
+            sumNutrient(from: oitems, key: nutrientKey)  // Other items
+            
+            return total
+        }
+
+        
+        func getCurrentCalorieGoal() {
+            do {
+                try dbQueue.read { db in
+                    // Select the firstSetupComplete value from the user table
+                    let result = try Row.fetchOne(db, sql: "SELECT caloriegoal FROM user WHERE id = 1")
+                    
+                    // If the result exists and the value is 1 (true), update the state
+                    if let result = result{
+                        if let goal = result["caloriegoal"]{
+                            print(goal)  // This will print calorie goal
+                            CalorieGoal = goal as! Int64
+                            
+                        }
+                        
+                    }
+                }
+            } catch {
+                print("Error fetching caloriegoal: \(error)")
+            }
+        }
+        
+
+        
+        // Fetch food items for a specific meal
+        public func getFoodItemsForMeal(mealname: String, completion: @escaping ([FoodItem]) -> Void) {
+            do {
+                let currentDate = formattedCurrentDate()
+                let mealType = mealname
+                
+                try dbQueue.read { db in
+                    let query = """
+                    SELECT fooditems.*
+                    FROM meals
+                    JOIN fooditems ON fooditems.meal_id = meals.id
+                    WHERE meals.date = ? AND meals.mealname = ?
+                    """
+                    
+                    let fetchedItems = try Row.fetchAll(db, sql: query, arguments: [currentDate, mealType])
+                    
+                    // Map the fetched rows to FoodItem structs
+                    let foodItems = fetchedItems.map { row in
+                        FoodItem(
+                            id: row["id"] as! Int64,
+                            name: row["name"] as! String,
+                            kcal: row["kcal"] as! String,
+                            pro: row["pro"] as! String,
+                            fat: row["fat"] as! String,
+                            cho: row["cho"] as! String
+                        )
+                    }
+                    completion(foodItems)
+                }
+            } catch {
+                print("Error fetching food items: \(error.localizedDescription)")
+            }
+        }
+        
+        func formatNumberWithCommas(_ number: Int) -> String? {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal  // This adds commas
+            return numberFormatter.string(from: NSNumber(value: number))
+        }
+        
+        func DeleteItem(item: FoodItem){
+            do {
+                // Use the ID of the food item to delete it from the database
+                try dbQueue.write { db in
+                    try db.execute(
+                        sql: "DELETE FROM fooditems WHERE id = ?",
+                        arguments: [item.id]
+                    )
+                }
+
+                // After deletion, update the local array by removing the item
+                if let index = breakfastItems.firstIndex(where: { $0.id == item.id }) {
+                    breakfastItems.remove(at: index)
+                }
+
+                if let index = lunchItems.firstIndex(where: { $0.id == item.id }) {
+                    lunchItems.remove(at: index)
+                }
+
+                if let index = dinnerItems.firstIndex(where: { $0.id == item.id }) {
+                    dinnerItems.remove(at: index)
+                }
+
+                if let index = otherItems.firstIndex(where: { $0.id == item.id }) {
+                    otherItems.remove(at: index)
+                }
+            } catch {
+                print("Error deleting food item: \(error.localizedDescription)")
+            }
+            totalCalories = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "kcal")
+            totalProtein = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "pro")
+            totalFat = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "fat")
+            totalCarbs = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "cho")
+            
+            
+        }
+        
+        private func refreshView() {
+            getCurrentCalorieGoal()
+            getFoodItemsForMeal(mealname: "Breakfast") { items in
+                breakfastItems = items
+            }
+            getFoodItemsForMeal(mealname: "Lunch") { items in
+                lunchItems = items
+            }
+            getFoodItemsForMeal(mealname: "Dinner") { items in
+                dinnerItems = items
+            }
+            getFoodItemsForMeal(mealname: "Other") { items in
+                otherItems = items
+            }
+            // Recalculate totals after fetching new data
+            totalCalories = GetTotalNutrient(
+                bitems: breakfastItems,
+                litems: lunchItems,
+                ditems: dinnerItems,
+                oitems: otherItems,
+                nutrientKey: "kcal"
+            )
+            totalProtein = GetTotalNutrient(
+                bitems: breakfastItems,
+                litems: lunchItems,
+                ditems: dinnerItems,
+                oitems: otherItems,
+                nutrientKey: "pro"
+            )
+            totalFat = GetTotalNutrient(
+                bitems: breakfastItems,
+                litems: lunchItems,
+                ditems: dinnerItems,
+                oitems: otherItems,
+                nutrientKey: "fat"
+            )
+            totalCarbs = GetTotalNutrient(
+                bitems: breakfastItems,
+                litems: lunchItems,
+                ditems: dinnerItems,
+                oitems: otherItems,
+                nutrientKey: "cho"
+            )
+        }
+
+        var body: some SwiftUI.View {
+            NavigationStack{
+                VStack{
+                    VStack {
+                        HStack{
+                            VStack{
+                                Text("Calories")
+                                    .bold()
+                                Text("\(totalCalories)")
+                                    
+                            }.font(.title3)
+                                
+                                .padding(.horizontal,6)
+                            VStack{
+                                Text("Protein")
+                                    .bold()
+                                Text("\(totalProtein)")
+                            }.font(.title3)
+                                
+                                .padding(.horizontal,6)
+                            VStack{
+                                Text("Fat")
+                                    .bold()
+                                Text("\(totalFat)")
+                            }.font(.title3)
+                                
+                                .padding(.horizontal,6)
+                            VStack{
+                                Text("Carbs")
+                                    .bold()
+                                Text("\(totalCarbs)")
+                                    
+                            }.font(.title3)
+                                
+                                .padding(.horizontal,6)
+                            VStack{
+                                VStack{
+                                    Text(String(formatNumberWithCommas(Int(CalorieGoal-Int64(totalCalories))) ?? ""))
+                                        
+                                    Text("Left")
+                                        
+                                }
+                                    .padding(4)
+                                    .border(.black)
+                                
+                                
+                                    
+                            } .padding(.horizontal, 6)
+                            
+                        }
+                        ProgressView(value: (Double(totalCalories)/Double(CalorieGoal)))
+                            .progressViewStyle(LinearProgressViewStyle())
+                            .frame(width: 400)
+                            .padding(6)
+
+                        // DatePicker for selecting a date
+                        DatePicker("Select Date:", selection: $selectedDate, displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .padding()
+
+                    }
+
+                    
+                    ScrollView{
+                        VStack{
+                            HStack{
+                                Text("Breakfast")
+                                    .font(.title2)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.leading, 123.0)
+                                Spacer()
+                            }.foregroundStyle(Color.white)
+                                .frame(width:360, height:60)
+                                .background(Color.mBlue)
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                            
+                            ForEach(breakfastItems, id: \.id) { item in
+                                HStack{
+                                    
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                    Spacer()
+
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
+                        }
+                        VStack{
+                            HStack{
+                                Text("Lunch")
+                                    .font(.title2)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.leading, 123.0)
+                                Spacer()
+                            }.foregroundStyle(Color.white)
+                                .frame(width:360, height:60)
+                                .background(Color.mBlue)
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                            
+                            ForEach(lunchItems, id: \.id) { item in
+                                HStack{
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                    Spacer()
+                                    
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
+                        }
+                        
+                        VStack{
+                            HStack{
+                                Text("Dinner")
+                                    .font(.title2)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.leading, 123.0)
+                                Spacer()
+                                
+                                
+                                
+                            }.foregroundStyle(Color.white)
+                                .frame(width:360, height:60)
+                                .background(Color.mBlue)
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                            ForEach(dinnerItems, id: \.id) { item in
+                                HStack{
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .font(.title)
+                                            .frame(width: 20, height: 20)
+                                            
+                                        
+                                    }
+                                    Spacer()
+                                    
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                Divider()
+                                    
+                            }
+                            
+                            
+                        }
+                        VStack{
+                            HStack{
+                                Text("Other")
+                                    .font(.title2)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.leading, 123.0)
+                                Spacer()
+                                
+                                
+                                
+                            }.foregroundStyle(Color.white)
+                                .frame(width:360, height:60)
+                                .background(Color.mBlue)
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                            ForEach(otherItems, id: \.id) { item in
+                                HStack{
+                                    Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
+                                    
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .frame(width: 15, height: 15)
+                                            
+                                        
+                                    }
+                                    Spacer()
+                                   
+                                        
+                                        
+ 
+                                }.padding(.leading,15)
+                                    .padding(.trailing,15)
+                                    .padding(.vertical,8)
+                                    
+                                Divider()
+                                    
+                            }
+                            
+                            
+                        }
+
+                    }
+                    
+                }
+                .onAppear {
+                    refreshView()
+                }
+                .onChange(of: selectedDate) { oldValue, newValue in
+                    refreshView()
+                }
+                
+                Spacer()
+            }
+        }
+    }
+    
+    
+    
+    
     struct Tracker: SwiftUI.View {
 
         // Define state variables to store food items for each meal
@@ -559,7 +1019,7 @@ struct NutritionViewer: SwiftUI.View {
             VStack{
                 Text(name).bold()
                     .font(.largeTitle)
-                    .foregroundStyle(Color.black)
+                    //.foregroundStyle(Color.black)
                     .padding(12)
                     
                 Divider()
