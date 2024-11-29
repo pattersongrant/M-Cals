@@ -34,6 +34,7 @@ struct Homepage: SwiftUI.View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundStyle(Color.mmaize)
+                        
                         Text("Cals")
                             .font(.largeTitle)
                             .fontWeight(.semibold)
@@ -796,7 +797,10 @@ struct Homepage: SwiftUI.View {
                             }.foregroundStyle(Color.white)
                                 .frame(width:360, height:60)
                                 .background(Color.mBlue)
+                                
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                                
+                                
                             
                             ForEach(breakfastItems, id: \.id) { item in
                                 HStack{
@@ -1050,10 +1054,12 @@ struct NutritionViewer: SwiftUI.View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.mmaize)
+                        
                     Text("Cals")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.mBlue)
+                        
                 }
                 Spacer()
             }

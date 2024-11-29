@@ -1,5 +1,8 @@
+necessary for release:
+- quantity
+- custom adj
+- cache today meals
+
+quality:
 - make different meals a segmented picker
-- add quantity of item
-- add custom cal adj
-- cache today's meals
 - new dark mode
