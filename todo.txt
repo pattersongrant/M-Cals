@@ -1,7 +1,7 @@
 necessary for release:
 - quantity
 - custom adj
-
+- ice cream, cereal, salad, soda, coffee, tea
 quality:
 - make different meals a segmented picker
 - cache today meals

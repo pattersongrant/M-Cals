@@ -142,7 +142,7 @@ struct Homepage: SwiftUI.View {
                     // If the result exists and the value is 1 (true), update the state
                     if let result = result{
                         if let goal = result["caloriegoal"]{
-                            print(goal)  // This will print calorie goal
+                            //print(goal)  // This will print calorie goal
                             CalorieGoal = goal as! Int64
                             
                         }
@@ -611,7 +611,7 @@ struct Homepage: SwiftUI.View {
                     // If the result exists and the value is 1 (true), update the state
                     if let result = result{
                         if let goal = result["caloriegoal"]{
-                            print(goal)  // This will print calorie goal
+                            //print(goal)  // This will print calorie goal
                             CalorieGoal = goal as! Int64
                             
                         }
@@ -1084,7 +1084,7 @@ struct Info: SwiftUI.View {
                     .foregroundStyle(Color.mBlue)
             }.padding(.top, 50.0)
             Spacer()
-            Text("MCals is an application created using the \nU-M Dining API to provide a way to easily track calories & macros from foods eaten in U-M dining halls.\n\nYou must be connected to the U-M WiFi for the app to function properly.\n\nThis is not an official U-M application and is not affiliated with U-M in any way.")
+            Text("MCals is an application created using the \nU-M Dining API to provide a way to easily and accurately track calories & macros from foods eaten in U-M dining halls.\n\nYou must be connected to the U-M WiFi for the app to function properly.\n\nThis is not an official U-M application and is not affiliated with U-M in any way.\n\nAny questions can be directed to me at: pattgrantm@gmail.com")
                 .padding(.bottom, 60.0)
                 .padding(.horizontal, 25.0)
             Spacer()

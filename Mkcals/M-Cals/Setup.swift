@@ -174,7 +174,7 @@ struct Unsure: View {
         NavigationStack {
             VStack {
                 
-                Text("We reccomend picking Maintain Weight if you're still deciding or if you're just here to track your nutrition. \n\n\nThis can always be changed in settings and is only used to tweak a few UI elements, so it's not too important.")
+                Text("We reccomend picking Maintain Weight if you're still deciding or if you're just here to track your nutrition. \n\n\nThis can always be changed in settings.")
                     .multilineTextAlignment(.leading)
                     .padding(25)
                     .foregroundStyle(Color.mBlue)

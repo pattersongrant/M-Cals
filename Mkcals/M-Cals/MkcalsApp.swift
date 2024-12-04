@@ -24,7 +24,7 @@ struct MkcalsApp: App {
                 // If the result exists and the value is 1 (true), update the state
                 if let result = result{
                     if let firstSetupCompleteValue = result["firstSetupComplete"]{
-                        print(firstSetupCompleteValue)  // This will print `true`
+                        //print(firstSetupCompleteValue)
                         firstSetupComplete = firstSetupCompleteValue as! Int64
                         
                     }
