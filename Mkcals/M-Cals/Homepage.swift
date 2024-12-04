@@ -316,12 +316,17 @@ struct Homepage: SwiftUI.View {
                             VStack{
                                 VStack{
                                     Text(String(formatNumberWithCommas(Int(CalorieGoal-Int64(totalCalories))) ?? ""))
+                                        .bold()
                                         
                                     Text("Left")
+                                        .bold()
                                         
                                 }
-                                    .padding(4)
-                                    .border(.black)
+                                    .padding(6)
+                                    .background(.mmaize)
+                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                                    
+                                    
                                 
                                 
                                     
@@ -667,7 +672,7 @@ struct Homepage: SwiftUI.View {
         
         func DeleteItem(item: FoodItem){
             do {
-                // Use the ID of the food item to delete it from the database
+                // Use the ID of the food item to delete it from the e
                 try dbQueue.write { db in
                     try db.execute(
                         sql: "DELETE FROM fooditems WHERE id = ?",
@@ -758,12 +763,15 @@ struct Homepage: SwiftUI.View {
                         VStack{
                             VStack{
                                 Text(String(formatNumberWithCommas(Int(CalorieGoal-Int64(totalCalories))) ?? ""))
+                                    .bold()
                                     
                                 Text("Left")
+                                    .bold()
                                     
                             }
-                                .padding(4)
-                                .border(.black)
+                            .padding(6)
+                            .background(.mmaize)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
                             
                             
                                 

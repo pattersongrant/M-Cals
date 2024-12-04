@@ -203,6 +203,7 @@ struct CalCount: View {
         }
     }
     
+    
     let kcalRange = Array(stride(from: 0, through: 10000, by: 50))
     
     var body: some View {
