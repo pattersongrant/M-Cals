@@ -65,6 +65,7 @@ struct Homepage: SwiftUI.View {
         @State private var totalCarbs: Int = 0
         @State private var CalorieGoal: Int64 = 2000
         @State private var selectedDate: Date = Date()
+
         
         // Function to get the current date in "yyyy-MM-dd" format
         private func formattedCurrentDate() -> String {
@@ -196,42 +197,6 @@ struct Homepage: SwiftUI.View {
             return numberFormatter.string(from: NSNumber(value: number))
         }
         
-        func DeleteItem(item: FoodItem){
-            do {
-                // Use the ID of the food item to delete it from the database
-                try dbQueue.write { db in
-                    try db.execute(
-                        sql: "DELETE FROM fooditems WHERE id = ?",
-                        arguments: [item.id]
-                    )
-                }
-
-                // After deletion, update the local array by removing the item
-                if let index = breakfastItems.firstIndex(where: { $0.id == item.id }) {
-                    breakfastItems.remove(at: index)
-                }
-
-                if let index = lunchItems.firstIndex(where: { $0.id == item.id }) {
-                    lunchItems.remove(at: index)
-                }
-
-                if let index = dinnerItems.firstIndex(where: { $0.id == item.id }) {
-                    dinnerItems.remove(at: index)
-                }
-
-                if let index = otherItems.firstIndex(where: { $0.id == item.id }) {
-                    otherItems.remove(at: index)
-                }
-            } catch {
-                print("Error deleting food item: \(error.localizedDescription)")
-            }
-            totalCalories = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "kcal")
-            totalProtein = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "pro")
-            totalFat = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "fat")
-            totalCarbs = GetTotalNutrient(bitems: breakfastItems, litems: lunchItems, ditems: dinnerItems, oitems: otherItems, nutrientKey: "cho")
-            
-            
-        }
         
         private func refreshView() {
             getCurrentCalorieGoal()
@@ -766,7 +731,7 @@ struct Homepage: SwiftUI.View {
                                     .bold()
                                     
                                 Text("Left")
-                                    .bold()
+                                    
                                     
                             }
                             .padding(6)

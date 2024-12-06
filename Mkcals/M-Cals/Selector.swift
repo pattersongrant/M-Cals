@@ -421,6 +421,7 @@ struct Selector: View {
                                                             //.frame(height:25)
                                                                 .font(.largeTitle)
                                                         }
+                                                        .sensoryFeedback(.increase, trigger: selectedItems)
                                                         .labelsHidden()
                                                         .toggleStyle(.button)
                                                         .padding(.trailing, 15)
@@ -478,7 +479,8 @@ struct Selector: View {
                         .foregroundStyle(Color.mBlue)
                 }
                 
-            } .simultaneousGesture(TapGesture().onEnded {
+            }
+            .simultaneousGesture(TapGesture().onEnded {
                 saveSelectedItemsToDatabase()
             })
         }
