@@ -284,12 +284,14 @@ struct Homepage: SwiftUI.View {
                                         .bold()
                                         
                                     Text("Left")
-                                        .bold()
+                                        
                                         
                                 }
-                                    .padding(6)
-                                    .background(.mmaize)
-                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                                .padding(5)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 13)
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
                                     
                                     
                                 
@@ -734,9 +736,12 @@ struct Homepage: SwiftUI.View {
                                     
                                     
                             }
-                            .padding(6)
-                            .background(.mmaize)
-                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
+                            .padding(5)
+                            
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 13)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
                             
                             
                                 
@@ -770,7 +775,6 @@ struct Homepage: SwiftUI.View {
                             }.foregroundStyle(Color.white)
                                 .frame(width:360, height:60)
                                 .background(Color.mBlue)
-                                
                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 13, height: 10)))
                                 
                                 
