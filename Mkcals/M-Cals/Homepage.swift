@@ -697,6 +697,7 @@ struct Homepage: SwiftUI.View {
                     }.padding(.bottom, 10)
                         .padding(.top,10)
                     HStack{
+
                         VStack{
                             Text("Calories")
                                 .bold()

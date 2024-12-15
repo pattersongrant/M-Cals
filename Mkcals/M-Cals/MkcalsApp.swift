@@ -54,10 +54,12 @@ struct MkcalsApp: App {
                 }
             }.onAppear{
                 checkFirstSetupComplete()
+                
+                
             }
         }
     }
-}
+} 
 var dbQueue: DatabaseQueue!
 
 class DatabaseManager {

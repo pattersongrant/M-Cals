@@ -29,7 +29,7 @@ struct Selector: View {
     @State var selectedMeal = "Breakfast"
     @State var jsonBug = false
     @State var hallChanging = false
-    
+ 
     let hallNames = [
         "Mosher Jordan Dining Hall",
         "Bursley Dining Hall",
@@ -148,8 +148,10 @@ struct Selector: View {
                 print(selectedItem)
                 
                 for meal in meals {
+                    print(meal)
                     if let courses = meal.course?.courseitem {
                         for course in courses {
+                            
                             // Find the first matching item
                             if let item = course.menuitem.item.first(where: { $0.name == selectedItem }) {
                                 
@@ -342,13 +344,16 @@ struct Selector: View {
                         ForEach(hallNames, id: \.self) { hall in
                             Text(hall).tag(hall)
                                 
+                                
+                                
                         }
                         .onChange(of: selectedDiningHall) { oldValue, newValue in
                             hallChanging = true
                             updateSelectedDiningHallCache()
                             fetchData()
                         }
-                    } .accentColor(Color.mBlue)
+                    } .accentColor(Color.black)
+                        
                                             //.padding(.top, 12)
                     .padding(.leading,2)
                     
@@ -366,14 +371,15 @@ struct Selector: View {
                                 if meal.course != nil {
                                     
                                     Text(meal.name?.lowercased().capitalized ?? "Unnamed Meal")
-                                    
+                                        
                                         .font(.largeTitle)
                                         .bold()
-                                        .foregroundStyle(Color.mBlue)
-                                        .frame(height:60)
+                                        .foregroundStyle(Color.white)
+                                        .frame(width: 340, height: 60)
                                         .padding(.horizontal) // Add padding around the text
-                                        .background(Color(.systemGray5)) // Light gray background
+                                        .background(Color(.mBlue)) // Light gray background
                                         .cornerRadius(13) // Apply rounded corners
+                                        
                                         .padding(.bottom, 8)
                                     
                                     
@@ -387,12 +393,13 @@ struct Selector: View {
                                             HStack{
                                                 Text(course.name ?? "Unnamed Course")
                                                     .foregroundStyle(Color.mmaize)
-                                                    .font(.title2)
-                                                    .bold()
+                                                    .font(.title3)
+                                                    .fontWeight(.bold)
                                                     .padding(.leading, 15)
                                                 //.underline(true)
                                                 
                                                     .padding(.bottom, 4)
+                                                    
                                                 
                                                 Spacer()
                                             }
@@ -402,6 +409,8 @@ struct Selector: View {
                                                 VStack{
                                                     HStack{
                                                         Text(menuItem.name ?? "Unnamed MenuItem")
+                                                            .font(. system(size: 14))
+                                                            //.font(.title)
                                                             .padding(.leading, 15)
                                                             .fontWeight(.semibold)
                                                         Spacer()
@@ -417,9 +426,11 @@ struct Selector: View {
                                                         )) {
                                                             Image(systemName: selectedItems.contains(menuItem.name ?? "") ? "checkmark.square.fill" : "square") // Empty square when unselected, filled when selected
                                                                 .foregroundStyle(Color.mBlue)
-                                                            
+                                                                                             
+                                                                .animation(nil, value:selectedItems)
                                                             //.frame(height:25)
-                                                                .font(.largeTitle)
+                                                                .font(.title)
+                                                                
                                                         }
                                                         .sensoryFeedback(.increase, trigger: selectedItems)
                                                         .labelsHidden()
@@ -433,7 +444,7 @@ struct Selector: View {
                                                     Divider()
                                                 }
                                             }
-                                        }.padding(.bottom, 15)
+                                        }.padding(.bottom, 8)
                                     }
                                     
                                 }
