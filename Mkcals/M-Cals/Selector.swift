@@ -9,6 +9,10 @@ import SwiftUI
 
 import GRDB
 
+class ToggleManager: ObservableObject {
+    @Published var demoMode: Bool = false
+}
+
 
 class APIHandling {
     //get url and format it
@@ -29,6 +33,9 @@ struct Selector: View {
     @State var selectedMeal = "Breakfast"
     @State var jsonBug = false
     @State var hallChanging = false
+    @EnvironmentObject var toggleManager: ToggleManager
+
+
  
     let hallNames = [
         "Mosher Jordan Dining Hall",
@@ -48,74 +55,100 @@ struct Selector: View {
     }
     
     
-    
-    //api call
-    func fetchData() {
-        let urlString = APIHandling.getURL(diningHall: selectedDiningHall)
-        
-        let url = URL(string: urlString)
-        
-        guard url != nil else {
+    //demo mode
+    func loadDemoData() {
+        guard let path = Bundle.main.path(forResource: "demo_menu", ofType: "json") else {
+            print("Demo JSON file not found.")
             return
         }
         
-        let session = URLSession.shared
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path))
+            let decoder = JSONDecoder()
+            let itemFeed = try decoder.decode(apiCalled.self, from: data)
+            self.menu = itemFeed.menu
+            print("Demo data loaded successfully.")
+            hallChanging = false
+        } catch {
+            print("Error loading demo data: \(error)")
+        }
+    }
+    
+    //api call
+    func fetchData() {
         
-        let dataTask = session.dataTask(with: url!) { (data,response,error) in
+        
+        if toggleManager.demoMode {
+            loadDemoData()
+            return
+        } else {
             
-            //check for errors
-            if error == nil && data != nil {
+            let urlString = APIHandling.getURL(diningHall: selectedDiningHall)
+            
+            let url = URL(string: urlString)
+            
+            guard url != nil else {
+                return
+            }
+            
+            let session = URLSession.shared
+            
+            let dataTask = session.dataTask(with: url!) { (data,response,error) in
                 
-                //parse json
-                let decoder = JSONDecoder()
-                
-                do{
+                //check for errors
+                if error == nil && data != nil {
                     
-                    //print raw json
-                    //if let jsonString = String(data: data!, encoding: .utf8) {
+                    //parse json
+                    let decoder = JSONDecoder()
+                    
+                    do{
+                        
+                        //print raw json
+                        //if let jsonString = String(data: data!, encoding: .utf8) {
                         //print("JSON Response: \(jsonString)")
-                    //}
-                    
-                    let itemFeed = try decoder.decode(apiCalled.self, from: data!)
-                    DispatchQueue.main.async {
-                        self.menu = itemFeed.menu //store decoded menu
+                        //}
                         
-                        
-                        /* Print each course name and its menuitem names
-                            if let meals = itemFeed.menu?.meal {
-                                for meal in meals {
-                                    if let courses = meal.course?.courseitem {
-                                        for course in courses {
-                                            // Print the course name before the menuitems
-                                            if let courseName = course.name {
-                                                print("Course Name: \(courseName)")
-                                            }
-                                            
-                                            // Print each menuitem name under the course
-                                            for menuItem in course.menuitem.item {
-                                                if let itemName = menuItem.name {
-                                                    print("  MenuItem Name: \(itemName)")
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }*/
-                        
-                        
+                        let itemFeed = try decoder.decode(apiCalled.self, from: data!)
+                        DispatchQueue.main.async {
+                            self.menu = itemFeed.menu //store decoded menu
+                            
+                            
+                            /* Print each course name and its menuitem names
+                             if let meals = itemFeed.menu?.meal {
+                             for meal in meals {
+                             if let courses = meal.course?.courseitem {
+                             for course in courses {
+                             // Print the course name before the menuitems
+                             if let courseName = course.name {
+                             print("Course Name: \(courseName)")
+                             }
+                             
+                             // Print each menuitem name under the course
+                             for menuItem in course.menuitem.item {
+                             if let itemName = menuItem.name {
+                             print("  MenuItem Name: \(itemName)")
+                             }
+                             }
+                             }
+                             }
+                             }
+                             }*/
+                            
+                            
+                        }
+                        hallChanging = false
+                        //print(itemFeed)
+                    } catch {
+                        print("error: \(error)")
+                        jsonBug = true
                     }
-                    hallChanging = false
-                    //print(itemFeed)
-                } catch {
-                    print("error: \(error)")
-                    jsonBug = true
+                    
                 }
                 
             }
-            
+            //make the API Call
+            dataTask.resume()
         }
-        //make the API Call
-        dataTask.resume()
     }
     
     func getCurrentDate() -> String {
@@ -362,6 +395,9 @@ struct Selector: View {
                         
                         
                     Spacer()
+                }
+                if toggleManager.demoMode {
+                    Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
                 }
                 ScrollView{
                     if let meals = menu?.meal{

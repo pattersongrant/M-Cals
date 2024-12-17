@@ -9,8 +9,8 @@ import SwiftUI
 import GRDB
 
 struct Homepage: SwiftUI.View {
-
-
+    @EnvironmentObject var toggleManager: ToggleManager
+    @State private var showAlert: Bool = false // Control alert visibility
     
     var body: some SwiftUI.View {
         NavigationStack{
@@ -43,7 +43,38 @@ struct Homepage: SwiftUI.View {
                     Spacer()
                     Setup()
                     Spacer()
+                    HStack{
+                        Text("Developer Mode (Keep off!): ")
+                            .foregroundStyle(Color.mBlue)
+                        Button(action: {
+                            
+                            showAlert = true
+                        }) {
+                            
+                            Text(toggleManager.demoMode ? "ON" : "OFF") // Change button label based on state
+                                
+                                .padding(6)
+                                .foregroundStyle(.white)
+                                .background(toggleManager.demoMode ? Color.green : Color.red)
+                                .cornerRadius(10)
+                            
+                        }.alert(isPresented: $showAlert) {
+                            Alert(
+                                title: Text("Are you sure?"),
+                                message: Text("This will stop menus from being up-to-date. You probably shouldn't turn this on."),
+                                primaryButton: .destructive(Text("Yes")) {
+                                    print("Dev mode activated!")
+                                    toggleManager.demoMode.toggle()
+                                },
+                                secondaryButton: .cancel() {
+                                    print("Action cancelled.")
+                                }
+                            )
+                        }
+                    }
+                    Spacer()
                 }
+                
                     .tabItem {
                         Label("Settings", systemImage: "gearshape")
                     }

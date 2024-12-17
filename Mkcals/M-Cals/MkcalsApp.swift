@@ -10,6 +10,7 @@ import GRDB
 
 @main
 struct MkcalsApp: App {
+    @StateObject private var toggleManager = ToggleManager() // Create shared instance
     @State private var firstSetupComplete: Int64 = 0
     init() {
         setupDatabase()
@@ -51,6 +52,7 @@ struct MkcalsApp: App {
                     ContentView()
                 } else {
                     Homepage()
+                        .environmentObject(toggleManager) // Share it across views
                 }
             }.onAppear{
                 checkFirstSetupComplete()
