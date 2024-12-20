@@ -202,6 +202,7 @@ struct Selector: View {
                                     let pro = nutrition.pro ?? "0gm"
                                     let fat = nutrition.fat ?? "0gm"
                                     let cho = nutrition.cho ?? "0gm"
+                                    let serving = item.itemsize?.serving_size ?? "N/A"
                                     
                                     try DatabaseManager.addFoodItem(
                                         meal_id: validMealID,
@@ -209,7 +210,8 @@ struct Selector: View {
                                         kcal: kcal,
                                         pro: pro,
                                         fat: fat,
-                                        cho: cho
+                                        cho: cho,
+                                        serving: serving
                                     )
                                 }
                             }
@@ -366,8 +368,6 @@ struct Selector: View {
 
     
 
-    
-    
     var body: some View {
         NavigationStack{
             VStack{
@@ -450,6 +450,7 @@ struct Selector: View {
                                                             .padding(.leading, 15)
                                                             .fontWeight(.semibold)
                                                         Spacer()
+
                                                         Toggle(isOn: Binding(
                                                             get: { selectedItems.contains(menuItem.name ?? "") },
                                                             set: { isSelected in

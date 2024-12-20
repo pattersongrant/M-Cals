@@ -114,6 +114,7 @@ struct Homepage: SwiftUI.View {
             let pro: String
             let fat: String
             let cho: String
+            let serving: String
         }
         
         // Function to get current date in yyyy-MM-dd format
@@ -212,7 +213,8 @@ struct Homepage: SwiftUI.View {
                             kcal: row["kcal"] as! String,
                             pro: row["pro"] as! String,
                             fat: row["fat"] as! String,
-                            cho: row["cho"] as! String
+                            cho: row["cho"] as! String,
+                            serving: row["serving"] as! String
                         )
                     }
                     completion(foodItems)
@@ -362,7 +364,7 @@ struct Homepage: SwiftUI.View {
                                     
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
 
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .font(.title)
@@ -395,7 +397,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
 
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .font(.title)
@@ -431,7 +433,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
 
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .font(.title)
@@ -468,7 +470,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
                                     
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .frame(width: 15, height: 15)
@@ -531,6 +533,7 @@ struct Homepage: SwiftUI.View {
             let pro: String
             let fat: String
             let cho: String
+            let serving: String
         }
         
         // Function to get current date in yyyy-MM-dd format
@@ -652,7 +655,8 @@ struct Homepage: SwiftUI.View {
                             kcal: row["kcal"] as! String,
                             pro: row["pro"] as! String,
                             fat: row["fat"] as! String,
-                            cho: row["cho"] as! String
+                            cho: row["cho"] as! String,
+                            serving: row["serving"] as! String
                         )
                     }
                     completion(foodItems)
@@ -812,11 +816,12 @@ struct Homepage: SwiftUI.View {
                                 
                             
                             ForEach(breakfastItems, id: \.id) { item in
+                                
                                 HStack{
                                     
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
 
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .font(.title)
@@ -825,6 +830,7 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
@@ -863,7 +869,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
 
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .font(.title)
@@ -913,7 +919,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
 
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .font(.title)
@@ -964,7 +970,7 @@ struct Homepage: SwiftUI.View {
                                 HStack{
                                     Text(item.name + " (\(item.kcal.dropLast(4)) Cal)")
                                     
-                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho)){
+                                    NavigationLink(destination: NutritionViewer(name: item.name, kcal: item.kcal, pro: item.pro, fat: item.fat, cho: item.cho, serving: item.serving)){
                                         Image(systemName: "info.circle")
                                             .resizable()
                                             .frame(width: 15, height: 15)
@@ -1027,6 +1033,7 @@ struct NutritionViewer: SwiftUI.View {
     @State var pro: String
     @State var fat: String
     @State var cho: String
+    @State var serving: String
     var body: some SwiftUI.View {
         NavigationStack{
             VStack{
@@ -1038,6 +1045,10 @@ struct NutritionViewer: SwiftUI.View {
                 Divider()
                     
                 VStack{
+                    HStack{
+                        Text("Serving: " + serving)
+                        Spacer()
+                    }
                     HStack{
                         Text("Calories: " + kcal)
                         Spacer()

@@ -50,6 +50,7 @@ struct MkcalsApp: App {
             ZStack{
                 if firstSetupComplete==0{
                     ContentView()
+                        .environmentObject(toggleManager) // Share it across views
                 } else {
                     Homepage()
                         .environmentObject(toggleManager) // Share it across views
@@ -94,6 +95,7 @@ class DatabaseManager {
                 t.column("pro", .text).notNull() //protein
                 t.column("fat", .text).notNull() //total fat
                 t.column("cho", .text).notNull() //total carbs
+                t.column("serving", .text).notNull()
 
             }
         }
@@ -121,11 +123,11 @@ class DatabaseManager {
         }
     }
     
-    static func addFoodItem(meal_id: Int, name: String, kcal: String, pro: String, fat: String, cho: String) throws {
+    static func addFoodItem(meal_id: Int, name: String, kcal: String, pro: String, fat: String, cho: String, serving: String) throws {
         try dbQueue.write { db in
             try db.execute(
-                sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho) VALUES (?, ?, ?, ?, ?, ?)",
-                arguments: [meal_id, name, kcal, pro, fat, cho]
+                sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho, serving) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                arguments: [meal_id, name, kcal, pro, fat, cho, serving]
             
             )
             

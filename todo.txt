@@ -2,7 +2,11 @@ necessary for release:
 - quantity
 - custom adj
 - ice cream, cereal, salad, soda, coffee, tea
+
+- make quantity and portion size at the same time
+
 quality:
 - make different meals a segmented picker
 - cache today meals
 - new dark mode
+- put info on selector screen
