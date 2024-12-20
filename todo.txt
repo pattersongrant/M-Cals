@@ -3,6 +3,6 @@ necessary for release:
 
 
 quality:
-- custom adj (pro mode? Add every food)
+- pro mode: custom foods and general food library
 - cache today meals
-- new dark mode
+- improved dark mode
