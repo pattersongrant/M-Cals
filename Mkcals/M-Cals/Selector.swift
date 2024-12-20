@@ -474,7 +474,7 @@ struct Selector: View {
                                                                 get: { quantities[menuItem.name ?? ""] ?? "1" },
                                                                 set: { quantities[menuItem.name ?? ""] = $0 }
                                                             )) {
-                                                                ForEach(["1/2", "1", "2", "3", "4"], id: \.self) { q in
+                                                                ForEach(["0.5", "1", "2", "3", "4"], id: \.self) { q in
                                                                     Text(q).tag(q)
                                                                 }
                                                             }

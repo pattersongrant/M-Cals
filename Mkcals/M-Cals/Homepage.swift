@@ -115,6 +115,7 @@ struct Homepage: SwiftUI.View {
             let fat: String
             let cho: String
             let serving: String
+            let qty: String
         }
         
         // Function to get current date in yyyy-MM-dd format
@@ -134,6 +135,8 @@ struct Homepage: SwiftUI.View {
                 for item in items {
                     // Dynamically access the nutrient value based on the key
                     let nutrientValue: String
+                    let qty = Double(item.qty) ?? 1
+                    
                     switch key {
                     case "kcal":
                         nutrientValue = String(item.kcal.dropLast(4))
@@ -148,8 +151,8 @@ struct Homepage: SwiftUI.View {
                     }
                     
                     // Convert the nutrient value string to an integer and add it to the total
-                    if let nutrientIntValue = Int(nutrientValue.trimmingCharacters(in: .whitespaces)) {
-                        total += nutrientIntValue
+                    if let nutrientDoubValue = Double(nutrientValue.trimmingCharacters(in: .whitespaces)) {
+                        total += Int(nutrientDoubValue * qty)
                     } else {
                         print("Invalid \(key) value: \(nutrientValue)")
                     }
@@ -214,7 +217,8 @@ struct Homepage: SwiftUI.View {
                             pro: row["pro"] as! String,
                             fat: row["fat"] as! String,
                             cho: row["cho"] as! String,
-                            serving: row["serving"] as! String
+                            serving: row["serving"] as! String,
+                            qty: row["qty"] as! String
                         )
                     }
                     completion(foodItems)
@@ -348,6 +352,7 @@ struct Homepage: SwiftUI.View {
                     
                     ScrollView{
                         VStack{
+                            
                             HStack{
                                 Text("Breakfast")
                                     .font(.title2)
@@ -373,6 +378,8 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
 
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -406,6 +413,8 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
                                     
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -441,7 +450,10 @@ struct Homepage: SwiftUI.View {
                                             
                                         
                                     }
+                                    
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
                                     
                                 }.padding(.leading,15)
                                     .padding(.trailing,15)
@@ -478,6 +490,8 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
                                    
                                         
                                         
@@ -534,6 +548,7 @@ struct Homepage: SwiftUI.View {
             let fat: String
             let cho: String
             let serving: String
+            let qty: String
         }
         
         // Function to get current date in yyyy-MM-dd format
@@ -576,6 +591,8 @@ struct Homepage: SwiftUI.View {
                 for item in items {
                     // Dynamically access the nutrient value based on the key
                     let nutrientValue: String
+                    let qty = Double(item.qty) ?? 1
+                    
                     switch key {
                     case "kcal":
                         nutrientValue = String(item.kcal.dropLast(4))
@@ -590,8 +607,8 @@ struct Homepage: SwiftUI.View {
                     }
                     
                     // Convert the nutrient value string to an integer and add it to the total
-                    if let nutrientIntValue = Int(nutrientValue.trimmingCharacters(in: .whitespaces)) {
-                        total += nutrientIntValue
+                    if let nutrientDoubValue = Double(nutrientValue.trimmingCharacters(in: .whitespaces)) {
+                        total += Int(nutrientDoubValue * qty)
                     } else {
                         print("Invalid \(key) value: \(nutrientValue)")
                     }
@@ -656,7 +673,8 @@ struct Homepage: SwiftUI.View {
                             pro: row["pro"] as! String,
                             fat: row["fat"] as! String,
                             cho: row["cho"] as! String,
-                            serving: row["serving"] as! String
+                            serving: row["serving"] as! String,
+                            qty: row["qty"] as! String
                         )
                     }
                     completion(foodItems)
@@ -776,7 +794,7 @@ struct Homepage: SwiftUI.View {
                             
                             .overlay(
                                 RoundedRectangle(cornerRadius: 13)
-                                    .stroke(Color.black, lineWidth: 1)
+                                    .stroke(Color.black, lineWidth: 0.5)
                             )
                             
                             
@@ -830,7 +848,10 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
-
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
+                                        
+                                        
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
@@ -878,6 +899,8 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
@@ -928,6 +951,8 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
@@ -978,6 +1003,8 @@ struct Homepage: SwiftUI.View {
                                         
                                     }
                                     Spacer()
+                                    Text("x" + item.qty)
+                                        .padding(.trailing, 8)
                                     Button(action: {
                                         DeleteItem(item: item) // Call DeleteItem when the button is pressed
                                     }) {
