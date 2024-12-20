@@ -1,11 +1,8 @@
 necessary for release:
-- quantity
 - ice cream, cereal, salad, soda, coffee, tea
 
 
 quality:
-- custom adj
-- make different meals a segmented picker
+- custom adj (pro mode? Add every food)
 - cache today meals
 - new dark mode
-- put info on selector screen
