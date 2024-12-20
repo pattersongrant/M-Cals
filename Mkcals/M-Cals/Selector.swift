@@ -39,14 +39,15 @@ struct Selector: View {
  
     let hallNames = [
         "Mosher Jordan Dining Hall",
-        "Bursley Dining Hall",
-        "East Quad Dining Hall",
-        "Lawyers Club Dining Hall",
         "Markley Dining Hall",
-        "Martha Cook Dining Hall",
-        "North Quad Dining Hall",
+        "Bursley Dining Hall",
         "South Quad Dining Hall",
-        "Twigs at Oxford"
+        "East Quad Dining Hall",
+        "Twigs at Oxford",
+        "North Quad Dining Hall",
+        "Martha Cook Dining Hall",
+        "Lawyers Club Dining Hall"
+        
     ]
     
     // Update UserDefaults whenever the dining hall changes
