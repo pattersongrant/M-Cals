@@ -405,7 +405,7 @@ struct Selector: View {
                     Spacer()
                 }
                 if toggleManager.demoMode {
-                    Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
+                    //Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
                 }
                 ScrollView{
                     if let meals = menu?.meal{
