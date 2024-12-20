@@ -34,6 +34,8 @@ struct Selector: View {
     @State var jsonBug = false
     @State var hallChanging = false
     @EnvironmentObject var toggleManager: ToggleManager
+    @State private var quantities: [String: String] = [:]
+
 
 
  
@@ -213,6 +215,7 @@ struct Selector: View {
                                         fat: fat,
                                         cho: cho,
                                         serving: serving
+                                        
                                     )
                                 }
                             }
@@ -303,6 +306,8 @@ struct Selector: View {
                 struct MenuItem: Codable {
                     var name: String?
                     var itemsize: ItemSize? //added
+
+                    
                     
                 }
             }
@@ -398,7 +403,7 @@ struct Selector: View {
                     Spacer()
                 }
                 if toggleManager.demoMode {
-                    Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
+                    //Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
                 }
                 ScrollView{
                     if let meals = menu?.meal{
@@ -443,6 +448,7 @@ struct Selector: View {
                                             // Directly use `course.menuitem.item` without optional unwrapping
                                             
                                             ForEach(course.menuitem.item, id: \.name) { menuItem in
+                                                
                                                 VStack{
                                                     HStack{
                                                         Text(menuItem.name ?? "Unnamed MenuItem")
@@ -450,8 +456,31 @@ struct Selector: View {
                                                             //.font(.title)
                                                             .padding(.leading, 15)
                                                             .fontWeight(.semibold)
+                                                        
+                                                        
+                                                        
+                                                        NavigationLink(destination: NutritionViewer(name: menuItem.name ?? "Unnamed MenuItem", kcal: menuItem.itemsize?.nutrition?.kcal ?? "0kcal", pro: menuItem.itemsize?.nutrition?.pro ?? "0gm", fat: menuItem.itemsize?.nutrition?.fat ?? "0gm", cho: menuItem.itemsize?.nutrition?.cho ?? "0gm", serving: menuItem.itemsize?.serving_size ?? "N/A")){
+                                                            Image(systemName: "info.circle")
+                                                                .resizable()
+                                                                .frame(width: 17, height: 17)
+                                                                
+                                                            
+                                                        }
                                                         Spacer()
+                                                        if selectedItems.contains(menuItem.name ?? "") {
+                                                            Picker("", selection: Binding(
+                                                                get: { quantities[menuItem.name ?? ""] ?? "1" },
+                                                                set: { quantities[menuItem.name ?? ""] = $0 }
+                                                            )) {
+                                                                ForEach(["1/2", "1", "2", "3", "4"], id: \.self) { q in
+                                                                    Text(q).tag(q)
+                                                                }
+                                                            }
+                                                            .accentColor(Color.black)
+                                                        }
 
+
+                                                        
                                                         Toggle(isOn: Binding(
                                                             get: { selectedItems.contains(menuItem.name ?? "") },
                                                             set: { isSelected in
@@ -462,6 +491,7 @@ struct Selector: View {
                                                                 }
                                                             }
                                                         )) {
+                                                            
                                                             Image(systemName: selectedItems.contains(menuItem.name ?? "") ? "checkmark.square.fill" : "square") // Empty square when unselected, filled when selected
                                                                 .foregroundStyle(Color.mBlue)
                                                                                              
@@ -475,6 +505,8 @@ struct Selector: View {
                                                         .toggleStyle(.button)
                                                         .padding(.trailing, 15)
                                                         .buttonStyle(.plain)
+                                                        // Show Picker only when the Toggle is checked
+
                                                         
                                                         
                                                         

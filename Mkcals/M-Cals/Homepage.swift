@@ -55,7 +55,7 @@ struct Homepage: SwiftUI.View {
                                 
                                 .padding(6)
                                 .foregroundStyle(.white)
-                                .background(toggleManager.demoMode ? Color.green : Color.red)
+                                .background(toggleManager.demoMode ? Color.mmaize : Color.mBlue)
                                 .cornerRadius(10)
                             
                         }.alert(isPresented: $showAlert) {
