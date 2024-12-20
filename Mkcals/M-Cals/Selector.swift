@@ -206,6 +206,7 @@ struct Selector: View {
                                     let fat = nutrition.fat ?? "0gm"
                                     let cho = nutrition.cho ?? "0gm"
                                     let serving = item.itemsize?.serving_size ?? "N/A"
+                                    let qty = quantities[selectedItem] ?? "1"
                                     
                                     try DatabaseManager.addFoodItem(
                                         meal_id: validMealID,
@@ -214,7 +215,8 @@ struct Selector: View {
                                         pro: pro,
                                         fat: fat,
                                         cho: cho,
-                                        serving: serving
+                                        serving: serving,
+                                        qty: qty
                                         
                                     )
                                 }
@@ -403,7 +405,7 @@ struct Selector: View {
                     Spacer()
                 }
                 if toggleManager.demoMode {
-                    //Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
+                    Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
                 }
                 ScrollView{
                     if let meals = menu?.meal{

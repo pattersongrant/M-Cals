@@ -96,6 +96,7 @@ class DatabaseManager {
                 t.column("fat", .text).notNull() //total fat
                 t.column("cho", .text).notNull() //total carbs
                 t.column("serving", .text).notNull()
+                t.column("qty", .text).notNull()
 
             }
         }
@@ -123,11 +124,11 @@ class DatabaseManager {
         }
     }
     
-    static func addFoodItem(meal_id: Int, name: String, kcal: String, pro: String, fat: String, cho: String, serving: String) throws {
+    static func addFoodItem(meal_id: Int, name: String, kcal: String, pro: String, fat: String, cho: String, serving: String, qty: String) throws {
         try dbQueue.write { db in
             try db.execute(
-                sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho, serving) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                arguments: [meal_id, name, kcal, pro, fat, cho, serving]
+                sql: "INSERT INTO fooditems (meal_id, name, kcal, pro, fat, cho, serving, qty) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                arguments: [meal_id, name, kcal, pro, fat, cho, serving, qty]
             
             )
             
