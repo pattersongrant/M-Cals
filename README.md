@@ -16,6 +16,7 @@ Other tracking apps have wildly varying information per food item, and even manu
 <img src="https://github.com/user-attachments/assets/6f1b005e-f556-4d92-b1bb-3679dd00d2aa" alt="Alt Text" width="150">
 <img src="https://github.com/user-attachments/assets/2759848d-dee4-4836-a4c3-0a3148e84228" alt="Alt Text" width="150">
 <img src="https://github.com/user-attachments/assets/e3dc21d2-94d4-47cf-b1da-2108a9c0fd72" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/deacb7ce-40e9-429e-9345-d7286c63464d" alt="Alt Text" width="150">
 
 
 
