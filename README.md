@@ -1,6 +1,6 @@
 # M-Cals
-Better calorie and macros tracking for UMich dining halls.
-
+Faster and more accurate calorie/macros tracking for UMich dining halls.
+<img src="https://github.com/user-attachments/assets/cb487cc8-832d-48e8-81e4-5cc6798775d7" alt="Alt Text" width="250">
 
 
 ## **Why?**
