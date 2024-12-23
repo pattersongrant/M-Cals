@@ -7,7 +7,10 @@ Better calorie and macros tracking for UMich dining halls.
 
 Other tracking apps have wildly varying information per food item, and even manually added items for U-M dining halls are unlikely to include information for all macros. Furthermore, having to search for and type in all of the different meals served every day wastes time and makes it harder to stay consistent. M-Cals gets accurate information straight from the M-dining API, including macro information like protein, fat, carbs, and makes it 10x more efficient adding meals with checkbox system and selecting eaten meals from specific dining halls, updated daily.
 
-https://github.com/user-attachments/assets/39f209b1-e71d-468c-88df-3d93bb7956e8
+
+https://github.com/user-attachments/assets/f3c7b0d0-2ee2-496a-9f27-6a083c74f2c6
+
+
 <img src="https://github.com/user-attachments/assets/b1bfc023-e11b-4cf0-b3a7-6bf2ddf798cc" alt="Alt Text" width="150">
 <img src="https://github.com/user-attachments/assets/d91d5563-fa99-4d1a-aa26-6665fc8b0c5e" alt="Alt Text" width="150">
 <img src="https://github.com/user-attachments/assets/671e17b2-809a-440b-b4b6-1faafaa509e5" alt="Alt Text" width="150">
