@@ -1,5 +1,5 @@
 # M-Cals
-Faster,easier, and more accurate calorie/macros tracking for UMich dining halls.
+Faster, easier, and more accurate calorie/macros tracking for UMich dining halls.
 
 Built with SwiftUI & SQLite.
 
