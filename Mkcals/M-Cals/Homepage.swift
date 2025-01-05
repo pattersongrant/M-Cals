@@ -1135,6 +1135,17 @@ struct Info: SwiftUI.View {
                 .padding(.bottom, 60.0)
                 .padding(.horizontal, 25.0)
             Spacer()
+            NavigationLink(destination: VStack {
+                Text("We don't share any data with third-parties. The only data stored on the app are the foods and nutrients that you've tracked and your weight and calorie goal, all of which is stored locally on your device and not uploaded anywhere.\n\nDeleting the app will delete your stored data.").padding()
+                Spacer()
+            }.navigationTitle("Privacy Policy")
+            ){
+                Text("Privacy Policy")
+                    .padding()
+                    
+                
+            }
+            Spacer()
         }
     }
 }

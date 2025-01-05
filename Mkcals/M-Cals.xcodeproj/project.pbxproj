@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		01E14D2DBF3FF47F09478FFD /* Pods_Mkcals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AAEE62F74528F7E9B5DC07 /* Pods_Mkcals.framework */; };
 		31292BDE2D119C0E00906DE6 /* demo_menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 31292BDD2D119A5400906DE6 /* demo_menu.json */; };
+		313594742D2A020200AF9D5F /* special_menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 313594732D2A020200AF9D5F /* special_menu.json */; };
 		3145F1BB2CBF4B6E00946A34 /* JsonTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */; };
 		3145F1BD2CC3500500946A34 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145F1BC2CC3500500946A34 /* Selector.swift */; };
 		3172A1332CBC4CD400BDD5BC /* MkcalsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172A1322CBC4CD400BDD5BC /* MkcalsApp.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		16AAEE62F74528F7E9B5DC07 /* Pods_Mkcals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mkcals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31292BDD2D119A5400906DE6 /* demo_menu.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = demo_menu.json; sourceTree = "<group>"; };
+		313594732D2A020200AF9D5F /* special_menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = special_menu.json; sourceTree = "<group>"; };
 		3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonTesting.swift; sourceTree = "<group>"; };
 		3145F1BC2CC3500500946A34 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
 		3172A12F2CBC4CD400BDD5BC /* M-Cals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "M-Cals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +78,7 @@
 				3145F1BC2CC3500500946A34 /* Selector.swift */,
 				3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */,
 				3172A1402CBC51C600BDD5BC /* Setup.swift */,
+				313594732D2A020200AF9D5F /* special_menu.json */,
 				31292BDD2D119A5400906DE6 /* demo_menu.json */,
 				3172A1362CBC4CD500BDD5BC /* Assets.xcassets */,
 				3172A1382CBC4CD500BDD5BC /* Preview Content */,
@@ -170,6 +173,7 @@
 			files = (
 				31292BDE2D119C0E00906DE6 /* demo_menu.json in Resources */,
 				3172A13A2CBC4CD500BDD5BC /* Preview Assets.xcassets in Resources */,
+				313594742D2A020200AF9D5F /* special_menu.json in Resources */,
 				3172A1372CBC4CD500BDD5BC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

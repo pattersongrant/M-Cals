@@ -67,9 +67,20 @@ struct Selector: View {
         
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
+            //print(path)
             let decoder = JSONDecoder()
             let itemFeed = try decoder.decode(apiCalled.self, from: data)
+
+            
+            //print raw json
+            //if let jsonString = String(data: data, encoding: .utf8) {
+                //print("JSON Response: \(jsonString)")
+            //}
+            //let customMeal1 = Meal()
+            
+
             self.menu = itemFeed.menu
+            
             print("Demo data loaded successfully.")
             hallChanging = false
         } catch {
@@ -112,7 +123,9 @@ struct Selector: View {
                         //}
                         
                         let itemFeed = try decoder.decode(apiCalled.self, from: data!)
+                        print(itemFeed)
                         DispatchQueue.main.async {
+                           
                             self.menu = itemFeed.menu //store decoded menu
                             
                             
@@ -140,7 +153,7 @@ struct Selector: View {
                             
                         }
                         hallChanging = false
-                        //print(itemFeed)
+                        
                     } catch {
                         print("error: \(error)")
                         jsonBug = true
@@ -477,7 +490,9 @@ struct Selector: View {
                                                                 ForEach(["0.5", "1", "2", "3", "4"], id: \.self) { q in
                                                                     Text(q).tag(q)
                                                                 }
+                                                                
                                                             }
+                                                            
                                                             .accentColor(Color.black)
                                                         }
 
