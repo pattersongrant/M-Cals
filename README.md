@@ -1,18 +1,28 @@
 # M-Cals
-Better calorie and macros tracking for UMich dining halls.
+Faster, easier, and more accurate calorie/macros tracking for UMich dining halls.
 
+Built with SwiftUI & SQLite.
+
+<img src="https://github.com/user-attachments/assets/cb487cc8-832d-48e8-81e4-5cc6798775d7" alt="Alt Text" width="250">
 
 
 ## **Why?**
 
 Other tracking apps have wildly varying information per food item, and even manually added items for U-M dining halls are unlikely to include information for all macros. Furthermore, having to search for and type in all of the different meals served every day wastes time and makes it harder to stay consistent. M-Cals gets accurate information straight from the M-dining API, including macro information like protein, fat, carbs, and makes it 10x more efficient adding meals with checkbox system and selecting eaten meals from specific dining halls, updated daily.
 
-https://github.com/user-attachments/assets/39f209b1-e71d-468c-88df-3d93bb7956e8
 
-<img width="150" alt="Screenshot 2024-11-11 at 2 45 52 PM" src="https://github.com/user-attachments/assets/24270fb6-5f76-4e1d-9207-c6ab50e747a9">
-<img width="150" alt="Screenshot 2024-11-11 at 2 45 52 PM" src="https://github.com/user-attachments/assets/dc1d5506-cf27-46ee-8340-8059d336f2da">
-<img width="150" alt="Screenshot 2024-11-11 at 2 45 52 PM" src="https://github.com/user-attachments/assets/d5b48eab-c1a1-44e8-9ba2-1ce23e9e1fad">
-<img width="150" alt="Screenshot 2024-11-11 at 2 45 52 PM" src="https://github.com/user-attachments/assets/187667d1-e2e0-4b58-83d1-5008d4b68cb5">
-<img width="150" alt="Screenshot 2024-11-11 at 2 45 52 PM" src="https://github.com/user-attachments/assets/71133a27-943a-4e03-91b0-4f1d31828c54">
+https://github.com/user-attachments/assets/f9a0a6e7-f818-49cb-a773-b2562c00b875
 
-<img width="343" alt="Screenshot 2024-11-25 at 10 47 06 PM" src="https://github.com/user-attachments/assets/052dfe59-dcf2-49bc-b081-6acc563b7fe2">
+
+
+<img src="https://github.com/user-attachments/assets/b1bfc023-e11b-4cf0-b3a7-6bf2ddf798cc" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/d91d5563-fa99-4d1a-aa26-6665fc8b0c5e" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/39f628fb-e13a-46d2-a078-17d721647e80" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/671e17b2-809a-440b-b4b6-1faafaa509e5" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/6f1b005e-f556-4d92-b1bb-3679dd00d2aa" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/2759848d-dee4-4836-a4c3-0a3148e84228" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/e3dc21d2-94d4-47cf-b1da-2108a9c0fd72" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/deacb7ce-40e9-429e-9345-d7286c63464d" alt="Alt Text" width="150">
+
+
+
