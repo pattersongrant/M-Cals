@@ -63,6 +63,7 @@ struct Selector: View {
     
     //demo mode
     func loadDemoData() {
+        noMenuItems = false
         guard let path = Bundle.main.path(forResource: "demo_menu", ofType: "json") else {
             print("Demo JSON file not found.")
             return
@@ -451,7 +452,8 @@ struct Selector: View {
                     Spacer()
                 }
                 if toggleManager.demoMode {
-                    //Text("DEMO MODE ACTIVATED. MENUS NOT CURRENT")
+                    Text("DEV MODE ACTIVATED. MENUS NOT CURRENT")
+                        
                 }
                 ScrollView{
                     if let meals = menu?.meal{
