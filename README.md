@@ -24,6 +24,7 @@ https://github.com/user-attachments/assets/f9a0a6e7-f818-49cb-a773-b2562c00b875
 <img src="https://github.com/user-attachments/assets/e3dc21d2-94d4-47cf-b1da-2108a9c0fd72" alt="Alt Text" width="150">
 <img src="https://github.com/user-attachments/assets/deacb7ce-40e9-429e-9345-d7286c63464d" alt="Alt Text" width="150">
 
+
 **Privacy Policy** 
 We don't share any data with third-parties. The only data stored on the app are the foods and nutrients that you've tracked and your weight and calorie goal, all of which is stored locally on your device and not uploaded anywhere. Deleting the app will delete your stored data.
 
