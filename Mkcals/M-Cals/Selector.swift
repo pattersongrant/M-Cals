@@ -37,6 +37,7 @@ struct Selector: View {
     @State private var quantities: [String: String] = [:]
     @State private var specialMenu: Menu?
     @State private var addButtonPressed: Bool = false
+    @State private var noMenuItems: Bool = true
 
 
 
@@ -434,6 +435,7 @@ struct Selector: View {
                         }
                         .onChange(of: selectedDiningHall) { oldValue, newValue in
                             hallChanging = true
+                            noMenuItems = true
                             updateSelectedDiningHallCache()
                             fetchData()
                         }
@@ -469,6 +471,8 @@ struct Selector: View {
                                         .cornerRadius(13) // Apply rounded corners
                                         
                                         .padding(.bottom, 8)
+                                        
+                                        
                                     
                                     
                                     
@@ -487,6 +491,9 @@ struct Selector: View {
                                                 //.underline(true)
                                                 
                                                     .padding(.bottom, 4)
+                                                    .onAppear {
+                                                        noMenuItems = false
+                                                    }
                                                     
                                                 
                                                 Spacer()
@@ -502,6 +509,7 @@ struct Selector: View {
                                                             //.font(.title)
                                                             .padding(.leading, 15)
                                                             .fontWeight(.semibold)
+                                                            
                                                         
                                                         
                                                         
@@ -567,7 +575,14 @@ struct Selector: View {
                                     
                                 }
                             }
-                            SpecialViewer(mealAddingTo: mealAddingTo, selectedItems: $selectedItems, addToMealButtonPressed: $addButtonPressed)
+                            
+                            if !noMenuItems{
+                                SpecialViewer(mealAddingTo: mealAddingTo, selectedItems: $selectedItems, addToMealButtonPressed: $addButtonPressed)
+                            } else {
+                                Text("No menu items found!")
+                                    .foregroundStyle(Color.gray)
+                                    .padding()
+                            }
                         } else if jsonBug == true{
                             Text("Error fetching menus.\nPlease connect to the U-M Wifi.")
                                 .foregroundStyle(Color.gray)
