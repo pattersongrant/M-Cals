@@ -116,7 +116,7 @@ struct Selector: View {
             print("Demo data loaded successfully.")
             hallChanging = false
         } catch {
-            print("Error loading demo data: \(error)")
+            print("Error loading special data: \(error)")
         }
     }
     
@@ -192,6 +192,8 @@ struct Selector: View {
                         jsonBug = true
                     }
                     
+                } else {
+                    jsonBug = true
                 }
                 
             }

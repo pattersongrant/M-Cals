@@ -14,72 +14,73 @@ struct Homepage: SwiftUI.View {
     
     var body: some SwiftUI.View {
         NavigationStack{
-            TabView{
-                Tracker()
-                    .tabItem {
-                        Label("Tracker", systemImage: "house")
-                    }
-                History()
-                    .tabItem {
-                        Label("History", systemImage: "calendar")
-                    }
-                Info()
-                    .tabItem {
-                        Label("Info", systemImage: "info.circle")
-                    }
-                VStack{
-                    Spacer()
-                    HStack{
-                        Text("M")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.mmaize)
-                        
-                        Text("Cals")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.mBlue)
-                    }.padding(.bottom, 28)
-                    Spacer()
-                    Setup()
-                    Spacer()
-                    HStack{
-                        Text("Developer Mode (Keep off!): ")
-                            .foregroundStyle(Color.mBlue)
-                        Button(action: {
-                            
-                            showAlert = true
-                        }) {
-                            
-                            Text(toggleManager.demoMode ? "ON" : "OFF") // Change button label based on state
-                                
-                                .padding(6)
-                                .foregroundStyle(.white)
-                                .background(toggleManager.demoMode ? Color.mmaize : Color.mBlue)
-                                .cornerRadius(10)
-                            
-                        }.alert(isPresented: $showAlert) {
-                            Alert(
-                                title: Text("Are you sure?"),
-                                message: Text("This will stop menus from being up-to-date. You probably shouldn't turn this on."),
-                                primaryButton: .destructive(Text("Yes")) {
-                                    print("Dev mode activated!")
-                                    toggleManager.demoMode.toggle()
-                                },
-                                secondaryButton: .cancel() {
-                                    print("Action cancelled.")
-                                }
-                            )
+                TabView{
+                    Tracker()
+                        .tabItem {
+                            Label("Tracker", systemImage: "house")
                         }
+                    History()
+                        .tabItem {
+                            Label("History", systemImage: "calendar")
+                        }
+                    Info()
+                        .tabItem {
+                            Label("Info", systemImage: "info.circle")
+                        }
+                    VStack{
+                        Spacer()
+                        HStack{
+                            Text("M")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.mmaize)
+                            
+                            Text("Cals")
+                                .font(.largeTitle)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color.mBlue)
+                        }.padding(.bottom, 28)
+                        Spacer()
+                        Setup()
+                        Spacer()
+                        HStack{
+                            Text("Developer Mode (Keep off!): ")
+                                .foregroundStyle(Color.mBlue)
+                            Button(action: {
+                                
+                                showAlert = true
+                            }) {
+                                
+                                Text(toggleManager.demoMode ? "ON" : "OFF") // Change button label based on state
+                                
+                                    .padding(6)
+                                    .foregroundStyle(.white)
+                                    .background(toggleManager.demoMode ? Color.mmaize : Color.mBlue)
+                                    .cornerRadius(10)
+                                
+                            }.alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text("Are you sure?"),
+                                    message: Text("This will stop menus from being up-to-date. You probably shouldn't turn this on."),
+                                    primaryButton: .destructive(Text("Yes")) {
+                                        print("Dev mode activated!")
+                                        toggleManager.demoMode.toggle()
+                                    },
+                                    secondaryButton: .cancel() {
+                                        print("Action cancelled.")
+                                    }
+                                )
+                            }
+                        }
+                        Spacer()
                     }
-                    Spacer()
-                }
-                
+                    
                     .tabItem {
                         Label("Settings", systemImage: "gearshape")
                     }
-
-            }
+                    
+                }
+            
         }.navigationBarBackButtonHidden()
     }
 
