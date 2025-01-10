@@ -38,6 +38,7 @@ struct Selector: View {
     @State private var specialMenu: Menu?
     @State private var addButtonPressed: Bool = false
     @State private var noMenuItems: Bool = true
+    @State private var preLoaded = false
 
 
 
@@ -63,8 +64,13 @@ struct Selector: View {
     
     //demo mode
     func loadDemoData() {
+        preLoaded = true
         noMenuItems = false
-        guard let path = Bundle.main.path(forResource: "demo_menu", ofType: "json") else {
+        print(selectedDiningHall.replacingOccurrences(of: " ", with: "_"))
+        print(selectedDiningHall)
+                                
+                                                
+        guard let path = Bundle.main.path(forResource: selectedDiningHall.replacingOccurrences(of: " ", with: "_"), ofType: "json") else {
             print("Demo JSON file not found.")
             return
         }
@@ -122,13 +128,13 @@ struct Selector: View {
     
     //api call
     func fetchData() {
+            preLoaded = false
         
-        
-        if toggleManager.demoMode {
-            loadDemoData()
+        //if toggleManager.demoMode {
+            //loadDemoData()
 
-            return
-        } else {
+          //  return
+        //} else {
             
             let urlString = APIHandling.getURL(diningHall: selectedDiningHall)
             
@@ -145,6 +151,7 @@ struct Selector: View {
                 //check for errors
                 if error == nil && data != nil {
                     
+                    
                     //parse json
                     let decoder = JSONDecoder()
                     
@@ -158,8 +165,10 @@ struct Selector: View {
                         let itemFeed = try decoder.decode(apiCalled.self, from: data!)
                         //print(itemFeed)
                         DispatchQueue.main.async {
+                            
                            
                             self.menu = itemFeed.menu //store decoded menu
+                            
                             
                             
                             /* Print each course name and its menuitem names
@@ -186,20 +195,23 @@ struct Selector: View {
                             
                         }
                         hallChanging = false
+                        preLoaded = false
                         
                     } catch {
                         print("error: \(error)")
-                        jsonBug = true
+                        loadDemoData()
+                        //jsonBug = true
                     }
                     
                 } else {
-                    jsonBug = true
+                    loadDemoData()
+                    //jsonBug = true
                 }
                 
             }
             //make the API Call
             dataTask.resume()
-        }
+        //}
     }
     
     func getCurrentDate() -> String {
@@ -440,7 +452,9 @@ struct Selector: View {
                             hallChanging = true
                             noMenuItems = true
                             updateSelectedDiningHallCache()
+                            preLoaded = false
                             fetchData()
+                            
                         }
                     } .accentColor(Color.black)
                         
@@ -452,9 +466,27 @@ struct Selector: View {
                         
                         
                     Spacer()
+                    /*if !preLoaded {
+                        HStack{
+                            Image(systemName: "dot.radiowaves.left.and.right")
+                            
+                                .foregroundStyle(Color.green)
+                                .font(.system(size: 10))
+                            Text("Up-To-Date")
+                                .font(.system(size: 10))
+                        }.padding(.trailing, 20)
+                        
+                        
+                    }*/
+                    
                 }
-                if toggleManager.demoMode {
-                    Text("DEV MODE ACTIVATED. MENUS NOT CURRENT")
+                if preLoaded {
+                    Text("Old menus loaded. Connect to U-M Wifi to use Updated Menus.")
+                        .foregroundStyle(Color.gray)
+                        .padding(.horizontal, 8)
+                    
+                        
+                        
                         
                 }
                 ScrollView{

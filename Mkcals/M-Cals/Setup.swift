@@ -158,6 +158,15 @@ struct Setup: View {
                     
                 }
                 
+                NavigationLink(destination:
+                                VStack{
+                    Text("Source: https://www.mayoclinic.org/healthy-lifestyle/weight-loss/in-depth/calories/art-20048065#:~:text=Your%20weight%20is%20a%20balancing,(0.45%20kilogram)%20of%20fat.")
+                    
+                    Text("\n\"Your weight is a balancing act, but the equation is simple. If you eat more calories than you burn, you gain weight. And if you eat fewer calories and burn more calories through physical activity, you lose weight.\"")
+                }.padding()){
+                    Text("Source")
+                }
+                
                 
             }.navigationTitle("What is your goal?")
                 .navigationBarTitleDisplayMode(.large)
@@ -276,10 +285,23 @@ struct CalHelp: View {
                     
                 }
                 if showMaint{
-                    Text("Your maintenance calories are likely around \(weight*15).\n\nTo gain weight, add 300-500 Calories.\nTo lose weight, subtract 300-500 Calories.\nMore or less depending on how quickly you want to gain/lose weight.")
+                    Text("If you are moderately active, your maintenance calories are likely around \(weight*15).\n(Bodyweight * 15)")
                         .padding()
                         .foregroundStyle(Color.mBlue)
                     
+                    
+                }
+                
+                VStack {
+                    Text("Source: https://www.health.harvard.edu/staying-healthy/calorie-counting-made-easy")
+                        .font(.system(size: 9))
+                        .padding(.horizontal)
+                        .padding(.top)
+                    Text("\"First, multiply your current weight by 15 — that's roughly the number of calories per pound of body weight needed to maintain your current weight if you are moderately active. \"")
+                        .font(.system(size: 9))
+                        .padding(.horizontal)
+                        .padding(.bottom)
+
                 }
                 
                 Spacer()

@@ -43,7 +43,7 @@ struct Homepage: SwiftUI.View {
                         Spacer()
                         Setup()
                         Spacer()
-                        HStack{
+                        /*HStack{
                             Text("Developer Mode (Keep off!): ")
                                 .foregroundStyle(Color.mBlue)
                             Button(action: {
@@ -71,8 +71,8 @@ struct Homepage: SwiftUI.View {
                                     }
                                 )
                             }
-                        }
-                        Spacer()
+                        }*/
+                        //Spacer()
                     }
                     
                     .tabItem {
@@ -1133,7 +1133,7 @@ struct Info: SwiftUI.View {
             }.padding(.top, 50.0)
             Spacer()
             Text("M-Cals is an application created using the \nU-M Dining API to provide a way to easily and more accurately track calories & macros from foods eaten in U-M dining halls.\n\nYou must be connected to the U-M WiFi for the app to function properly.\n\nM-Cals is not an official U-M application and is not affiliated with U-M in any way.\n\nDisclaimer: The calorie and nutrition information provided by this app is intended for general informational purposes only, and is not intended for use in managing medical conditions or making health decisions. \n\nAny questions can be directed to me at: pattgrantm@gmail.com")
-                .padding(.bottom, 60.0)
+                .padding(.bottom, 50.0)
                 .padding(.horizontal, 25.0)
             Spacer()
             NavigationLink(destination: VStack {

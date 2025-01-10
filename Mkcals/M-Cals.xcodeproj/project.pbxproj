@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01E14D2DBF3FF47F09478FFD /* Pods_Mkcals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AAEE62F74528F7E9B5DC07 /* Pods_Mkcals.framework */; };
-		31292BDE2D119C0E00906DE6 /* demo_menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 31292BDD2D119A5400906DE6 /* demo_menu.json */; };
 		313594742D2A020200AF9D5F /* special_menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 313594732D2A020200AF9D5F /* special_menu.json */; };
 		3145F1BB2CBF4B6E00946A34 /* JsonTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */; };
 		3145F1BD2CC3500500946A34 /* Selector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145F1BC2CC3500500946A34 /* Selector.swift */; };
@@ -18,11 +17,19 @@
 		3172A13A2CBC4CD500BDD5BC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3172A1392CBC4CD500BDD5BC /* Preview Assets.xcassets */; };
 		3172A1412CBC51C600BDD5BC /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172A1402CBC51C600BDD5BC /* Setup.swift */; };
 		3172A1472CBDA6A800BDD5BC /* Homepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172A1462CBDA6A800BDD5BC /* Homepage.swift */; };
+		31937F152D318E0E00397676 /* Mosher_Jordan_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F142D318E0E00397676 /* Mosher_Jordan_Dining_Hall.json */; };
+		31937F172D3190ED00397676 /* Markley_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F162D3190ED00397676 /* Markley_Dining_Hall.json */; };
+		31937F192D3191CE00397676 /* Lawyers_Club_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F182D3191CE00397676 /* Lawyers_Club_Dining_Hall.json */; };
+		31937F202D3191DF00397676 /* Bursley_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1A2D3191DF00397676 /* Bursley_Dining_Hall.json */; };
+		31937F212D3191DF00397676 /* Martha_Cook_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1C2D3191DF00397676 /* Martha_Cook_Dining_Hall.json */; };
+		31937F222D3191DF00397676 /* South_Quad_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1E2D3191DF00397676 /* South_Quad_Dining_Hall.json */; };
+		31937F232D3191DF00397676 /* East_Quad_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1B2D3191DF00397676 /* East_Quad_Dining_Hall.json */; };
+		31937F242D3191DF00397676 /* North_Quad_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1D2D3191DF00397676 /* North_Quad_Dining_Hall.json */; };
+		31937F252D3191DF00397676 /* Twigs_at_Oxford.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1F2D3191DF00397676 /* Twigs_at_Oxford.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16AAEE62F74528F7E9B5DC07 /* Pods_Mkcals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mkcals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		31292BDD2D119A5400906DE6 /* demo_menu.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = demo_menu.json; sourceTree = "<group>"; };
 		313594732D2A020200AF9D5F /* special_menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = special_menu.json; sourceTree = "<group>"; };
 		3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonTesting.swift; sourceTree = "<group>"; };
 		3145F1BC2CC3500500946A34 /* Selector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selector.swift; sourceTree = "<group>"; };
@@ -33,6 +40,15 @@
 		3172A1392CBC4CD500BDD5BC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3172A1402CBC51C600BDD5BC /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
 		3172A1462CBDA6A800BDD5BC /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
+		31937F142D318E0E00397676 /* Mosher_Jordan_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Mosher_Jordan_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F162D3190ED00397676 /* Markley_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Markley_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F182D3191CE00397676 /* Lawyers_Club_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Lawyers_Club_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F1A2D3191DF00397676 /* Bursley_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Bursley_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F1B2D3191DF00397676 /* East_Quad_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = East_Quad_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F1C2D3191DF00397676 /* Martha_Cook_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Martha_Cook_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F1D2D3191DF00397676 /* North_Quad_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = North_Quad_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F1E2D3191DF00397676 /* South_Quad_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = South_Quad_Dining_Hall.json; sourceTree = "<group>"; };
+		31937F1F2D3191DF00397676 /* Twigs_at_Oxford.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Twigs_at_Oxford.json; sourceTree = "<group>"; };
 		31AA10042CF4567C004C3380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		57C4CCD2C03D6182DD5B687D /* Pods-Mkcals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mkcals.release.xcconfig"; path = "Target Support Files/Pods-Mkcals/Pods-Mkcals.release.xcconfig"; sourceTree = "<group>"; };
 		62B17EBF452A9D1FBCE30DCE /* Pods-Mkcals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mkcals.debug.xcconfig"; path = "Target Support Files/Pods-Mkcals/Pods-Mkcals.debug.xcconfig"; sourceTree = "<group>"; };
@@ -78,8 +94,16 @@
 				3145F1BC2CC3500500946A34 /* Selector.swift */,
 				3145F1BA2CBF4B6E00946A34 /* JsonTesting.swift */,
 				3172A1402CBC51C600BDD5BC /* Setup.swift */,
+				31937F162D3190ED00397676 /* Markley_Dining_Hall.json */,
+				31937F142D318E0E00397676 /* Mosher_Jordan_Dining_Hall.json */,
+				31937F1A2D3191DF00397676 /* Bursley_Dining_Hall.json */,
+				31937F1B2D3191DF00397676 /* East_Quad_Dining_Hall.json */,
+				31937F1C2D3191DF00397676 /* Martha_Cook_Dining_Hall.json */,
+				31937F1D2D3191DF00397676 /* North_Quad_Dining_Hall.json */,
+				31937F1E2D3191DF00397676 /* South_Quad_Dining_Hall.json */,
+				31937F1F2D3191DF00397676 /* Twigs_at_Oxford.json */,
+				31937F182D3191CE00397676 /* Lawyers_Club_Dining_Hall.json */,
 				313594732D2A020200AF9D5F /* special_menu.json */,
-				31292BDD2D119A5400906DE6 /* demo_menu.json */,
 				3172A1362CBC4CD500BDD5BC /* Assets.xcassets */,
 				3172A1382CBC4CD500BDD5BC /* Preview Content */,
 			);
@@ -171,10 +195,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31292BDE2D119C0E00906DE6 /* demo_menu.json in Resources */,
+				31937F202D3191DF00397676 /* Bursley_Dining_Hall.json in Resources */,
+				31937F212D3191DF00397676 /* Martha_Cook_Dining_Hall.json in Resources */,
+				31937F222D3191DF00397676 /* South_Quad_Dining_Hall.json in Resources */,
+				31937F232D3191DF00397676 /* East_Quad_Dining_Hall.json in Resources */,
+				31937F242D3191DF00397676 /* North_Quad_Dining_Hall.json in Resources */,
+				31937F252D3191DF00397676 /* Twigs_at_Oxford.json in Resources */,
 				3172A13A2CBC4CD500BDD5BC /* Preview Assets.xcassets in Resources */,
+				31937F152D318E0E00397676 /* Mosher_Jordan_Dining_Hall.json in Resources */,
 				313594742D2A020200AF9D5F /* special_menu.json in Resources */,
+				31937F172D3190ED00397676 /* Markley_Dining_Hall.json in Resources */,
 				3172A1372CBC4CD500BDD5BC /* Assets.xcassets in Resources */,
+				31937F192D3191CE00397676 /* Lawyers_Club_Dining_Hall.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
