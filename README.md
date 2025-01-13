@@ -3,7 +3,7 @@ Faster, easier, and more accurate calorie/macros tracking for UMich dining halls
 
 Built with SwiftUI & SQLite.
 
-<img src="https://github.com/user-attachments/assets/cb487cc8-832d-48e8-81e4-5cc6798775d7" alt="Alt Text" width="250">
+<img src="https://github.com/user-attachments/assets/82c25c3c-8447-4ce7-9dd5-733c8927eaf8" alt="Alt Text" width="175">
 
 
 ## **Why?**
