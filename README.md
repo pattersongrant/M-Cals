@@ -1,6 +1,8 @@
 # M-Cals
 Faster, easier, and more accurate calorie/macros tracking for UMich dining halls.
 
+Live on the iOS app store.
+
 Built with SwiftUI & SQLite.
 
 <img src="https://github.com/user-attachments/assets/82c25c3c-8447-4ce7-9dd5-733c8927eaf8" alt="Alt Text" width="175">
