@@ -5,6 +5,13 @@ Built with SwiftUI & SQLite.
 
 <img src="https://github.com/user-attachments/assets/82c25c3c-8447-4ce7-9dd5-733c8927eaf8" alt="Alt Text" width="175">
 
+<img src="https://github.com/user-attachments/assets/0f936641-8b3c-4f3f-8f8e-0091c45ba00e" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/8e42821d-1c14-434d-8cbf-61f88cbdefa1" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/5008bb8e-4637-4785-9df4-ac29dccc0a22" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/34337e3b-9742-4630-a6d6-dc1c4eec8c42" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/a5c4e742-c7d8-4b71-b8bf-7b8b820530d2" alt="Alt Text" width="150">
+<img src="https://github.com/user-attachments/assets/a736a728-c42e-445e-8069-08d2ef55d507" alt="Alt Text" width="150">
+
 
 ## **Why?**
 
@@ -13,12 +20,7 @@ Other tracking apps have wildly varying information per food item, and even manu
 
 https://github.com/user-attachments/assets/f9a0a6e7-f818-49cb-a773-b2562c00b875
 
-<img src="https://github.com/user-attachments/assets/0f936641-8b3c-4f3f-8f8e-0091c45ba00e" alt="Alt Text" width="150">
-<img src="https://github.com/user-attachments/assets/8e42821d-1c14-434d-8cbf-61f88cbdefa1" alt="Alt Text" width="150">
-<img src="https://github.com/user-attachments/assets/5008bb8e-4637-4785-9df4-ac29dccc0a22" alt="Alt Text" width="150">
-<img src="https://github.com/user-attachments/assets/34337e3b-9742-4630-a6d6-dc1c4eec8c42" alt="Alt Text" width="150">
-<img src="https://github.com/user-attachments/assets/a5c4e742-c7d8-4b71-b8bf-7b8b820530d2" alt="Alt Text" width="150">
-<img src="https://github.com/user-attachments/assets/a736a728-c42e-445e-8069-08d2ef55d507" alt="Alt Text" width="150">
+
 
 
 **Privacy Policy:** 
