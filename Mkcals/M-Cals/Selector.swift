@@ -466,6 +466,28 @@ struct Selector: View {
                         
                         
                     Spacer()
+                    NavigationLink(destination: Custom()) {
+                        HStack{
+                            Image(systemName: "plus.circle")
+                            Text("Custom")
+                            
+                            //.foregroundStyle(Color.mBlue)
+                            
+                            /*
+                             .padding(.horizontal, 5)
+                             .frame(height: 25)
+                             .foregroundStyle(Color.white)
+                             .background(Color.blue)
+                             .cornerRadius(8)*/
+                        }
+                            
+                        
+                    }
+                    
+                        //.buttonStyle(.bordered)
+                        
+                        .padding(.trailing, 15)
+                        //.tint(Color.blue)
                     /*if !preLoaded {
                         HStack{
                             Image(systemName: "dot.radiowaves.left.and.right")
