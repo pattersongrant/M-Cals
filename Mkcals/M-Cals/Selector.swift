@@ -466,7 +466,7 @@ struct Selector: View {
                         
                         
                     Spacer()
-                    NavigationLink(destination: Custom(quantities: $quantities, selectedItems: $selectedItems, mealAddingTo: mealAddingTo)) {
+                    NavigationLink(destination: Custom(menu: $menu, quantities: $quantities, selectedItems: $selectedItems, mealAddingTo: mealAddingTo)) {
                         HStack{
                             Image(systemName: "plus.circle")
                             Text("Custom")

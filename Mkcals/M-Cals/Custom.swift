@@ -13,7 +13,7 @@ struct Custom: View {
     }
     //start copy
     @State var selectedDiningHall: String = UserDefaults.standard.string(forKey: "selectedDiningHall") ?? "Mosher Jordan Dining Hall"
-    @State private var menu: Menu? // Store the fetched menu data
+    @Binding var menu: Selector.Menu? //
     @State var selectedMeal = "Breakfast"
     @State var jsonBug = false
     @State var hallChanging = false
@@ -45,7 +45,7 @@ struct Custom: View {
         UserDefaults.standard.set(selectedDiningHall, forKey: "selectedDiningHall")
     }
     
-    
+    /*
     //demo mode
     func loadDemoData() {
         preLoaded = true
@@ -197,7 +197,7 @@ struct Custom: View {
             dataTask.resume()
         //}
     }
-    
+    */
     func getCurrentDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd" // Set the format to include only year, month, and day
@@ -625,9 +625,9 @@ struct Custom: View {
                         .padding(.top, 15)
                     Spacer()
                 } .frame(width: 400)
-                .onAppear {
+                /*.onAppear {
                     fetchData()
-            }
+            }*/
             
             
             
