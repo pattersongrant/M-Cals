@@ -480,151 +480,153 @@ struct Custom: View {
 
     var body: some View {
         NavigationStack{
-            VStack{
-                HStack{
-                    
-                    TextField("Cheese", text: $name)
-                        
-                        .disableAutocorrection(true) // Disable autocorrection
-                        .frame(width:150)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($focusedField, equals: .int)
-                        
-                        .onReceive(Just(name)) { newValue in
-                            let filtered = newValue.filter { "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890".contains($0) }
-                            if filtered != newValue {
-                                self.name = filtered
-                            }
-                        } .padding(.leading, 100)
-                        
-                    
-                    Text("Name")
-                    Spacer()
-                }.padding(.top, 100)
-                HStack{
-                    
-                    TextField("0", text: $kcal)
-                        
-                        
-                        .frame(width:100)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($focusedField, equals: .int)
-                        .keyboardType(.numberPad)
-                        .onReceive(Just(kcal)) { newValue in
-                            let filtered = newValue.filter { "0123456789".contains($0) }
-                            if filtered != newValue {
-                                self.kcal = filtered
-                            }
-                        } .padding(.leading, 100)
-                    
-                    Text("Calories (kcal)")
-                    Spacer()
-                }
-                HStack{
-                    
-                    TextField("0", text: $pro)
-                        
-                        .frame(width:100)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($focusedField, equals: .int)
-                        .keyboardType(.numberPad)
-                        .onReceive(Just(pro)) { newValue in
-                            let filtered = newValue.filter { "0123456789".contains($0) }
-                            if filtered != newValue {
-                                self.pro = filtered
-                            }
-                        }
-                        .padding(.leading, 100)
-                    Text("protein (g)")
-                    
-                    Spacer()
-                }
-                HStack{
-                    
-                    TextField("0", text: $fat)
-                        
-                        .frame(width:100)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($focusedField, equals: .int)
-                        .keyboardType(.numberPad)
-                        .onReceive(Just(fat)) { newValue in
-                            let filtered = newValue.filter { "0123456789".contains($0) }
-                            if filtered != newValue {
-                                self.fat = filtered
-                            }
-                        }
-                        .padding(.leading, 100)
-                    Text("Fat (g)")
-                    Spacer()
-                }
-                HStack{
-                    
-                    TextField("0", text: $cho)
-                        
-                        .frame(width:100)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($focusedField, equals: .int)
-                        .keyboardType(.numberPad)
-                        .onReceive(Just(cho)) { newValue in
-                            let filtered = newValue.filter { "0123456789".contains($0) }
-                            if filtered != newValue {
-                                self.cho = filtered
-                            }
-                        }
-                        .padding(.leading, 100)
-                    Text("Carbs (g)")
-                    Spacer()
-                }
-                HStack{
-                    
-                    TextField("1", text: $qty)
-                        
-                        .frame(width:100)
-                        .textFieldStyle(.roundedBorder)
-                        .focused($focusedField, equals: .int)
-                        .keyboardType(.numberPad)
-                        .onReceive(Just(qty)) { newValue in
-                            let filtered = newValue.filter { "0123456789".contains($0) }
-                            if filtered != newValue {
-                                self.qty = filtered
-                            }
-                        }
-                        .padding(.leading, 100)
-                    Text("Quantity (int)")
-                    Spacer()
-                }
-                NavigationLink(destination: Homepage()){
+            
+                VStack{
                     HStack{
-                        /*Text("Add to \(mealAddingTo)")
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.mBlue)
-                        Image(systemName: "arrow.right.circle.fill")
-                            .font(.title)
-                            .foregroundStyle(Color.mBlue)*/
-                        Text("Add to \(mealAddingTo)")
+                        
+                        TextField("Cheese", text: $name)
+                        
+                            .disableAutocorrection(true) // Disable autocorrection
+                            .frame(width:150)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .int)
+                        
+                            .onReceive(Just(name)) { newValue in
+                                let filtered = newValue.filter { "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890".contains($0) }
+                                if filtered != newValue {
+                                    self.name = filtered
+                                }
+                            } .padding(.leading, 100)
+                        
+                        
+                        Text("Name")
+                        Spacer()
+                    }.padding(.top, 100)
+                    HStack{
+                        
+                        TextField("0", text: $kcal)
+                        
+                        
+                            .frame(width:100)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .int)
+                            .keyboardType(.numberPad)
+                            .onReceive(Just(kcal)) { newValue in
+                                let filtered = newValue.filter { "0123456789".contains($0) }
+                                if filtered != newValue {
+                                    self.kcal = filtered
+                                }
+                            } .padding(.leading, 100)
+                        
+                        Text("Calories (kcal)")
+                        Spacer()
+                    }
+                    HStack{
+                        
+                        TextField("0", text: $pro)
+                        
+                            .frame(width:100)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .int)
+                            .keyboardType(.numberPad)
+                            .onReceive(Just(pro)) { newValue in
+                                let filtered = newValue.filter { "0123456789".contains($0) }
+                                if filtered != newValue {
+                                    self.pro = filtered
+                                }
+                            }
+                            .padding(.leading, 100)
+                        Text("protein (g)")
+                        
+                        Spacer()
+                    }
+                    HStack{
+                        
+                        TextField("0", text: $fat)
+                        
+                            .frame(width:100)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .int)
+                            .keyboardType(.numberPad)
+                            .onReceive(Just(fat)) { newValue in
+                                let filtered = newValue.filter { "0123456789".contains($0) }
+                                if filtered != newValue {
+                                    self.fat = filtered
+                                }
+                            }
+                            .padding(.leading, 100)
+                        Text("Fat (g)")
+                        Spacer()
+                    }
+                    HStack{
+                        
+                        TextField("0", text: $cho)
+                        
+                            .frame(width:100)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .int)
+                            .keyboardType(.numberPad)
+                            .onReceive(Just(cho)) { newValue in
+                                let filtered = newValue.filter { "0123456789".contains($0) }
+                                if filtered != newValue {
+                                    self.cho = filtered
+                                }
+                            }
+                            .padding(.leading, 100)
+                        Text("Carbs (g)")
+                        Spacer()
+                    }
+                    HStack{
+                        
+                        TextField("1", text: $qty)
+                        
+                            .frame(width:100)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .int)
+                            .keyboardType(.numberPad)
+                            .onReceive(Just(qty)) { newValue in
+                                let filtered = newValue.filter { "0123456789".contains($0) }
+                                if filtered != newValue {
+                                    self.qty = filtered
+                                }
+                            }
+                            .padding(.leading, 100)
+                        Text("Quantity (int)")
+                        Spacer()
+                    }
+                    NavigationLink(destination: Homepage()){
+                        HStack{
+                            /*Text("Add to \(mealAddingTo)")
+                             .fontWeight(.semibold)
+                             .foregroundStyle(Color.mBlue)
+                             Image(systemName: "arrow.right.circle.fill")
+                             .font(.title)
+                             .foregroundStyle(Color.mBlue)*/
+                            Text("Add to \(mealAddingTo)")
                             //.font(.title3)
-                            .foregroundStyle(Color.white)
+                                .foregroundStyle(Color.white)
                             
-                            .frame(width: 150.0, height: 50.0)
+                                .frame(width: 150.0, height: 50.0)
                                 .background(Color.mBlue)
                                 .cornerRadius(13)
                                 .padding(5)
                                 .padding(.top, 15)
-                    }
-                    
-                }   .simultaneousGesture(TapGesture().onEnded {
-                    saveTextFieldsToDatabase(name: name, kcal: kcal, pro: pro, fat: fat, cho: cho, qty: qty)
-                    saveSelectedItemsToDatabase()
-                    
-                })
-                Text("(also adds selected items on previous page)")
-                    .italic()
-                    .frame(width: 200)
-                    .foregroundStyle(.gray)
-                    .padding(.top, 15)
-                Spacer()
-            } .onAppear {
-                fetchData()
+                        }
+                        
+                    }   .simultaneousGesture(TapGesture().onEnded {
+                        saveTextFieldsToDatabase(name: name, kcal: kcal, pro: pro, fat: fat, cho: cho, qty: qty)
+                        saveSelectedItemsToDatabase()
+                        
+                    })
+                    Text("(also adds selected items on previous page)")
+                        .italic()
+                        .frame(width: 200)
+                        .foregroundStyle(.gray)
+                        .padding(.top, 15)
+                    Spacer()
+                } .frame(width: 400)
+                .onAppear {
+                    fetchData()
             }
             
             
