@@ -536,7 +536,7 @@ struct Custom: View {
                                 }
                             }
                             .padding(.leading, 100)
-                        Text("protein (g)")
+                        Text("Protein (g)")
                         
                         Spacer()
                     }
