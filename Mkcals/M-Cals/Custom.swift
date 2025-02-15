@@ -476,6 +476,30 @@ struct Custom: View {
         } catch {
             print("Failed to add item: \(error)")
         }
+        
+        do {
+            
+            // Validate and sanitize inputs
+            let sanitizedName = name.isEmpty ? "Custom Item" : name
+            let sanitizedKcal = (kcal.isEmpty ? "0" : kcal) + "kcal"
+            let sanitizedPro = (pro.isEmpty ? "0" : pro) + "gm"
+            let sanitizedFat = (fat.isEmpty ? "0" : fat) + "gm"
+            let sanitizedCho = (cho.isEmpty ? "0" : cho) + "gm"
+            
+            // Add the food item to the database
+            try DatabaseManager.addCustomItem(
+                name: sanitizedName,
+                kcal: sanitizedKcal,
+                pro: sanitizedPro,
+                fat: sanitizedFat,
+                cho: sanitizedCho,
+                serving: "Custom"
+            )
+            
+            print("Item successfully added to the database.")
+        } catch {
+            print("Failed to add item: \(error)")
+        }
     }
 
     var body: some View {

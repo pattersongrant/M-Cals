@@ -110,6 +110,19 @@ class DatabaseManager {
                 
             }
         }
+        try dbQueue.write { db in
+            try db.create(table: "customitems3", ifNotExists: true) { t in
+                t.autoIncrementedPrimaryKey("id")
+                t.column("name", .text).notNull() // yyyy-mm-dd
+                t.column("kcal", .text).notNull() //Calories
+                t.column("pro", .text).notNull() //protein
+                t.column("fat", .text).notNull() //total fat
+                t.column("cho", .text).notNull() //total carbs
+                t.column("serving", .text).notNull()
+                t.column("created_at", .date).notNull().defaults(sql: "CURRENT_TIMESTAMP")
+                print("customitems3 database is good.")
+            }
+        }
         
     }
     
@@ -131,6 +144,19 @@ class DatabaseManager {
                 arguments: [meal_id, name, kcal, pro, fat, cho, serving, qty]
             
             )
+            
+        }
+    }
+    
+    static func addCustomItem(name: String, kcal: String, pro: String, fat: String, cho: String, serving: String) throws {
+        try dbQueue.write { db in
+            try db.execute(
+                sql: "INSERT INTO customitems3 (name, kcal, pro, fat, cho, serving) VALUES (?, ?, ?, ?, ?, ?)",
+                arguments: [name, kcal, pro, fat, cho, serving]
+                
+            
+            )
+            print("the custom sql ran")
             
         }
     }
