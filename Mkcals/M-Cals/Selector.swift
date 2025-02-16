@@ -1122,12 +1122,16 @@ struct SpecialViewer: View {
             .onChange(of:addToMealButtonPressed) {
                 saveSelectedItemsToDatabase()
             }
+        
+        
             
         
         
             
         
     }
+    
+
     
     
     
