@@ -813,6 +813,7 @@ struct Custom: View {
                                             .foregroundStyle(Color.mBlue)
                                             .font(.title)
                                     }
+                                    .sensoryFeedback(.increase, trigger: selectedCustomitems)
                                     .labelsHidden()
                                     .toggleStyle(.button)
                                     .padding(.trailing, 15)
