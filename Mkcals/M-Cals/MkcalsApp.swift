@@ -7,9 +7,22 @@
 
 import SwiftUI
 import GRDB
+import FirebaseCore
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
+
+
 
 @main
 struct MkcalsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var toggleManager = ToggleManager() // Create shared instance
     @State private var firstSetupComplete: Int64 = 0
     init() {

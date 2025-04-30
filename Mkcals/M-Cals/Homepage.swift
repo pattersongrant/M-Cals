@@ -1137,7 +1137,7 @@ struct Info: SwiftUI.View {
                 .padding(.horizontal, 25.0)
             Spacer()
             NavigationLink(destination: VStack {
-                Text("We don't share any data with third-parties. The only data stored on the app are the foods and nutrients that you've tracked and your weight and calorie goal, all of which is stored locally on your device and not uploaded anywhere.\n\nDeleting the app will delete your stored data.").padding()
+                Text("M-Cals does not share any data with third-parties. Foods and nutrients that you've tracked are all stored locally on your device and will be erased if the app is deleted. Approximate location and app usage data are tracked for analytics purposes. These analytics will stop being tracked if the app is deleted, and are never shared with any third-parties.").padding()
                 Spacer()
             }.navigationTitle("Privacy Policy")
             ){
