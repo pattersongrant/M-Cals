@@ -53,8 +53,6 @@
 		319D4FA82DC1F21400E025CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		31AA10042CF4567C004C3380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		31EE8D472D401C3F0036C267 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
-		57C4CCD2C03D6182DD5B687D /* Pods-Mkcals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mkcals.release.xcconfig"; path = "Target Support Files/Pods-Mkcals/Pods-Mkcals.release.xcconfig"; sourceTree = "<group>"; };
-		62B17EBF452A9D1FBCE30DCE /* Pods-Mkcals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mkcals.debug.xcconfig"; path = "Target Support Files/Pods-Mkcals/Pods-Mkcals.debug.xcconfig"; sourceTree = "<group>"; };
 		6B7554FDE17128EA77C1AAD1 /* Pods_M_Cals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_M_Cals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A7ADAAAC611665522474C5 /* Pods-M-Cals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M-Cals.release.xcconfig"; path = "Target Support Files/Pods-M-Cals/Pods-M-Cals.release.xcconfig"; sourceTree = "<group>"; };
 		C9A13DF557411D6B023F0541 /* Pods-M-Cals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M-Cals.debug.xcconfig"; path = "Target Support Files/Pods-M-Cals/Pods-M-Cals.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,8 +135,6 @@
 		E6057329D3C0CF472D470C9A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				62B17EBF452A9D1FBCE30DCE /* Pods-Mkcals.debug.xcconfig */,
-				57C4CCD2C03D6182DD5B687D /* Pods-Mkcals.release.xcconfig */,
 				C9A13DF557411D6B023F0541 /* Pods-M-Cals.debug.xcconfig */,
 				99A7ADAAAC611665522474C5 /* Pods-M-Cals.release.xcconfig */,
 			);
@@ -426,7 +422,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.grantp.M-Cals";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -463,7 +459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.grantp.M-Cals";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
