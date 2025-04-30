@@ -33,6 +33,6 @@ https://github.com/user-attachments/assets/f9a0a6e7-f818-49cb-a773-b2562c00b875
 **Privacy Policy:** 
 
 
-We don't share any data with third-parties. The only data stored on the app are the foods and nutrients that you've tracked and your weight and calorie goal, all of which is stored locally on your device and not uploaded anywhere. Deleting the app will delete your stored data.
+M-Cals does not share any data with third-parties. Foods and nutrients that you've tracked are all stored locally on your device and will be erased if the app is deleted. Approximate location and app usage data are tracked for analytics purposes. These analytics will stop being tracked if the app is deleted, and are never shared with any third-parties.
 
 Any questions can be directed to pattgrantm@gmail.com
