@@ -52,7 +52,8 @@ struct Selector: View {
         "Twigs at Oxford",
         "North Quad Dining Hall",
         "Martha Cook Dining Hall",
-        "Lawyers Club Dining Hall"
+        "Lawyers Club Dining Hall",
+        "Wolverine Village Dining Hall"
         
     ]
     

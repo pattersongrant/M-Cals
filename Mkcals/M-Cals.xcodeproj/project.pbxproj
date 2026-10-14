@@ -26,6 +26,7 @@
 		31937F232D3191DF00397676 /* East_Quad_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1B2D3191DF00397676 /* East_Quad_Dining_Hall.json */; };
 		31937F242D3191DF00397676 /* North_Quad_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1D2D3191DF00397676 /* North_Quad_Dining_Hall.json */; };
 		31937F252D3191DF00397676 /* Twigs_at_Oxford.json in Resources */ = {isa = PBXBuildFile; fileRef = 31937F1F2D3191DF00397676 /* Twigs_at_Oxford.json */; };
+		A4D8E5B02D4F000100000002 /* Wolverine_Village_Dining_Hall.json in Resources */ = {isa = PBXBuildFile; fileRef = A4D8E5B02D4F000100000001 /* Wolverine_Village_Dining_Hall.json */; };
 		319D4FA92DC1F21400E025CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319D4FA82DC1F21400E025CE /* GoogleService-Info.plist */; };
 		31EE8D482D401C3F0036C267 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EE8D472D401C3F0036C267 /* Custom.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		31937F1D2D3191DF00397676 /* North_Quad_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = North_Quad_Dining_Hall.json; sourceTree = "<group>"; };
 		31937F1E2D3191DF00397676 /* South_Quad_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = South_Quad_Dining_Hall.json; sourceTree = "<group>"; };
 		31937F1F2D3191DF00397676 /* Twigs_at_Oxford.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Twigs_at_Oxford.json; sourceTree = "<group>"; };
+		A4D8E5B02D4F000100000001 /* Wolverine_Village_Dining_Hall.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Wolverine_Village_Dining_Hall.json; sourceTree = "<group>"; };
 		319D4FA82DC1F21400E025CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		31AA10042CF4567C004C3380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		31EE8D472D401C3F0036C267 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				31937F1D2D3191DF00397676 /* North_Quad_Dining_Hall.json */,
 				31937F1E2D3191DF00397676 /* South_Quad_Dining_Hall.json */,
 				31937F1F2D3191DF00397676 /* Twigs_at_Oxford.json */,
+				A4D8E5B02D4F000100000001 /* Wolverine_Village_Dining_Hall.json */,
 				31937F182D3191CE00397676 /* Lawyers_Club_Dining_Hall.json */,
 				313594732D2A020200AF9D5F /* special_menu.json */,
 				3172A1362CBC4CD500BDD5BC /* Assets.xcassets */,
@@ -208,6 +211,7 @@
 				31937F232D3191DF00397676 /* East_Quad_Dining_Hall.json in Resources */,
 				31937F242D3191DF00397676 /* North_Quad_Dining_Hall.json in Resources */,
 				31937F252D3191DF00397676 /* Twigs_at_Oxford.json in Resources */,
+				A4D8E5B02D4F000100000002 /* Wolverine_Village_Dining_Hall.json in Resources */,
 				3172A13A2CBC4CD500BDD5BC /* Preview Assets.xcassets in Resources */,
 				31937F152D318E0E00397676 /* Mosher_Jordan_Dining_Hall.json in Resources */,
 				313594742D2A020200AF9D5F /* special_menu.json in Resources */,
