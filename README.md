@@ -5,15 +5,6 @@ Live on the iOS app store.
 
 Built with SwiftUI & SQLite.
 
-## General food search
-
-The bundled general food catalog contains 5,431 foods from USDA FoodData Central's
-Food and Nutrient Database for Dietary Studies (FNDDS) 2021–2023 release.
-Nutrition values are per 100 g. The catalog is stored in
-`Mkcals/M-Cals/USDA_FNDDS_Foods.json` and can be regenerated with
-`scripts/build_usda_catalog.py` from the [USDA download](https://fdc.nal.usda.gov/download-datasets/).
-USDA FoodData Central data is published under CC0 1.0.
-
 <img src="https://github.com/user-attachments/assets/82c25c3c-8447-4ce7-9dd5-733c8927eaf8" alt="Alt Text" width="175">
 
 
@@ -38,6 +29,14 @@ Other tracking apps have wildly varying information per food item, and even manu
 
 https://github.com/user-attachments/assets/f9a0a6e7-f818-49cb-a773-b2562c00b875
 
+## General food search
+
+The bundled general food catalog contains 5,431 foods from USDA FoodData Central's
+Food and Nutrient Database for Dietary Studies (FNDDS) 2021–2023 release.
+Nutrition values are per 100 g. The catalog is stored in
+`Mkcals/M-Cals/USDA_FNDDS_Foods.json` and can be regenerated with
+`scripts/build_usda_catalog.py` from the [USDA download](https://fdc.nal.usda.gov/download-datasets/).
+USDA FoodData Central data is published under CC0 1.0.
 
 **Privacy Policy:** 
 
