@@ -30,6 +30,9 @@ struct Selector: View {
     @State var mealAddingTo: String
     @State private var menu: Menu? // Store the fetched menu data
     @State private var selectedItems: Set<String> = [] // Set to store selected menu items
+    @State private var searchText = ""
+    @State private var selectedGeneralFoodIDs: Set<Int> = []
+    @State private var generalFoodQuantities: [Int: String] = [:]
     @State var selectedMeal = "Breakfast"
     @State var jsonBug = false
     @State var hallChanging = false
@@ -56,6 +59,30 @@ struct Selector: View {
         "Wolverine Village Dining Hall"
         
     ]
+
+    private var searchTerm: String {
+        searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var matchingMichiganItems: [Meal.CourseWrapper.Course.MenuItem] {
+        guard !hallChanging, !searchTerm.isEmpty else { return [] }
+        var seenNames = Set<String>()
+        return (menu?.meal ?? [])
+            .flatMap { $0.course?.courseitem ?? [] }
+            .flatMap { $0.menuitem.item }
+            .filter { item in
+                guard let name = item.name,
+                      name.localizedCaseInsensitiveContains(searchTerm) else { return false }
+                return seenNames.insert(name).inserted
+            }
+    }
+
+    private var matchingGeneralFoods: [GeneralFood] {
+        guard !searchTerm.isEmpty else { return [] }
+        return GeneralFoodCatalog.foods.filter {
+            $0.name.localizedCaseInsensitiveContains(searchTerm)
+        }
+    }
     
     // Update UserDefaults whenever the dining hall changes
     private func updateSelectedDiningHallCache() {
@@ -65,8 +92,6 @@ struct Selector: View {
     
     //demo mode
     func loadDemoData() {
-        preLoaded = true
-        noMenuItems = false
         print(selectedDiningHall.replacingOccurrences(of: " ", with: "_"))
         print(selectedDiningHall)
                                 
@@ -90,10 +115,13 @@ struct Selector: View {
             //let customMeal1 = Meal()
             
 
-            self.menu = itemFeed.menu
-            
+            DispatchQueue.main.async {
+                self.menu = itemFeed.menu
+                self.preLoaded = true
+                self.noMenuItems = false
+                self.hallChanging = false
+            }
             print("Demo data loaded successfully.")
-            hallChanging = false
         } catch {
             print("Error loading demo data: \(error)")
         }
@@ -169,6 +197,8 @@ struct Selector: View {
                             
                            
                             self.menu = itemFeed.menu //store decoded menu
+                            self.hallChanging = false
+                            self.preLoaded = false
                             
                             
                             
@@ -195,9 +225,6 @@ struct Selector: View {
                             
                             
                         }
-                        hallChanging = false
-                        preLoaded = false
-                        
                     } catch {
                         print("error: \(error)")
                         loadDemoData()
@@ -223,7 +250,7 @@ struct Selector: View {
     }
     
     func saveSelectedItemsToDatabase() {
-        guard let meals = menu?.meal else { return }
+        let meals = menu?.meal ?? []
         //print(getCurrentDate())
         print(selectedItems)
         
@@ -285,6 +312,19 @@ struct Selector: View {
                         }
                     }
                 }
+            }
+
+            for food in GeneralFoodCatalog.foods where selectedGeneralFoodIDs.contains(food.id) {
+                try DatabaseManager.addFoodItem(
+                    meal_id: validMealID,
+                    name: food.name,
+                    kcal: food.caloriesText,
+                    pro: food.proteinText,
+                    fat: food.fatText,
+                    cho: food.carbsText,
+                    serving: "100 g",
+                    qty: generalFoodQuantities[food.id] ?? "1"
+                )
             }
 
             
@@ -431,6 +471,161 @@ struct Selector: View {
         }
     }
 
+    private func searchSectionTitle(_ title: String) -> some View {
+        Text(title)
+            .font(.title3)
+            .bold()
+            .foregroundStyle(Color.white)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(Color.mBlue)
+            .cornerRadius(13)
+            .padding(.horizontal, 15)
+            .padding(.top, 12)
+    }
+
+    private func michiganSearchRow(_ item: Meal.CourseWrapper.Course.MenuItem) -> some View {
+        let name = item.name ?? "Unnamed Menu Item"
+        return VStack {
+            HStack {
+                Text(name)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+                    .padding(.leading, 15)
+                NavigationLink(destination: NutritionViewer(
+                    name: name,
+                    kcal: item.itemsize?.nutrition?.kcal ?? "0kcal",
+                    pro: item.itemsize?.nutrition?.pro ?? "0gm",
+                    fat: item.itemsize?.nutrition?.fat ?? "0gm",
+                    cho: item.itemsize?.nutrition?.cho ?? "0gm",
+                    serving: item.itemsize?.serving_size ?? "N/A"
+                )) {
+                    Image(systemName: "info.circle")
+                }
+                Spacer()
+                if selectedItems.contains(name) {
+                    Picker("Quantity", selection: Binding(
+                        get: { quantities[name] ?? "1" },
+                        set: { quantities[name] = $0 }
+                    )) {
+                        ForEach(["0.5", "1", "2", "3", "4"], id: \.self) { amount in
+                            Text(amount).tag(amount)
+                        }
+                    }
+                    .labelsHidden()
+                    .tint(.black)
+                }
+                Toggle(isOn: Binding(
+                    get: { selectedItems.contains(name) },
+                    set: { selected in
+                        if selected { selectedItems.insert(name) }
+                        else { selectedItems.remove(name) }
+                    }
+                )) {
+                    Image(systemName: selectedItems.contains(name) ? "checkmark.square.fill" : "square")
+                        .foregroundStyle(Color.mBlue)
+                        .font(.title)
+                }
+                .accessibilityLabel(name)
+                .labelsHidden()
+                .toggleStyle(.button)
+                .buttonStyle(.plain)
+                .padding(.trailing, 15)
+            }
+            Divider()
+        }
+    }
+
+    private func generalSearchRow(_ food: GeneralFood) -> some View {
+        VStack {
+            HStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(food.name)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+                    Text("\(food.caloriesText) · 100 g")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.leading, 15)
+                NavigationLink(destination: NutritionViewer(
+                    name: food.name,
+                    kcal: food.caloriesText,
+                    pro: food.proteinText,
+                    fat: food.fatText,
+                    cho: food.carbsText,
+                    serving: "100 g"
+                )) {
+                    Image(systemName: "info.circle")
+                }
+                Spacer()
+                if selectedGeneralFoodIDs.contains(food.id) {
+                    Picker("Quantity", selection: Binding(
+                        get: { generalFoodQuantities[food.id] ?? "1" },
+                        set: { generalFoodQuantities[food.id] = $0 }
+                    )) {
+                        ForEach(["0.5", "1", "2", "3", "4"], id: \.self) { amount in
+                            Text(amount).tag(amount)
+                        }
+                    }
+                    .labelsHidden()
+                    .tint(.black)
+                }
+                Toggle(isOn: Binding(
+                    get: { selectedGeneralFoodIDs.contains(food.id) },
+                    set: { selected in
+                        if selected { selectedGeneralFoodIDs.insert(food.id) }
+                        else { selectedGeneralFoodIDs.remove(food.id) }
+                    }
+                )) {
+                    Image(systemName: selectedGeneralFoodIDs.contains(food.id) ? "checkmark.square.fill" : "square")
+                        .foregroundStyle(Color.mBlue)
+                        .font(.title)
+                }
+                .accessibilityLabel(food.name)
+                .labelsHidden()
+                .toggleStyle(.button)
+                .buttonStyle(.plain)
+                .padding(.trailing, 15)
+            }
+            Divider()
+        }
+    }
+
+    private var searchResultsView: some View {
+        LazyVStack(alignment: .leading, spacing: 0) {
+            searchSectionTitle("Michigan Dining")
+            if hallChanging || menu == nil {
+                Text("Loading dining hall foods...")
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 12)
+            } else if matchingMichiganItems.isEmpty {
+                Text("No dining hall foods found.")
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 12)
+            } else {
+                ForEach(matchingMichiganItems, id: \.name) { item in
+                    michiganSearchRow(item)
+                }
+            }
+
+            searchSectionTitle("General Foods · USDA")
+            if matchingGeneralFoods.isEmpty {
+                Text("No general foods found.")
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 12)
+            } else {
+                ForEach(matchingGeneralFoods) { food in
+                    generalSearchRow(food)
+                }
+            }
+        }
+    }
+
     
     
     
@@ -503,6 +698,26 @@ struct Selector: View {
                     }*/
                     
                 }
+                HStack(spacing: 8) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.secondary)
+                    TextField("Search foods", text: $searchText)
+                        .autocorrectionDisabled()
+                    if !searchText.isEmpty {
+                        Button {
+                            searchText = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.secondary)
+                        }
+                        .accessibilityLabel("Clear search")
+                    }
+                }
+                .padding(11)
+                .background(Color(.systemGray6))
+                .cornerRadius(12)
+                .padding(.horizontal, 15)
+                .padding(.bottom, 6)
                 if preLoaded {
                     Text("Old menus loaded. Connect to U-M Wifi to use Updated Menus.")
                         .foregroundStyle(Color.gray)
@@ -513,6 +728,9 @@ struct Selector: View {
                         
                 }
                 ScrollView{
+                    if !searchTerm.isEmpty {
+                        searchResultsView
+                    } else {
                     if let meals = menu?.meal{
                         if hallChanging == false{
                             ForEach(meals, id: \.name) { meal in
@@ -665,6 +883,7 @@ struct Selector: View {
                             .padding(.top, 15)
                         Text("Loading Menu...")
                             .foregroundStyle(Color.gray)
+                    }
                     }
                     
                 }
